@@ -58,3 +58,29 @@ Top statuses:
 This spans across 30 different stages in the system. The bulk are closed/resolved (Paid, Communicated), but there are active tickets scattered across completion and assignment stages.
 
 Source: EOXS Teams Live Odoo (current).
+
+**User**: is there any more active ticket right now?
+
+**Claude**: **45 active tickets** for Sabre Alloys (excluding closed/tabled stages).
+
+| Stage | Count |
+|-------|-------|
+| Can be released | 12 |
+| Assigned | 6 |
+| Ready for Sandbox | 5 |
+| Need Developer | 4 |
+| Raj questions | 4 |
+| Code QA/AI Review | 3 |
+| Ready for Live | 2 |
+| On Live | 2 |
+| QA Passed | 1 |
+| QA Failed | 1 |
+| Ongoing Tasks | 1 |
+| To-Do | 1 |
+| Revert code/Update Gitlab | 1 |
+| On Sandbox/Functional QA | 1 |
+| Intake | 1 |
+
+The bulk (12) are ready to be released. The rest are scattered across development, QA, and release stages.
+
+Source: EOXS Teams Live Odoo (current).
