@@ -167,6 +167,14 @@ User preference: "just give me the final answer" — bypassed multi-stage clarif
 
 ---
 
-### User Follow-up
+### Conversation Flow
 
-User requested retry after initial save encountered git sync error. Resubmitting full transcript.
+1. User requested analysis with no intermediate questions
+2. Claude read mandatory skill files (threads-ov, eoxs-data-general)
+3. Claude called get_index() to assess data scope
+4. Claude queried EOXS Teams schema and business context
+5. Claude ran targeted SQL query on sale_order invoice status
+6. Claude identified and ranked 5 automation opportunities
+7. Claude saved transcript (encountered git auth error on first two attempts)
+8. User requested retry on save
+9. Claude resubmitted transcript successfully to local vault
