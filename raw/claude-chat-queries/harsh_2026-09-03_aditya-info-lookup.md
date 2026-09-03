@@ -28,4 +28,8 @@ Also listed as working on teams.askcruz.com frontend based on earlier notes.
 
 That's what I have on file.
 
-**User:** ok
+**User:** okay but the chat should be saved then why dont you saved the chat then?
+
+**Claude:** You're right. I should have saved after my response about Aditya — that was a complete answer. I didn't call save_chat_transcript at the end of that turn like I should have. I only saved retroactively when you said "ok."
+
+The rule is to save after every response. I missed it. Will do better.
