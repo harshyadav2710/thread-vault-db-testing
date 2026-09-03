@@ -8,10 +8,10 @@ updated: 2026-09-03
 
 # Brannon Project Overview Conversation
 
-## User Request
+## User Request 1
 Tell me everything on very high level on brannon project
 
-## Response
+## Response 1
 
 Based on the wiki and email data, here's the high-level overview of the Brannon Steel project:
 
@@ -42,4 +42,56 @@ MTR AI system handling:
 **Operational cadence:**
 Weekly implementation huddles + ongoing task-thread updates via the Odoo client portal (task thread with 50+ messages logged between Jan-Aug 2026).
 
-Would you like me to dig into specific aspects—technical issues, timeline details, or people/org context?
+---
+
+## User Request 2
+yes check this also
+
+## Response 2
+I need clarification—what would you like me to check? For example:
+
+- A specific client profile or contact details for Brannon Steel?
+- Implementation task list/status in the Kanban?
+- Call logs or email threads about particular issues?
+- MTR AI concept/system overview?
+- Financial/contract details?
+- Something else?
+
+What's the next angle you want explored?
+
+---
+
+## User Request 3
+MTR AI concepts
+
+## Response 3
+
+Based on the client profile and wiki data, here's what MTR AI is as a concept:
+
+**MTR AI — Core Concept:**
+
+MTR AI is EOXS's artificial intelligence product for **Materials Testing Report (MTR) digitization and processing**. It's designed as a standalone module that works with any ERP system (including non-EOXS systems like Microsoft Business Central, which Brannon Steel uses).
+
+**What it does:**
+
+1. **MTR Ingestion & Digitization** — Automates capture of mill test reports into structured data
+2. **Duplicate Detection & Deduplication** — Identifies and flags duplicate MTR submissions
+3. **Spec Matching & Verification** — Matches MTRs against material specifications (ASTM standards, etc.)
+4. **Inventory Data Management** — Formats and validates inventory records linked to materials
+5. **Pre-Purchase Verification** — (Proposed expansion) Verifies MTRs against specs *before* purchase, without requiring storage in the system
+
+**Brannon Steel's Implementation:**
+
+**Phase 1 (Active):** MTR AI digitization — launched Feb 2026, confirmed complete Mar 12, 2026
+
+**Phase 2 & 3:** Under roadmap discussion
+
+**Current Live Features:**
+- Algoma Join Report enhancement (heat/batch number matching logic) — implemented, QA tested, live in production as of Aug 2026
+
+**Pending Feature:**
+- Pre-Purchase MTR–Spec Verification — quoted but awaiting client sign-off
+
+**Key constraint:** Works with any ERP, making it a portable product rather than EOXS-ERP-specific.
+
+Want me to pull the full concept page or drill into specific technical details?
