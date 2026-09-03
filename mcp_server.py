@@ -29,7 +29,7 @@ CHAT_SUMMARIES_DIR = WIKI_DIR / "chat-summaries"
 
 GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN", "")
 GITHUB_REPO_URL = os.environ.get(
-    "GITHUB_REPO_URL", "https://github.com/eoxssecondbrain/claude-notes-vault.git"
+    "GITHUB_REPO_URL", "https://github.com/harshyadav2710/thread-vault-db-testing.git"
 )
 GIT_BRANCH = os.environ.get("GIT_BRANCH", "data")
 
