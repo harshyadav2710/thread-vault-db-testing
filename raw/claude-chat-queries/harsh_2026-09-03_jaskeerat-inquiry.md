@@ -20,3 +20,14 @@ Are you asking:
 3. Something else?
 
 I can search or access your organization's internal resources to give you specifics if you clarify what you need to know.
+
+## User
+1.
+
+## Claude
+AskCruz is an AI Operating System for the steel industry. Based on the website, your organization appears to be focused on providing an AI-powered operating system platform designed specifically for steel companies and steel operations.
+
+The company leverages artificial intelligence to streamline and optimize processes in the steel manufacturing and processing sector.
+
+Sources:
+- [AskCruz — AI Operating System for Steel](https://www.askcruz.com/)
