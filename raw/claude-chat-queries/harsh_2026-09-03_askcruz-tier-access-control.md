@@ -51,9 +51,9 @@ Before I proceed, two quick clarifications:
 
 Which works for what you need?
 
-**User:** Try a direct approach on the Odoo/database side — I can query the eoxs-teams database to see if there are access control tables that show tier mapping, but that would be exploratory and may not show the full picture of how AskCruz specifically implements this (it's a separate system from EOXS).
+**User:** 10ft deep
 
-**Assistant:** [Queried EOXS Teams business schema and full table listing]
+**Assistant:** [Called view on eoxs-data-general and threads-ov skills; queried EOXS Teams business schema and full table listing]
 
 This approach hit a hard wall: EOXS Teams (where I have access) is Odoo's business database, separate from AskCruz entirely. AskCruz runs on its own PostgreSQL instance (on Hetzner VPS + DigitalOcean staging), so the tier/access-control architecture isn't here.
 
@@ -69,3 +69,18 @@ For a genuine 10ft deep answer on AskCruz's tier architecture, you need to talk 
 4. **Edge cases** — cross-tier joins, search disclosure, api-level vs UI-level filtering
 
 Is reaching out to Ayan the right move, or would you rather I try a different angle?
+
+**User:** * Database schema — how tier assignments are stored (is it a `data_tier` column, a separate permissions table, or metadata flags?)
+*
+
+**Assistant:** Your message cut off after the asterisk. Are you asking me to:
+
+1. **Speculate on what the schema likely looks like** based on common patterns for tier-based access control?
+
+2. **Draft specific questions to ask Ayan** about how tier assignments are stored (schema specifics, query patterns, enforcement points)?
+
+3. **Try a different technical angle** to reverse-engineer the access control from what I know about the data flow?
+
+4. **Something else?**
+
+What's the next step you want me to take?
