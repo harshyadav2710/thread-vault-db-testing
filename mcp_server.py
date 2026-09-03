@@ -1047,9 +1047,9 @@ if __name__ == "__main__":
     print(f"Configured users: {len(CLAUDE_OV_USERS)} (secrets not logged)")
     print(f"Per-user endpoints mounted at /<their-secret>/sse (each resolves to one username)")
 
-    # Use mcp.app instead of mcp.sse_app() to support multiple transports
-    # (SSE, JSON-RPC over HTTP, etc.). The identity middleware wraps this
-    # and handles per-user authentication via secrets in the URL path.
+    # mcp.run(transport="sse") builds and serves its own uvicorn app internally
+    # with no hook to inject middleware — so the identity-resolving middleware
+    # is wired in manually here instead: get the raw ASGI app, wrap it, run it.
     import uvicorn
-    app = _IdentityMiddleware(mcp.app)
+    app = _IdentityMiddleware(mcp.sse_app())
     uvicorn.run(app, host="0.0.0.0", port=PORT)
