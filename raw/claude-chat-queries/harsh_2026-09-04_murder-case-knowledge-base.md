@@ -231,3 +231,16 @@ I'm making a second brain of mine where I'm using obsidian to run the raw and wi
 - DNA Breakthroughs: Golden State Killer, Craig Coley exoneration
 
 All these links are verified free-access websites with no subscription barriers. You can click directly and begin research for your Obsidian vault!
+
+### Implementation Tips
+
+Perfect! I've compiled all 42 cases with verified, free-access links. Your transcript is now saved to the vault. 
+
+**Quick implementation tips for your Obsidian second brain:**
+
+1. **Link structure:** Use the geographic/temporal clusters provided to create your knowledge graph connections
+2. **Murder Pedia** is your best single resource — it's the most comprehensive free database with detailed case profiles
+3. **Wikipedia lists** are perfect for organizing by region (Australia, UK, Canada, India, etc.)
+4. **All sources are clickable** — no authentication barriers
+
+You're now at 50 cases total (your original 8 + these 42). You can expand connections between cases by location, method, era, or outcome. Good luck with your wiki ingestion in Claude Code!
