@@ -54,3 +54,30 @@ Various foundational items including:
 The project shows active development with recent updates through September 4th. The critical path seems to be finishing the staging database structure and the Outlook automation integration (currently in QA).
 
 **Note:** I couldn't find tasks formally assigned to your user ID in the database—this might mean your work is tracked through a different mechanism or via the shared account setup. Do you have other projects or tasks that aren't showing up here?
+
+---
+
+**User:** where have you fetched these data from
+
+**Claude:** I fetched all that data from **AskCruz's Odoo 13 database** using the **ASK CRUZ:query** tool. Here's what I queried:
+
+### **Data Sources:**
+
+1. **Database:** askcruz (Odoo 13 Community instance)
+
+2. **Tables queried:**
+   - `project_task` — individual tasks/work items
+   - `project_project` — projects
+   - `project_task_type` — task stages/status
+   - `hr_employee` — employee records
+
+3. **Search criteria:**
+   - First, I searched `hr_employee` table for anyone with "Aditya" in their name → Found: "Aditya yadav" with user_id = 11 and email aditya@askcruz.com
+   - Then I searched for projects containing "3GM" or "Outlook" → Found: **"Customer 2 - 3GM"** project (project_id = 14)
+   - Finally, I pulled all 23 active tasks from that project sorted by recent updates
+
+### **Why I did this:**
+- I couldn't find tasks directly assigned to your user_id (11) in the initial query, so I focused on the 3GM project you mentioned in your profile
+- The 23 tasks I found are all part of the "Customer 2 - 3GM" project that your team is working on
+
+**Note:** This data is real-time and read-only from AskCruz's internal Odoo system. If you have other projects or if your work is tracked differently (perhaps through EOXS systems or implementation tasks), I can query those as well. Would you like me to check EOXS implementation tasks or any other specific project?
