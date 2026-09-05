@@ -31,7 +31,7 @@ Great to have you here. What are you working on today? Whether it's 3GM testing,
 
 **User:** can you reverify the details of my ongoing projects
 
-**Claude:** [Previous response with correction noting all 23 tasks are assigned to Ayan Dutta, not directly to user...]
+**Claude:** [Previous response with correction noting all 23 tasks are assigned to Ayan Dutta...]
 
 ---
 
@@ -52,16 +52,46 @@ Great to have you here. What are you working on today? Whether it's 3GM testing,
 
 ## **Finding:**
 
-**There is currently NO data formally tagged or assigned to you in the system.** 
+**There is currently NO data formally tagged or assigned to you in the system.** [Previous analysis...]
 
-This could mean:
+---
 
-1. **Shared Account Model:** Since you're part of a shared account with Priyanshu Sinha, Jagriti Chowdhury, Isha Bisht, Danish, and Harsimran, work may be assigned to other team members but you collaborate on it
-2. **Informal Assignment:** Your contributions to the 3GM project (Outlook email sync testing) are likely documented outside the formal task assignment system
-3. **Role-Based Work:** As a Startup Generalist Intern, you might be contributing across multiple areas without formal individual task ownership
+**User:** [Uploaded files asking to search for tasks where listed in comments/watchers OR check specific projects involved with]
 
-**Would you like me to:**
-- Search for tasks where you're listed in comments/watchers?
-- Check specific projects you know you're involved with?
-- Look at creation/update history to see what you've worked on?
-- Check if there's an HR training or onboarding project tracking system?
+**Claude:** Excellent! I found **14 tasks you're following/watching** in the system. Here's your actual work tagged under you:
+
+## **Tasks You're Following/Watching (14 Total)**
+
+### **Customer 1 - EOXS Project (7 tasks)**
+
+**Completed:**
+1. **Setup backend server architecture locally** 
+2. **Threads Wiki MCP testing**
+3. **Integrate Isha's email** (Due: 2026-08-12)
+4. **Customizable & personalized E-mail marketing automation** (Due: 2026-08-17)
+5. **MCP Write Function** (Due: 2026-08-06)
+6. **Update your emails and photo on TeamCruz** (Due: 2026-08-13)
+7. **Database Skill file updation**
+
+**Recurring Tasks:**
+8. **Training Material Cruz Backend**
+9. **Daily research on new AI innovation and Technologies**
+
+### **Customer 2 - 3GM Project (1 task)**
+10. **Training Materials (Interns)** – Recurring Task
+
+### **AskCruz Project (1 task)**
+11. **Integrate Ayan's Ask Cruz Email Data into Vault** – Completed
+
+### **Ai/Product Interns Project (1 task)**
+12. **Karpathy's wiki/Second Brain** – Assigned
+
+### **Daily Snippets Project (1 task)**
+13. **Aditya yadav** – Product Interns stage
+
+### **50 MBA Interns Cohort Project (1 task)**
+14. **Basic QA on the product interns claude** – Task List stage
+
+---
+
+**Summary:** You're actively following work across EOXS, 3GM, AskCruz, AI/Product Interns, and other projects. Most of your tasks are completed or in recurring status. The active item is **Karpathy's wiki/Second Brain** (Assigned stage).
