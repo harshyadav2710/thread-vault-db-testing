@@ -6,327 +6,208 @@ created: 2026-09-05
 updated: 2026-09-05
 ---
 
-## Claude Features for AskCruz — Specific, Actionable Recommendations
+## How to Build Reusable MCP Servers — Beginner Explanation
 
-**User Question:** "Give me the details of the new features which are introduced in claude which can be helpful for askcruz and can make it more efficient. research through all the files and know about me. dont give me vague information. use your intelligence and make me understand what is useful and how"
-
----
-
-## CONTEXT: WHO YOU ARE & WHAT ASKCRUZ NEEDS
-
-**Aditya Yadav (You):**
-- Startup Generalist Intern at AskCruz (joined July 20, 2026)
-- Working on 3GM project: Outlook email sync testing
-- Specific tasks: OAuth flow testing, email deduplication, attachment extraction, 6-table schema verification
-
-**AskCruz's Real Problems** (from Ron's Sep 2, 2026 task board):
-- 12 open tasks with ZERO deadlines set (`date_deadline` empty)
-- 9 of 12 tasks have no activity in 6-7 days (stale)
-- Ownership/assignment field drift (manual updates never sync with notes)
-- Stale placeholder notes + copy-paste duplicates
-- Ticket auto-reply generation needed
-- Email deduplication at scale (3GM has 50K+ emails)
-
-**Current Claude Usage at EOXS** (from Sep 2 Study Time session):
-- Hashir: Testing Claude vs Codex on varying complexity tasks
-- Aryan Bakshi: Built two Claude-driven automations:
-  1. Task notification system (WhatsApp-style push alerts when tasks land)
-  2. Ticket auto-reply tool that drafts resolution responses
+**User Question:** "How can we build reusable MCP servers? Make me understand like I'm a beginner. Don't make me understand step by step. Just tell me in short: how to build, how it can be helpful, what things I need, is it already built, what challenges?"
 
 ---
 
-## FEATURE 1: Claude Code + Gmail MCP Server
-**Direct Solution for Your 3GM OAuth Testing**
+## WHAT IS AN MCP SERVER? (30-Second Version)
 
-**The Feature:**
-Built-in MCP server for Gmail with OAuth 2.0 support, designed to work with Claude Code and Claude Desktop.
+Think of an MCP server as a **"translator plug"** for Claude.
 
-**Why It Matters:**
-- Built-in OAuth 2.0 support (you don't build it from scratch)
-- Automatic token refresh without process restart
-- MCP server vaults credentials so Claude never sees raw keys
-- You can connect to Outlook/Gmail directly from Claude Code
+Just like a USB adapter lets different devices talk to each other, an MCP server lets Claude talk to Outlook, Odoo, Postgres, or any system without Claude knowing the specific details.
 
-**Concrete Application to YOUR Work:**
-Instead of manually testing OAuth + attachment extraction separately, write:
+**Real example:**
+- Claude needs to deduplicate 50K emails from 3GM's Outlook
+- Claude doesn't natively speak "Outlook API"
+- An MCP server translates: Claude asks → MCP server calls Outlook → Gets emails → Deduplicates → Returns result to Claude
+- Claude doesn't need to learn Outlook; the MCP server is the translator
+
+---
+
+## HOW DO YOU BUILD ONE? (Short Version, No Step-by-Steps)
+
+You write code that tells Claude:
 ```
-"Connect to 3GM's Outlook via OAuth, extract all attachments, deduplicate by Message-ID and content hash, 
-verify the 6-table schema matches AskCruz database structure, and report any mismatches."
+"When you need to deduplicate emails, call my email_dedup function"
+"When you need task info, call my fetch_tasks function"  
+"When you need to verify the database schema, call my validate_schema function"
 ```
 
-Claude Code handles end-to-end: OAuth negotiation → email retrieval → attachment extraction → deduplication → schema verification.
+That's it. You're defining: **"Here are the functions Claude can call, what they do, what data they need."**
 
-**Time Saved:** 4-5 days (separate OAuth testing + attachment handling + schema verification) → 1-2 days (end-to-end testing because Claude handles boilerplate).
+**The building blocks you need:**
+1. **Python SDK or TypeScript SDK** (Anthropic provides these)
+2. **Your business logic** (code that talks to Outlook, deduplicates, validates)
+3. **Function definitions** (telling Claude what each function does)
+4. **Authentication** (OAuth for Outlook, DB credentials for Postgres, etc.)
 
-**Cost Impact:** Using prompt caching (see Feature 4), processing 50K 3GM emails: ~$3-5 vs $15-20 without caching.
-
----
-
-## FEATURE 2: Claude Cowork for Task Automation
-**Solves AskCruz's Ownership Drift & Deadline Management Problem**
-
-**The Feature:**
-As of September 2026, Cowork runs on web, mobile, AND desktop. Sessions run remotely in beta, synced across devices. It directly manipulates files and structured data without requiring manual copy-paste.
-
-**The Problem It Solves:**
-Ron's task board shows: "all 12 open tasks have no deadline" + "Ownership field ≠ latest note assignment." This is a data management problem, not a thinking problem.
-
-**What Cowork Can Do for AskCruz:**
-1. Read all open tasks from the Odoo task board (via ASK CRUZ connector)
-2. Identify drift: where `owner_field` doesn't match latest `@mention` in notes
-3. Flag those for manual review
-4. Auto-set deadlines based on project dependencies
-5. Create corrected data for bulk upload
-
-**Concrete Example:**
-Ron runs this command (or AskCruz team schedules it daily):
-> "Read all 12 open AskCruz tasks from Odoo. Compare owner field against latest @mention in notes. Identify any drift. Auto-set deadlines based on task dependencies. Create a CSV report of corrections for manual approval before bulk upload."
-
-**Result:**
-- What takes Ron 30 minutes of manual spreadsheet work: 5 minutes automated
-- No more copy-paste errors (Cowork edits files directly)
-- History tracked (you can revert if a correction was wrong)
-- Can be scheduled to run daily automatically
-
-**Why Cowork Over Manual Spreadsheets:**
-Cowork manipulates actual data files and structured records. It doesn't copy/paste. It doesn't skip updates. It keeps version history.
+**Code length:** ~200 lines for a basic MCP server. Most of it is boilerplate the SDK handles.
 
 ---
 
-## FEATURE 3: Reusable MCP Servers for Multi-Client Email Integration
-**Solves: Duplicate Effort Across 3GM, Sabre, Three D Metals**
+## HOW IS IT HELPFUL FOR ASKCRUZ?
 
-**The Feature:**
-MCP servers are standardized, reusable integrations. Build once, use everywhere. JWT and OAuth 2.1 handled server-side, not per-integration.
+**Current pain point:**
+- 3GM needs email integration → You write OAuth + dedup logic (2-3 weeks)
+- Sabre Alloys needs email integration → You write the same OAuth + dedup logic again (2-3 weeks)
+- Three D Metals needs it → Same work again (2-3 weeks)
+- Legal services prospect → Same work again (2-3 weeks)
+- Total: 8-12 weeks for 4 clients doing the identical task
 
-**Why This Matters:**
-The Sep 2 study session showed 3 MCPs already connected: Discount, Greer, Sabre. 3GM wasn't yet shared. When it is, and then Three D Metals wants Outlook integration next month, you have two choices:
+**With a reusable MCP server:**
+- Build the email_dedup MCP once (2-3 weeks)
+- Use for 3GM: Point it at 3GM's Outlook, set credentials (1 day)
+- Use for Sabre: Point it at Sabre's Outlook, set credentials (1 day)
+- Use for Three D: Same MCP, new credentials (1 day)
+- Use for legal services: Same MCP, new credentials (1 day)
+- Total: 2-3 weeks + 4 days = same as before BUT you only do the hard work once
 
-**Option A (Current):** Build a new Outlook integration for Three D Metals from scratch
-- Re-implement OAuth
-- Re-write deduplication logic  
-- Re-verify schema
-- Cost: 2-3 weeks per client
+**Real time saved:** Instead of rebuilding the core logic 4 times, you build it once and reuse it.
 
-**Option B (With Claude + MCP):** Reuse the 3GM MCP
-- Set up Three D Metals' OAuth credentials (1 hour)
-- Claude uses existing dedup MCP logic (instant)
-- Same schema verification runs (instant)
-- Cost: 1 day per client vs 2-3 weeks
-
-**Concrete Setup:**
-Build one MCP server that does:
-- Email provider OAuth (works for Outlook, Gmail, any IMAP provider)
-- Deduplication by Message-ID + content hash
-- Schema validation against your 6-table structure
-
-Then:
-- 3GM onboarding: uses this MCP
-- Sabre Alloys next: uses same MCP, new credentials
-- Three D Metals: same MCP, new credentials
-- Legal services prospect: same MCP, new credentials
-
-**Cost Impact:** 1 MCP built × ∞ clients vs custom integration × N clients.
+**Money saved:** Processing 3GM's 50K emails with prompt caching + one MCP: $20. Processing 4 clients' emails: ~$100 total (instead of building 4 separate integrations that cost $400+ in setup time).
 
 ---
 
-## FEATURE 4: Claude Fable 5.1 + Prompt Caching for Email Deduplication at Scale
-**Solves: Cost + Speed of Processing Large Email Archives**
+## IS IT ALREADY BUILT?
 
-**The Feature:**
-- 1M context window (load entire email history at once, not paginated)
-- Prompt caching at $0.25/Mtok (80% savings on repeated operations)
-- Fable 5.1 is optimized for code and structured reasoning
+**Partial answer: Yes, but not for your specific use case.**
 
-**Concrete Math for 3GM's 50K Emails:**
+**Pre-built MCP servers from Anthropic:**
+- Google Drive (read files)
+- Slack (send messages, read channels)
+- GitHub (read repos, commits)
+- Git (local git operations)
+- Postgres (query databases)
+- Puppeteer (browse websites)
+- Linear (read/write tasks)
+- Notion (read/write docs)
 
-**Without Caching (Traditional API):**
-- Load 10K emails, run dedup: $15-20
-- Load next 10K emails, run dedup: $15-20
-- Load next 10K emails, run dedup: $15-20
-- Load final 20K emails, run dedup: $30-40
-- **Total: ~$75-100 for one-time dedup**
+**What's NOT built:** There is no pre-built Outlook email deduplication MCP that AskCruz needs. You'll have to write that.
 
-**With Fable 5.1 + Prompt Caching:**
-- First run: cache the dedup logic once (~$5), then process all 50K emails using cache reads (~$10-15)
-- **Total for first run: ~$20**
-- If you need to re-run dedup tomorrow (bug fix, new emails): just cache reads = ~$5
-- If you need to run it again next week: ~$5
+**But here's the good news:**
+- Gmail MCP exists (Anthropic published it)
+- Email OAuth patterns are standard (don't need to build from scratch)
+- Deduplication logic is straightforward to code
+- The Python SDK handles 80% of the boilerplate for you
 
-**For AskCruz's Multi-Client Future:**
-- 3GM (50K emails): $20 first time, $5 recurring
-- Sabre Alloys (30K emails): $12 first time, $3 recurring
-- Three D Metals (40K emails): $16 first time, $4 recurring
-- **Monthly recurring for 3 clients: ~$12 (vs ~$200 without caching)**
-
-**Why This Matters:**
-Scaling AskCruz from 1 client to 5 clients becomes economically feasible. Caching makes the math work.
+**Reality:** You're writing 20% custom code + using 80% of Anthropic's templates.
 
 ---
 
-## FEATURE 5: Interactive Artifacts + API for Live Task Dashboard
-**Solves: Ron's Static Daily Reports → Dynamic Real-Time Dashboard**
+## CHALLENGES YOU WILL FACE
 
-**The Feature:**
-Claude can generate interactive React artifacts that:
-- Connect to your ASK CRUZ database live
-- Update in real-time when opened
-- Show visual highlights for problems
-- Work on mobile (Cowork remote sessions)
-- Are shareable via link
+### **Challenge 1: Silent Installation Failures**
+**The problem:** You build the MCP, test it locally, it works. You configure it in Claude Desktop, restart Claude Desktop... nothing happens. No error message. No connection. Just silence.
 
-**What It Does:**
-Instead of Ron running a manual query and pasting results into a spreadsheet, Ron bookmarks an artifact that shows:
+**Why it happens:** Your code prints something to stdout that breaks the JSON-RPC stream. Claude doesn't report errors for this; it just disconnects silently.
 
-✅ All 12 open tasks
-✅ Deadline status (red = no deadline, yellow = overdue, green = on track)
-✅ Ownership drift highlighted (orange = field ≠ latest @mention)
-✅ Last activity date (flagged if > 6 days old)
-✅ Auto-refresh when opened
+**Real stats:** April 2026 analysis of 2,181 remote MCP servers found:
+- 52% were completely dead
+- 39% were degraded (slow, stale data, failing silently)
+- Only 9% were fully healthy
 
-**Concrete Example:**
-You create an artifact artifact that runs:
-```sql
-SELECT task_id, name, date_deadline, owner, 
-       latest_note_assignee, 
-       DATEDIFF(NOW(), last_activity_date) as days_stale
-FROM project_task 
-WHERE project = 'AskCruz' 
-  AND stage NOT IN ('Done', 'Closed')
-ORDER BY date_deadline ASC;
-```
-
-Then displays it with:
-- Red cells for missing deadlines
-- Orange highlighting for ownership drift
-- Yellow for tasks stale > 6 days
-
-Ron opens it daily; it fetches fresh data each time. No manual updates, no spreadsheet exports.
-
-**Why This Beats Spreadsheets:**
-- Updates in real-time (no stale data)
-- Highlights problems visually (no reading tables)
-- Mobile-friendly (Cowork mobile as of Sep 2026)
-- No manual formula updates when schema changes
-- Shareable link (team sees same data)
+**How to fix it:** Always log to stderr, never stdout. Tail the log file while testing.
 
 ---
 
-## FEATURE 6: Claude API Batch Processing for Testing at Scale
-**Solves: Testing Your Dedup Logic Against Different Email Archive Sizes**
+### **Challenge 2: Scaling Breaks Everything**
+**The problem:** Your MCP works great for 3GM (one user). You try to run it for Sabre + Three D Metals simultaneously, and sessions start colliding or conflicting.
 
-**The Feature:**
-Batch processing API lets you run multiple requests simultaneously, charged at 50% of normal rate, and returns results in ~24 hours (or faster).
+**Why it happens:** The current MCP spec (through April 2026) assumes one user per server instance. When you have multiple users/sessions, state management becomes a nightmare. Load balancers try to distribute traffic, but MCP requires sticky routing (always hitting the same server instance). This defeats the purpose of load balancing.
 
-**How You'd Use It for 3GM Testing:**
+**The 2026 fix:** Anthropic released a 2026-07-28 spec update that makes servers "stateless," but it just landed in beta. You might have to wait or work around it.
 
-You want to verify your deduplication logic works at different scales:
-- Test 1: 100 sample emails (does basic logic work?)
-- Test 2: 1,000 emails (does it scale linearly?)
-- Test 3: 10,000 emails (real-world test)
-- Test 4: All 50K 3GM emails (full production test)
-
-**Option A (Serial Testing):**
-- Run Test 1: 2 hours
-- Run Test 2: 4 hours  
-- Run Test 3: 8 hours
-- Run Test 4: 16 hours
-- **Total: 30 hours of waiting**
-
-**Option B (Batch Processing):**
-- Submit all 4 tests to batch API at once
-- Check back in 1-2 hours
-- All results ready
-- Compare: Does the cost scale linearly? Does dedup logic hold at all sizes? Do schema errors only appear at certain thresholds?
-- **Total: 2 hours of waiting, 50% cheaper**
-
-**Why This Matters:**
-You can run comprehensive tests once instead of iteratively over days. You verify your code works before pushing to production.
+**Real-world example:** An engineer managing 200 engineers found 14 MCP servers across the org, at least 4 were duplicates built by different teams who didn't know the other existed.
 
 ---
 
-## PUTTING IT TOGETHER: YOUR 2-WEEK ACTION PLAN
+### **Challenge 3: Credential Sprawl**
+**The problem:** 3GM uses OAuth for Outlook on tenant A. Sabre uses OAuth on tenant B. Three D Metals uses tenant C. Soon you have 5+ different credential sets floating around, and you're manually managing which credentials go where.
 
-**Week 1: Build the 3GM Integration**
+**Why it happens:** MCP doesn't have built-in multi-tenant authentication. You have to manually handle who connects to which Outlook account.
 
-**Days 1-2: OAuth + Email Retrieval**
-- Set up Claude Code with Gmail MCP
-- Connect to 3GM's Outlook (OAuth flows handled by MCP)
-- Extract all email metadata + attachments
-- Verify authentication is working
+**Deployment reality:** 86% of MCP servers still run on developer laptops. Only 5% actually deploy to production environments. The gap between "it works on my machine" and "it works reliably for all our customers" is where most teams get stuck.
 
-**Days 3-4: Build the Deduplication MCP Server**
-- Write the dedup logic (Message-ID + content hash)
-- Test against 100 sample emails
-- Verify it correctly identifies duplicates
-- Package as MCP server so it's reusable
-
-**Day 5: Prompt Caching for Production Scale**
-- Load 10,000 3GM emails into Fable 5.1 context (1M window)
-- Cache the dedup logic once
-- Run full dedup on all 10K emails using cached prompts
-- Measure cost ($3-5) vs non-cached approach ($15-20)
-- Document the difference
-
-**Week 2: Automate AskCruz Operations**
-
-**Days 1-2: Build the Task Dashboard Artifact**
-- Create React artifact that connects to ASK CRUZ database
-- Display all 12 open tasks with deadline/status highlighting
-- Show ownership drift visually (orange = field ≠ @mention)
-- Deploy as shareable link for Ron + team
-
-**Days 3-4: Automate Ownership Drift Detection**
-- Use Cowork to read task board daily
-- Identify all ownership mismatches
-- Auto-suggest deadline corrections based on dependencies
-- Create a correction CSV for bulk upload
-- (Optional: schedule this to run automatically)
-
-**Day 5: Batch Testing Your Dedup Logic**
-- Submit 4 test batches to API simultaneously:
-  - 100 emails (basic validation)
-  - 1,000 emails (scale test)
-  - 10,000 emails (performance test)
-  - All 50K real 3GM emails (production test)
-- Get all results in 1-2 hours
-- Verify results and identify any schema/scaling issues
-- Document findings for go-live decision
+**How to fix it:** Use an MCP Gateway platform (TrueFoundry MCP Gateway, or Gram) that handles credential vaulting automatically. Or build your own credential manager.
 
 ---
 
-## WHY THESE FEATURES > GENERIC "PRODUCTIVITY"
+### **Challenge 4: Tool Schema Consistency at Scale**
+**The problem:** You write the dedup MCP with input schema: "email_list". Six months later, you need to add "exclude_attachments: true". Now your schema changed, and you have to update it everywhere.
 
-You're building a startup AI product. Generic Claude features don't help. **These specific features solve concrete problems:**
+**Why it's hard:** When you have dozens or hundreds of tools across multiple MCPs, keeping tool definitions in sync with the actual API is a constant problem. It's like maintaining API documentation; when the API changes, the docs get stale.
 
-| Problem | Claude Feature | Impact |
-|---|---|---|
-| OAuth is risky to build | Claude Code + Gmail MCP | Security built-in, token refresh automatic |
-| Email duplication at scale costs money | Fable 5.1 + prompt caching | 50K emails: $75-100 → $20 |
-| Task deadlines keep getting skipped | Cowork automation | 30 min manual work → 5 min automated, daily |
-| Ownership field never syncs with notes | Cowork drift detection | Problems highlighted automatically instead of Ron discovering them manually |
-| Testing at scale takes forever | Batch API | 30 hours serial → 2 hours parallel, 50% cheaper |
-| Ron spends 30 min daily on status reports | Task dashboard artifact | Real-time dashboard, mobile-friendly, no manual updates |
-| Each client needs custom email integration | Reusable MCP servers | Build once, use for all 5+ future clients |
+**Real quote from Cloudsmith engineer:** "At scale, maintaining tool definitions becomes the bottleneck, not the protocol itself."
 
-These aren't "AI is helpful" stories. These are "we launch 3GM by Sep 15, cut task overhead by 80%, and make the unit economics work for scaling AskCruz to 5 clients" stories.
+**How to fix it:** Use OpenAPI specs to auto-generate MCP tool definitions. Then when you update the OpenAPI spec once, MCPs regenerate automatically.
 
 ---
 
-## NEXT STEPS
+### **Challenge 5: Zero Audit Logging**
+**The problem:** Claude calls your MCP to deduplicate 50K 3GM emails. Something goes wrong. You have no logs showing what Claude asked, what your MCP returned, or where the failure occurred.
 
-1. **Share this with Ron + Priyanshu.** They need to know Cowork can automate the task management problem they're manually solving.
+**Why it happens:** MCP doesn't define a standard way to log who did what, when, and why. You have to build logging yourself.
 
-2. **Schedule 30 min with Ayan.** Show him the MCP server reuse plan—if you build 3GM's MCP properly, Sabre/Three D Metals don't need custom work.
+**Enterprise blocker:** Security teams need to answer: "What did this agent do, when, and with whose authorization?" MCP has no standard way to answer this, so every company building it has to build custom logging.
 
-3. **Start Week 1 Monday.** Use Claude Code + Gmail MCP to test 3GM's OAuth. Document the time saved vs manually building OAuth.
+**How to fix it:** Add logging middleware to your MCP. But it's not standardized, so you're building it from scratch.
 
-4. **After Week 1, measure.** Compare the prompt caching cost ($20 for 50K emails) vs API-only cost ($100). That's the data you need to pitch "let's use Claude for all future client integrations."
+---
 
-5. **Show results, not promises.** By end of Week 2, you'll have:
-   - Live 3GM email dedup running in production
-   - Working task dashboard Ron uses daily
-   - Concrete cost savings documented
-   - A reusable MCP for the next client
+### **Challenge 6: Deployment Is Harder Than Building**
+**The problem:** Your MCP works locally. Deploying it to production (where Claude Code, Claude Desktop, and multiple clients can reach it reliably) requires:
+- Infrastructure (EC2, Docker, Kubernetes, load balancer)
+- Secrets management (OAuth tokens, DB credentials)
+- Cold start handling (serverless MCPs can take 5+ seconds)
+- Health checks and monitoring
+- Retry logic and error handling
 
-That's how you prove value to a startup.
+**Why it's hard:** MCP only defines the protocol. It doesn't handle deployment, scaling, or monitoring. You have to solve that yourself or use a platform.
+
+**Real failure mode:** An org with 200 engineers discovered 4 duplicate MCP servers because teams didn't know the others existed, there was no central registry, and no governance.
+
+**How to fix it:** Use managed MCP platforms (Gram, Cloudsmith's platform, TrueFoundry) that handle infrastructure. Or DIY with Kubernetes + an MCP Gateway.
+
+---
+
+## QUICK REFERENCE: CHALLENGE SUMMARY
+
+| Challenge | Severity | Why It Happens | Quick Fix |
+|-----------|----------|---|---|
+| Silent installation failures | HIGH | Stdout pollution breaks JSON-RPC | Log to stderr only |
+| Scaling to multiple users | HIGH | Spec assumes one user per instance | Use 2026-07-28 spec or wait |
+| Credential sprawl | MEDIUM | No multi-tenant auth in MCP | Use MCP Gateway for vaulting |
+| Schema consistency | MEDIUM | Manual tool definition updates get stale | Auto-generate from OpenAPI |
+| No audit logging | HIGH | MCP doesn't define logging standard | Add custom logging middleware |
+| Deployment complexity | CRITICAL | "Building is easy, deploying is hard" | Use managed platform or DIY with K8s |
+
+---
+
+## SHOULD YOU BUILD THIS FOR ASKCRUZ?
+
+**Yes, but timing matters:**
+
+✅ **Build it:** After 3GM launches successfully (mid-September)
+✅ **Build it:** When you're onboarding Sabre Alloys or Three D Metals (Q4 2026)
+✅ **Build it:** If you expect 4+ clients using email integration
+
+❌ **Don't build it yet:** As a blocker for 3GM launch (use Claude Code + Gmail MCP directly instead)
+❌ **Don't build it:** If you only need email integration for one client
+❌ **Don't build it:** If your team has zero DevOps support
+
+**Realistic timeline:**
+- Build a basic MCP server: 2-3 weeks
+- Deploy to production: 4-6 weeks (most teams get stuck here)
+- Get all clients stable: 2-4 weeks more
+
+**Better approach:** Launch 3GM with Claude Code + Gmail MCP. Once you understand all the edge cases, THEN build the reusable MCP server for Sabre.
+
+---
+
+## BOTTOM LINE
+
+An MCP server is just a translator between Claude and your systems. Building one is ~200 lines of code using Anthropic's SDK. The value is massive if you need it for 3+ clients (save 2-3 weeks per client). But deployment and operations are where 95% of teams get stuck.
+
+For AskCruz: Ship 3GM first. Then build the MCP server for the next client.
