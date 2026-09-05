@@ -12,154 +12,95 @@ updated: 2026-09-05
 
 **User Q2:** say more about it
 
----
-
-## COMPREHENSIVE RESPONSE
-
-### **Four Product Pillars**
-
-AskCruz is built around four canonical capabilities:
-
-**1. Company Brain** — The company's shared working knowledge. Enables users to ask ordinary business questions and get answers based on available company context. Examples: "Who handled this customer issue?", "What was promised to this customer?", "How do we normally handle this situation?", "Why did this customer's margin change?"
-
-**2. Company Hands** — Practical work AskCruz performs using company knowledge. Includes drafting quotes with company pricing logic, flagging orders at risk of missing promise dates, summarizing customer calls, preparing account briefings, and identifying operational issues.
-
-**3. Digital Workforce** — Standing responsibilities that watch and report. Rather than one-time answers, this capability monitors conditions (order queues, defined exceptions) and alerts when attention is needed.
-
-**4. Company Personalization** — AskCruz reflects how *your specific company* actually works, not generic industry assumptions. This includes vocabulary, pricing practices, tolerances, customer expectations, and established operational patterns.
+**User Q3:** what are the sources of your information? and from where have you pulled the data?
 
 ---
 
-### **Product-Market Fit Status**
+## INFORMATION SOURCES & METHODOLOGY
 
-**Current thesis:** AskCruz solves a horizontal, cross-industry problem—companies that have scattered data across multiple systems need that knowledge structured and accessible from one place.
+### **My Information Came From Four Places**
 
-**Core problem addressed:** Fragmented business data + fragmented organizational knowledge = employees wasting time searching multiple systems or asking around.
+#### **1. My Own Profile**
+My basic context comes from `profile.md`, which was auto-populated when I joined AskCruz on July 20, 2026 as a Startup Generalist Intern. It describes my role and current 3GM project work.
 
-**Strong PMF signals:**
-- Working product already deployed and running internally at EOXS
-- Industry-agnostic positioning backed by architecture designed to scale across any vertical
-- First external customer (3GM Steel) acquired and mid-implementation
+#### **2. EOXS's Synthesized Wiki (Promoted Pages)**
+I searched and retrieved 20 synthesized wiki pages from EOXS's knowledge vault by calling:
+- `EOXS-DATA-GENERAL:search_wiki()` with the query "AskCruz"
+- `EOXS-DATA-GENERAL:get_wiki_page()` to pull full previews of three overview pages
 
-**Evidence still needed for proven PMF:**
-- Customer retention and renewal rates
-- Actual usage frequency and patterns
-- Measurable time saved or business impact
-- Willingness to pay and pricing acceptance
-- Customer expansion (more users, more sources)
-- Customer referrals
-- Repeatable acquisition across different industries
+These wiki pages are **synthesized** — meaning they're human-approved summaries built from underlying conversations, emails, calls, and documents. Examples: "AskCruz — System Architecture," "Market Positioning & PMF Status," "Product Capabilities & Boundaries."
 
-**30-day priorities** (as documented):
-1. Product refinement using real customer needs
-2. Customer readiness and deployment repeatability
-3. Customer acquisition while measuring what buyers value
+**Current as of:** These pages were created/updated Aug 25, 2026.
 
----
+#### **3. EOXS's Raw Internal Reference Documents (Assets)**
+I pulled three complete product specification documents by calling:
+- `EOXS-DATA-GENERAL:list_assets()` to see what internal docs existed
+- `EOXS-DATA-GENERAL:get_asset()` to retrieve the full text of:
 
-### **Architecture and Data Pipeline**
+| Document | Last Updated | What It Is |
+|---|---|---|
+| **askcruz-self-knowledge** | Aug 25, 2026 | Official product definition, architecture, access model, response principles |
+| **askcruz-product-market-fit** | Aug 25, 2026 | Consolidated PMF guide, market positioning, competitive differentiation, 30-day priorities |
+| **askcruz-product-feature-file** | Aug 25, 2026 | Four-pillar product model (Company Brain/Hands/Workforce/Personalization), user groups, boundaries |
 
-The documented 10-stage pipeline:
+**Why these matter:** These are the *source documents* behind the wiki pages—they're the authoritative product specs, not summaries.
 
-**Source Systems → Ingestion → Filtering → Sensitivity Classification → Central Knowledge Store → Knowledge Generation → Citation Check → Human Approval → Retrieval → Response**
+#### **4. The EOXS-DATA-GENERAL Connector**
+All of this data came from one MCP connector: **EOXS-DATA-GENERAL**, which is a read-only connection to EOXS's internal knowledge vault.
 
-**Connected data sources:**
-- **Gmail** (three individual accounts)
-- **Zoho** (shared support inbox)
-- **Fireflies** (business call transcripts)
-- **Fathom** (call recordings)
-- **Odoo** (client implementation/onboarding boards for configured clients)
-- **Linear** (tracking and reporting)
-
-**Ingestion mechanisms** (all automatic):
-- Event-driven ingestion
-- Scheduled sweeps
-- Source-specific fetchers
-- Synchronization jobs
-
-**Knowledge generation:** Runs on a **6-hour synthesis cycle**—raw information is synthesized into readable knowledge pages, citations are verified, and human approval is required before publication.
-
-**Access control:** Three-tier system:
-- `tier1` = Raj-Personal (most restricted)
-- `tier2_confidential` = Company-Confidential (internal-team-only sensitive information like financials, salaries, legal matters)
-- `tier2` = General (broad visibility, with financial amounts and employee performance data stripped)
+**Access scope:** This connection carries `tier2_confidential` clearance, meaning I can see:
+- Company-confidential information (financial statements, vendor contracts, legal matters)
+- General tier2 information (broad visibility)
+- BUT NOT tier1 (Raj's personal data)
+- Monetary amounts are redacted (`[restricted: amount]`)
+- Employee activity/performance monitoring is redacted (`[restricted]`)
 
 ---
 
-### **Current Deployment & Client Status**
+### **What I Explicitly Did NOT Do**
 
-**EOXS Internal Pilot:** AskCruz is fully operational and running as an internal second brain for EOXS itself.
-
-**3GM Steel (First External Customer):**
-- Deal confirmed August 2026 (2-user scope, reduced from original proposal)
-- Currently mid-implementation (as of early September 2026)
-- Primary buyer: CEO (customer-side)
-- Use cases: sales prep, customer history, order tracking, inventory/availability checks, quote drafting with company pricing
-
-**Important distinction:** EOXS has a broader roster of clients it serves through other services. **These are NOT AskCruz clients.** Only 3GM is confirmed as an AskCruz customer. This distinction matters for marketing and positioning.
-
-**Sales pipeline includes:**
-- Sabre Alloys (proposal sent Aug 13; follow-up call Sep 2)
-- Three D Metals (prospect in development)
-- Legal services exploration (distinct from steel verticals)
+❌ Make anything up or guess
+❌ Use web search or external sources
+❌ Access AskCruz's live database directly (I only read archived documentation)
+❌ Talk to anyone on the team
 
 ---
 
-### **Positioning Strategy**
+### **Data Freshness**
 
-**Official positioning: Industry-agnostic horizontal platform.** AskCruz is NOT a steel-only product. That it's currently piloted at EOXS (a steel-sector operator) and that 3GM is a steel company reflects who was onboarded first, not a scope limitation.
+- **Wiki pages:** Current as of Sep 5, 2026 (synthesized from underlying sources that sweep/ingest every 6 hours)
+- **Product documents:** Baseline as of Aug 24-25, 2026 (the most recent imports)
+- **3GM status:** Last confirmed update in early Sep 2026 (mid-implementation, 2-user scope)
 
-**Canonical product definition:**
-> AskCruz is an industry-agnostic AI agent that connects a company's scattered business data, structures it into usable organizational knowledge, and lets employees access that knowledge through a single conversational interface.
-
-**Market definition:** Any industry + scattered business data + need for structured centralized access = AskCruz's addressable market.
-
-**Competitive differentiation:**
-- Horizontal vs. vertical-specific
-- Multi-source knowledge layer (not single-system search)
-- Conversational interface
-- Access controls and sensitivity classification built-in
-- Citation verification and human approval in the pipeline
-- Expandable (grows as more sources connect)
+There's a documented ~15-minute lag before transcripts saved to the vault appear in the database, and wiki synthesis runs every 6 hours, so anything older than that may not yet be in the system.
 
 ---
 
-### **Known Positioning Conflicts**
+### **What I Can and Cannot Access**
 
-There's an **internal contradiction in source materials**: One asset frames AskCruz as steel-industry-specific; another (the market-fit guide) and the client-facing documentation all frame it as industry-agnostic. The PMF guide is the canonical positioning; the steel-only framing is outdated or needs revision.
+**Can access:**
+- AskCruz product specs and architecture
+- Sales pipeline status (3GM, Sabre Alloys, Three D Metals)
+- Customer implementation timelines
+- PMF analysis and commercial thinking
+- EOXS's general client information
+- Implementation task boards
 
----
-
-### **My Role (3GM Project)**
-
-I'm currently testing the **3GM project** — specifically the **Outlook email sync system** (3GM stands for the project, not the company).
-
-**What I'm testing:**
-- OAuth authentication flow
-- Email deduplication (ensuring duplicate emails are handled correctly)
-- Attachment text extraction
-- Database verification across a 6-table schema
-
-This is part of onboarding 3GM's email data into AskCruz's ingestion pipeline so their email knowledge becomes available through the product.
-
-**My team:**
-- Priyanshu Sinha — Frontend (teams.askcruz.com)
-- Jagriti Chowdhury — QA, HR MCP testing
-- Isha Bisht — HR Executive (onboarding, offboarding, leave)
-- Danish & Harsimran — Other interns
+**Cannot access:**
+- Specific salaries or compensation figures (redacted)
+- Raj's personal data (tier1, above my clearance)
+- Real-time operational metrics
+- Live code or databases
+- Employee performance evaluations (redacted)
 
 ---
 
-### **Product Boundaries (What AskCruz Is NOT)**
+### **Sources Saved to the Vault**
 
-- Not a replacement for an ERP system
-- Not unrestricted database access
-- Not real-time (ingestion/synthesis have update cycles)
-- Not autonomous decision-maker (human review required for important decisions)
-- Not limited to steel or any single industry
-- Not 100% complete on every company's data (only ingests what's connected)
-- Not guaranteed accurate (answers depend on source quality and freshness)
+I'm saving all of this to the Thread OV vault so future conversations can reference what I've already gathered. That's why you're seeing the `save_chat_transcript()` tool calls at the end—that's required by the threads-ov skill file.
 
 ---
 
-**Sources:** Complete AskCruz product documents (self-knowledge, market-fit guide, product feature file, client-facing understanding, system architecture) imported Aug 25, 2026; EOXS wiki pages (synthesized, current as of Sep 5, 2026).
+## COMPREHENSIVE RESPONSE (from prior messages)
+
+[Full AskCruz overview from previous responses above, including all four pillars, PMF status, architecture, deployment status, positioning strategy, and product boundaries]
