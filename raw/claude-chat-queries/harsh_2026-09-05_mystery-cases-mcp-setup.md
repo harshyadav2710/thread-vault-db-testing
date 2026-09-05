@@ -6,68 +6,59 @@ created: 2026-09-05
 updated: 2026-09-05
 ---
 
-# Mystery Cases MCP Server Setup
+# Building a Custom MCP Server for Mystery Cases Repository
 
-## User Query
-The user has created a raw file in Obsidian containing information about mystery and murder cases. They:
-1. Used Claude Code in VS Code to ingest the data into a wiki
-2. Made a GitHub repo and connected it to Claude Code in VS Code
-3. Now wants to create an MCP (Model Context Protocol) link to connect to Claude so they can search through the documents and get answers
+## User Request
+User wants detailed instructions on how to build their own MCP (Model Context Protocol) server to connect their GitHub-hosted mystery/murder case data to Claude.
 
-## Assistant Response: Steps to Create an MCP Link
+They have:
+- Obsidian file with raw case information
+- Used Claude Code in VS Code to ingest data into a wiki
+- Created a GitHub repository connected to Claude Code
+- Now needs steps to build and configure an MCP server
 
-### 1. Choose or Build an MCP Server
-**Option A: Use a pre-built MCP server (faster)**
-- GitHub MCP (if available) - some MCP implementations support searching GitHub repos directly
-- File-based MCP - if docs are in markdown/text format
+## Assistant's Response: Complete MCP Server Build Guide
 
-**Option B: Build a custom MCP server (more flexible)**
-- Create a Node.js or Python MCP server that:
-  - Reads from GitHub repo (via git clone or GitHub API)
-  - Indexes case files
-  - Implements tools for searching/querying (e.g., `search_cases`, `get_case_details`)
-  - Handles semantic search across case descriptions
+### Part 1: Project Setup
+1. Create new directory and initialize npm project
+2. Install dependencies: `@modelcontextprotocol/sdk`, `zod`
+3. Install dev dependencies: `typescript`, `@types/node`, `tsx`
+4. Configure `tsconfig.json` with critical settings (`"module": "Node16"` and `"moduleResolution": "Node16"`)
+5. Update `package.json` with proper bin, type: "module", and scripts
 
-### 2. If Building Custom - Structure
-```
-mystery-cases-mcp/
-├── src/
-│   └── server.ts (or server.py)
-├── package.json (or requirements.txt)
-├── .env (GitHub token)
-└── README.md
-```
+### Part 2: Build the MCP Server
+**Created a complete `src/index.ts` template with:**
+- Server initialization using Anthropic's MCP SDK
+- Three tool definitions:
+  - `search_cases`: Search cases by keyword
+  - `get_case_details`: Retrieve full case information
+  - `list_cases`: List all available cases
+- Tool handler implementations with mock data
+- Request handlers for tool listing and execution
+- Error handling and stdio transport setup
 
-**Minimal MCP server example (TypeScript/Node):**
-- Use `@modelcontextprotocol/sdk` library
-- Implement `list_resources` tool showing case files
-- Implement `search_cases` tool to query data
-- Implement `get_case` tool to retrieve full case details
+### Part 3: Connect to Claude Code
+- Build the server: `npm run build`
+- Add to Claude Code: `claude mcp add mystery-cases-mcp node dist/index.js --scope project`
+- Verify connection: `claude mcp list`
+- Test by asking Claude to search cases
 
-### 3. Connect to Claude
-**In Claude.ai:**
-- Settings → Developer → MCP Servers
-- Add MCP server URL (if deployed) or local SSE endpoint
-- Test connection
+### Part 4: Integrate Real Data from GitHub
+Provided enhanced `loadCasesFromGitHub()` function using:
+- Octokit library for GitHub API access
+- Reads markdown files from GitHub repository
+- Uses `GITHUB_TOKEN` environment variable for authentication
+- Installation: `npm install @octokit/rest`
 
-**In Claude Code (VS Code):**
-- Configure `.claude/claude.json` with MCP server details
-- MCP server becomes available for tool use
+### Part 5: Optional Deployment
+- For remote access: Use SSE (Server-Sent Events) transport
+- Deploy to services like Railway, Heroku, or Fly.io
 
-### 4. GitHub Integration Details
-- Store credentials: Add `GITHUB_TOKEN` to `.env`
-- Fetch on demand: Server fetches files when queried, OR
-- Pre-index: Clone repo into server, rebuild index periodically
-
-### 5. Testing Before Full Integration
-```bash
-npm install (or pip install)
-npm start (or python server.py)
-# Then test tools with simple Claude conversation
-```
-
-## Follow-up Questions Asked
-To provide more specific MCP server code examples, assistant requested clarification on:
-- File format of case files (markdown, JSON, plain text)
-- Search type needed (keyword vs semantic)
-- Repository update frequency (static vs frequently updated)
+### Additional Resources
+- File structure template
+- Troubleshooting table with common issues and solutions
+- Referenced official MCP SDK documentation and community tutorials from:
+  - DEV Community guides (10-20 minute tutorials)
+  - TypeScript SDK repository
+  - Snyk and other developer guides
+  - HuggingFace MCP Course Unit 3
