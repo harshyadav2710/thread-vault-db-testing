@@ -6,31 +6,40 @@ created: 2026-09-07
 updated: 2026-09-07
 ---
 
-## Render MCP Setup - Next Steps
+## Render MCP Setup - Claude Desktop Configuration
 
-**User Question:** What should be done next after Render MCP deployment?
+**User Question:** What to do next after Render MCP deployment, connecting to Claude Desktop
 
-**Context from Screenshot:**
-- MCP server successfully deployed to Render with simplified static-token auth (OAuth removed)
-- oauth.js deleted, server.js reverted to plain token auth
-- MCP link: https://<your-service-name>.onrender.com/mcp
-- Bearer token provided: 8091c1c795108b61d60e3d9f28d6ae89763a088407caf52f91b6a6daabb6c8977
-- OAUTH_SIGNING_SECRET and OWNER_PASSWORD can be removed from Render Environment tab
+**Context:**
+- MCP server successfully deployed to Render
+- Static bearer token auth (no OAuth)
+- MCP Link: https://<your-service-name>.onrender.com/mcp
+- Bearer Token: 8091c1c795108b61d60e3d9f28d6ae89763a088407caf52f91b6a6daabb6c8977
 
-**Guidance Provided:**
+**Solution Provided - Add to Claude Desktop:**
 
-### Next Steps:
-1. **Identify connection target** — where is this MCP being used?
-   - Claude Desktop (native MCP support)
-   - Claude.ai web (limited - needs OAuth)
-   - Other MCP clients (Cursor, etc.)
+### Steps:
 
-2. **Gather connection details:**
-   - MCP Link: https://<service-name>.onrender.com/mcp (get actual URL from Render dashboard)
-   - Bearer Token: 8091c1c795108b61d60e3d9f28d6ae89763a088407caf52f91b6a6daabb6c8977
+**1. Open Claude Desktop Settings**
+- Click ⚙️ Settings icon (bottom left)
+- Navigate to Developer or Connectors
+- Look for "Local MCP servers" or "MCP servers"
 
-3. **Optional cleanup:** Delete OAUTH_SIGNING_SECRET and OWNER_PASSWORD from Render Environment tab if they exist
+**2. Add Remote Server**
+Click + button to add new MCP server with:
+- **Name:** askcruz-email-harvester (or custom name)
+- **Type/Transport:** Remote Server or HTTP/SSE
+- **URL:** https://<your-service-name>.onrender.com/mcp (get actual URL from Render dashboard)
+- **Authentication Type:** Bearer Token
+- **Bearer Token:** 8091c1c795108b61d60e3d9f28d6ae89763a088407caf52f91b6a6daabb6c8977
 
-4. **Configure in target tool** — exact steps depend on tool selected
+**3. Save & Restart**
+- Click Save/Connect
+- Restart Claude Desktop
+- MCP tools should now appear in conversations
 
-**User needs to specify:** Claude Desktop, Claude.ai, or other tool to get exact setup steps
+### Notes:
+- Do NOT use claude_desktop_config.json for remote servers — use the UI
+- Config file is only for local MCP servers (stdio-based)
+- Remote servers (HTTP/SSE) must be added through Settings UI
+- If UI differs, look for "Add custom MCP server" or "Add remote MCP" options
