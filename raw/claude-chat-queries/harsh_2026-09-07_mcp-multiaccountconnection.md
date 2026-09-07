@@ -6,39 +6,31 @@ created: 2026-09-07
 updated: 2026-09-07
 ---
 
-## MCP Connector Multi-Account Setup Issue
+## Render MCP Setup - Next Steps
 
-**User Question:** Facing problems connecting MCP link to another Claude account
+**User Question:** What should be done next after Render MCP deployment?
 
-**Context:** User shared screenshot showing Claude's "Add connector" menu and notes about Free/Pro/Max vs Team/Enterprise plan connector setup
+**Context from Screenshot:**
+- MCP server successfully deployed to Render with simplified static-token auth (OAuth removed)
+- oauth.js deleted, server.js reverted to plain token auth
+- MCP link: https://<your-service-name>.onrender.com/mcp
+- Bearer token provided: 8091c1c795108b61d60e3d9f28d6ae89763a088407caf52f91b6a6daabb6c8977
+- OAUTH_SIGNING_SECRET and OWNER_PASSWORD can be removed from Render Environment tab
 
-**Answer Provided:**
+**Guidance Provided:**
 
-### The Problem
-Claude currently has a limitation: it rejects adding a second custom MCP connector if the Remote MCP server URL is already used by another connector (Error: "A server with this URL already exists"). This blocks multi-account scenarios where the same MCP server needs different OAuth identities.
+### Next Steps:
+1. **Identify connection target** — where is this MCP being used?
+   - Claude Desktop (native MCP support)
+   - Claude.ai web (limited - needs OAuth)
+   - Other MCP clients (Cursor, etc.)
 
-### Solutions Offered:
+2. **Gather connection details:**
+   - MCP Link: https://<service-name>.onrender.com/mcp (get actual URL from Render dashboard)
+   - Bearer Token: 8091c1c795108b61d60e3d9f28d6ae89763a088407caf52f91b6a6daabb6c8977
 
-**Option 1: Different Claude Accounts (Recommended)**
-- Each separate Claude account can connect to the same MCP URL independently
-- Each account maintains its own OAuth session and credentials
-- Try adding the connector to second account—should work since they're separate workspaces
+3. **Optional cleanup:** Delete OAUTH_SIGNING_SECRET and OWNER_PASSWORD from Render Environment tab if they exist
 
-**Option 2: Unique Connector Names**
-- Rename connector with unique suffix ("MCP Server - Account A" vs "Account B")
-- Currently doesn't fully work due to URL-based blocking, but worth trying
+4. **Configure in target tool** — exact steps depend on tool selected
 
-**Option 3: Multi-Account MCP Wrapper**
-- Community solutions: multi-account Gmail MCP server
-- GWS Connector supports unlimited accounts in one instance, routed by label/email/domain
-
-**Option 4: Team/Enterprise**
-- Owner/Primary Owner adds at organization level first
-- Members connect individually
-
-### Sources:
-- GitHub Issue: Cannot add two custom MCP connectors with same server URL (anthropics/claude-ai-mcp #178)
-- Multi-account Gmail MCP: github.com/jwlutz/gmail_connector
-- GWS Connector: github.com/orieg/gws-connector
-
-User asked: "Which specific MCP are you trying to connect?" to help suggest best workaround
+**User needs to specify:** Claude Desktop, Claude.ai, or other tool to get exact setup steps
