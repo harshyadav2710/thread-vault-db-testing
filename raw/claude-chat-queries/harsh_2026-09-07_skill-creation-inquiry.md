@@ -112,7 +112,7 @@ Claude creates 8-part structured plan:
 | Approach | Assumes understanding; jumps to output | Validates understanding first |
 | Questions | May ask a few | Systematically asks until clarity |
 | Output | Immediate | After full understanding |
-| Structure | Varies | Consistent 3-phase framework |
+| Structure | Consistent 3-phase framework |
 | Confidence | You may get wrong plan | Plan based on deep understanding |
 
 ### When to Use This Skill
@@ -137,5 +137,5 @@ Claude creates 8-part structured plan:
 5. Reduced rework (get it right first time)
 6. Actionable output (execute immediately)
 
-## Status
-Skill proposal created and detailed explanation provided to user.
+## User Follow-up
+User wants to add more points to the skill file. Awaiting their input on what sections or guidelines to add.
