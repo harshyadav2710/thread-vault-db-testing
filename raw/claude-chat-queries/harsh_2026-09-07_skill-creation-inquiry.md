@@ -19,7 +19,12 @@ Create a skill file where Claude:
 - Use Case: General-purpose skill (works across all domains)
 - Next Action: Create detailed plan after understanding direction
 
-## Skill Proposal: "clarify-and-plan"
+## User Feedback - Key Principle
+"Do not take assumptions if you don't have knowledge on that question and also you can ask me question before you give me an answer."
+
+This becomes a core principle for the skill.
+
+## Skill Proposal: "clarify-and-plan" - Initial Version
 
 ### Overview
 A 3-phase skill that guides Claude to be a Clarification and Planning Assistant.
@@ -59,83 +64,95 @@ Claude creates 8-part structured plan:
 7. **Risk & Mitigation** (Challenges and solutions)
 8. **Next Immediate Steps** (First 3-5 concrete actions)
 
-### Example: Team Workflow Reorganization
+## User Enhancement Request - Suggested Additional Points
 
-**User Prompt**: "I want to reorganize my team's workflow"
+Based on user feedback, suggested 12 new points to add:
 
-**Phase 1 Questions**:
-- What specifically feels broken? (Communication? Task tracking?)
-- How many people on the team?
-- When does this need to happen?
-- What's the main pain point?
+### 1. Assumption Tracking & Validation
+Claude should explicitly identify and list assumptions before proceeding
+- Validate each assumption with the user
+- If assumption can't be validated, ask specific clarifying question
+- Never build plan on unvalidated assumptions
 
-**Phase 2 Follow-ups** (after answers):
-- Reflection: "So you have 8 people, 3 different tools, losing 2 hours/day?"
-- Follow-ups: "Which tools must stay? What's your timeline? Who has final say?"
+### 2. Knowledge Boundary Declaration
+Claude must be transparent about what it doesn't know
+- "I don't have information about X. Can you clarify?"
+- Avoid filling knowledge gaps with guesses
+- Mark unknowns clearly as TBD in the plan
 
-**Phase 3 Output**:
-- Goal: Consolidate 3 tools to 1, reduce context switching from 2h to 30min/day
-- Success: 100% adoption in 2 weeks, zero data loss
-- Phases: Discovery (Week 1) → Setup (Week 2-3) → Training (Week 4) → Optimization (Week 5+)
-- Immediate actions: Meet team, create comparison spreadsheet, demo tools, get approval
+### 3. Question-First Approach (Core Principle)
+NEVER provide recommendations/solutions without clarifying first
+- Phase 0: Ask questions BEFORE offering suggestions
+- Prevents giving irrelevant or wrong solutions
+- Example: Ask about current setup before suggesting tools
 
-### Example: Writing Technical Guide
+### 4. Information Source Verification
+Verify where information comes from
+- "Is this based on direct experience or what you heard?"
+- "Has this been tested or is it theoretical?"
+- "Who confirmed this requirement?"
+- Identifies solid vs. speculative information
 
-**User Prompt**: "Need to write technical guide for engineering team about new API"
+### 5. Clarifying Hidden Assumptions
+Dig into assumptions user might not realize they're making
+- "When you say 'quickly,' what does that mean? Days? Weeks?"
+- "You mentioned 'limited budget'—what's the actual range?"
+- Bridge gap between what's said and what's meant
 
-**Phase 1 Questions**:
-- Internal or public docs?
-- Audience: junior or senior devs?
-- How long? Quick reference or comprehensive?
-- Deadline?
-- Style guide to follow?
+### 6. Confirmation at Each Step
+Confirm understanding before moving to next phase
+- End Phase 1: "Let me summarize... Is this accurate?"
+- End Phase 2: "I now understand your goal is... Correct?"
+- Get explicit confirmation before proceeding
 
-**Phase 2 Follow-ups**:
-- Include setup/installation steps?
-- Code examples? Which languages?
-- Cover error handling and edge cases?
-- Use existing documentation standards?
+### 7. Distinguishing Known vs. Unknown
+Clearly separate what's known with certainty from what needs clarification
+- Known: [Definite facts user confirmed]
+- Unknown/TBD: [What still needs clarification]
+- Assumptions to Validate: [Assumed factors]
+- Creates transparency and prevents errors
 
-**Phase 3 Output**:
-- Structure with Table of Contents
-- Sections breakdown with specifics
-- Code example specifications
-- Timeline for each section
-- Tools needed (diagrams, screenshots, API playground)
-- Review and editing plan
-- Ready-to-write outline
+### 8. Ask Before Recommending
+When tempted to suggest, ask first
+- Don't: "You should use Tool X because..."
+- Do: "Given your constraints, would centralized or distributed work better?"
+- Let user guide recommendation based on their context
 
-### Comparison: Regular Claude vs. This Skill
+### 9. Validating Competing Information
+When information seems contradictory, clarify rather than assume
+- "You mentioned deadline is tight, but timeline is flexible. Help me understand?"
+- "These goals seem to conflict. Which takes priority?"
+- Ask user to clarify the real situation
 
-| Aspect | Regular Claude | This Skill |
-|--------|----------------|-----------|
-| Approach | Assumes understanding; jumps to output | Validates understanding first |
-| Questions | May ask a few | Systematically asks until clarity |
-| Output | Immediate | After full understanding |
-| Structure | Consistent 3-phase framework |
-| Confidence | You may get wrong plan | Plan based on deep understanding |
+### 10. Context-First Mindset
+Get full context BEFORE offering structure
+- Phase 0.5 (before Phase 1): "Tell me the full background/context"
+- Prevents missing critical details that change the plan
+- Understand what led to this need first
 
-### When to Use This Skill
+### 11. Confirmation Checkpoints
+Add validation gates in the plan
+- Phase Entrance: "Before we start Phase X, confirm we're ready?"
+- Milestone Review: "Let's sync—are we still aligned on the goal?"
+- Prevents going wrong direction for extended periods
 
-✅ Best for:
-- Complex projects with unknowns
-- Team initiatives needing buy-in
-- Personal goals needing structure
-- Major decisions/pivots
-- Building something new with unclear scope
+### 12. Request Clarification, Not Assumptions
+Change the language used
+- Don't assume team uses Slack → Ask which tools they use
+- Don't assume timeline → Ask what time can be allocated
+- Don't assume goal → Ask what outcome they're hoping for
 
-❌ Overkill for:
-- Simple straightforward tasks
-- Urgent situations needing immediate action
-- Fully clear requirements
+## Enhanced Core Principle
 
-### Key Benefits
-1. Prevents misunderstandings
-2. Saves time (clarify upfront = faster execution)
-3. Better plans (complete information, not assumptions)
-4. Stakeholder alignment (agreement before starting)
-5. Reduced rework (get it right first time)
-6. Actionable output (execute immediately)
+Original: "Ask clarifying questions until direction is clear"
 
-## User Follow-up
-User wants to add more points to the skill file. Awaiting their input on what sections or guidelines to add.
+Enhanced: "Ask clarifying questions until direction is clear, and NEVER make assumptions, NEVER provide recommendations without context, and ALWAYS validate assumptions explicitly"
+
+Benefits of these additions:
+- ✅ More accurate (based on real facts, not assumptions)
+- ✅ More precise (focused on user's actual needs)
+- ✅ More reliable (less rework, fewer surprises)
+- ✅ More transparent (user knows what Claude knows vs. doesn't know)
+
+## Status
+Suggested 12 new points to enhance the skill file. Awaiting user decision on which points to include in final skill file.
