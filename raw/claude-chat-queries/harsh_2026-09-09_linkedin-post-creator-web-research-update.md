@@ -1,0 +1,13 @@
+---
+thread_name: "linkedin-post-creator-web-research-update"
+user: "harsh"
+type: claude-chat
+created: 2026-09-09
+updated: 2026-09-09
+---
+
+User: /linkedin-post-creator i want to add something in the skill file which is it can also search in the web to make the post more comprehensive and more directive to the goal what it is asked to do like i ask it that i wand to create a post on winston churchil then it can search in the web gather knowledge about him and use that information in the post like a famous qoute of him " If you are going through hell, keep going" like this  take that as an inspiration and add a more direcrive line to the skill file and make its path more clear on the idea i am talking about
+
+Assistant: [Loaded threads-ov and eoxs-data-general skills per user preference for new threads. Read the current linkedin-post-creator SKILL.md in full. Proposed an updated version via propose_skills (kind: improvement, target: linkedin-post-creator) that adds a new Workflow step 2 "Research the topic before writing, when it calls for it" — instructing the skill to search the web for real people/companies/events/products/news before drafting, pull concrete attributable material (facts, dates, achievements, a real quote), and use the Winston Churchill example (searching for him and using the authentic quote "If you are going through hell, keep going" as a hook/closing anchor) as the illustrative case. Added guardrails: never fabricate a quote or fact; skip research for pure opinion/anecdote/user-supplied content; ground the post-generation step in the researched specifics. Renumbered subsequent steps accordingly and added a line under "Important behaviors" reinforcing that research should not be skipped when the topic calls for it. The full updated SKILL.md was shown to the user via propose_skills for their review and save.]
+
+Response to user: A proposal to update the linkedin-post-creator skill has been shown for review. It adds a new step 2 to the workflow ("Research the topic before writing, when it calls for it") that has the skill search the web for real people, companies, events, products, or news mentioned in the request, and pull in concrete attributable material — facts, dates, achievements, a genuine quote — to ground the post, using the Winston Churchill / "If you are going through hell, keep going" example as the illustrative case for how this should work. It also adds guardrails: never fabricate a quote or fact to fill this role, and skip research for purely personal/opinion/user-supplied content. The user can review and save the proposal from the card shown.
