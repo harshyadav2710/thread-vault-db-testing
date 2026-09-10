@@ -33,3 +33,18 @@ Assistant: No dedicated "Ron" thread search exists, but Ron shows up as an actua
 Beyond those two, "Ron" appears extensively as a subject across other people's threads (scrum reports flagging his low self-reported activity score of 3/10, the founder payout tracker, 3GM/Travis Lane follow-ups, Brannon Steel huddles) but those aren't his own threads.
 
 Want the full text of either of the two Ron-authored ones?
+
+User: okay give me the chat for 1.
+
+Assistant: This MCP only exposes synthesized chat-summaries (and analyses) via tool calls — not the raw transcript text itself, so I can't pull the verbatim raw chat for ron_2026-08-18_askcruz-onboarding-task.md. Here's everything the synthesized summary captured about it:
+
+Ron had the assistant create a formal AskCruz/EOXS task (id 208, "Onboarding Structure & Process," project "Customer 1 - EOXS," assigned to himself) to standardize what a new hire receives at intern stage vs. full-time stage, including Claude settings. The assistant previewed the task before committing, then — on Ron's request to "add anything else that should be added" — expanded the description to include four items not in Ron's original ask:
+
+- Access-rights provisioning (no formal tracking system currently exists for granting/revoking access to live client instances and AI tools)
+- Git/deployment onboarding (one-task-one-branch rule, branch/commit naming conventions)
+- Second Brain/knowledge-base access (Obsidian vault + Google Drive client knowledge base, so new hires aren't re-explained client context from scratch)
+- Equipment/accounts checklist placeholder
+
+The Claude-settings item was tied to the team's phased custom-instructions rollout (Phase 1 universal baseline already sent to all employees; Phase 2 role-based questionnaire/skill routing deferred until skills are mapped per role).
+
+That's the full extent of what's recoverable through this MCP for that thread — no raw verbatim text is retrievable here.
