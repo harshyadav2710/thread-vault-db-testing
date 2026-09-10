@@ -709,7 +709,7 @@ def _chat_dir_for(user: str | None) -> list[Path]:
     return files
 
 
-@mcp.tool()
+# @mcp.tool()  # Fetching disabled
 def search_claude_chat_queries(query: str, user: str = "") -> str:
     """Search saved Claude chat transcripts (raw/claude-chat-queries/) — by topic, keyword, or content.
     user: optional — restrict to one user's threads (e.g. 'ayan'), matching the <user>_ filename
@@ -736,7 +736,7 @@ def search_claude_chat_queries(query: str, user: str = "") -> str:
     return f"Results for '{query}':\n\n" + "\n\n".join(results[:12])
 
 
-@mcp.tool()
+# @mcp.tool()  # Fetching disabled
 def list_claude_chat_queries(user: str = "") -> str:
     """List all saved Claude chat transcripts, newest first.
     user: optional — restrict to one user's threads (e.g. 'ayan'). Leave empty for all users."""
@@ -754,7 +754,7 @@ def list_claude_chat_queries(user: str = "") -> str:
     return "Saved chat transcripts:\n\n" + "\n".join(lines) + note
 
 
-@mcp.tool()
+# @mcp.tool()  # Fetching disabled
 def get_claude_chat_query(file_path: str) -> str:
     """Return the full content of a saved Claude chat transcript.
     file_path: relative path from vault root, e.g. 'raw/claude-chat-queries/2026-07-24-testing-01.md'
