@@ -710,57 +710,57 @@ def _chat_dir_for(user: str | None) -> list[Path]:
 
 
 # @mcp.tool()  # Fetching disabled
-def search_claude_chat_queries(query: str, user: str = "") -> str:
-    """Search saved Claude chat transcripts (raw/claude-chat-queries/) — by topic, keyword, or content.
-    user: optional — restrict to one user's threads (e.g. 'ayan'), matching the <user>_ filename
-        prefix. Leave empty to search across all users' threads."""
-    files = _chat_dir_for(user or None)
-    if not files:
-        return "No saved chat transcripts yet." if not user else f"No saved chat transcripts for user '{user}'."
-    q = query.lower()
-    results = []
-    for path in files:
-        content = _read(path)
-        lines = content.splitlines()
-        matches = []
-        for i, line in enumerate(lines):
-            if q in line.lower():
-                start = max(0, i - 1)
-                end = min(len(lines), i + 3)
-                matches.append("\n".join(lines[start:end]))
-        if matches:
-            rel = path.relative_to(VAULT_ROOT)
-            results.append(f"### {rel}\n" + "\n---\n".join(matches[:3]))
-    if not results:
-        return f"No results for '{query}'" + (f" (user='{user}')" if user else "") + "."
-    return f"Results for '{query}':\n\n" + "\n\n".join(results[:12])
+# def search_claude_chat_queries(query: str, user: str = "") -> str:
+#     """Search saved Claude chat transcripts (raw/claude-chat-queries/) — by topic, keyword, or content.
+#     user: optional — restrict to one user's threads (e.g. 'ayan'), matching the <user>_ filename
+#         prefix. Leave empty to search across all users' threads."""
+#     files = _chat_dir_for(user or None)
+#     if not files:
+#         return "No saved chat transcripts yet." if not user else f"No saved chat transcripts for user '{user}'."
+#     q = query.lower()
+#     results = []
+#     for path in files:
+#         content = _read(path)
+#         lines = content.splitlines()
+#         matches = []
+#         for i, line in enumerate(lines):
+#             if q in line.lower():
+#                 start = max(0, i - 1)
+#                 end = min(len(lines), i + 3)
+#                 matches.append("\n".join(lines[start:end]))
+#         if matches:
+#             rel = path.relative_to(VAULT_ROOT)
+#             results.append(f"### {rel}\n" + "\n---\n".join(matches[:3]))
+#     if not results:
+#         return f"No results for '{query}'" + (f" (user='{user}')" if user else "") + "."
+#     return f"Results for '{query}':\n\n" + "\n\n".join(results[:12])
 
 
 # @mcp.tool()  # Fetching disabled
-def list_claude_chat_queries(user: str = "") -> str:
-    """List all saved Claude chat transcripts, newest first.
-    user: optional — restrict to one user's threads (e.g. 'ayan'). Leave empty for all users."""
-    files = _chat_dir_for(user or None)
-    if not files:
-        return "No saved chat transcripts yet." if not user else f"No saved chat transcripts for user '{user}'."
-    lines = []
-    for f in files[:150]:
-        rel = str(f.relative_to(VAULT_ROOT))
-        content = _read(f)
-        thread_match = re.search(r'^thread_name: "(.*?)"', content, flags=re.MULTILINE)
-        label = thread_match.group(1) if thread_match else f.stem
-        lines.append(f"- [{label}]({rel})")
-    note = f"\n\n(showing 150 of {len(files)})" if len(files) > 150 else ""
-    return "Saved chat transcripts:\n\n" + "\n".join(lines) + note
+# def list_claude_chat_queries(user: str = "") -> str:
+#     """List all saved Claude chat transcripts, newest first.
+#     user: optional — restrict to one user's threads (e.g. 'ayan'). Leave empty for all users."""
+#     files = _chat_dir_for(user or None)
+#     if not files:
+#         return "No saved chat transcripts yet." if not user else f"No saved chat transcripts for user '{user}'."
+#     lines = []
+#     for f in files[:150]:
+#         rel = str(f.relative_to(VAULT_ROOT))
+#         content = _read(f)
+#         thread_match = re.search(r'^thread_name: "(.*?)"', content, flags=re.MULTILINE)
+#         label = thread_match.group(1) if thread_match else f.stem
+#         lines.append(f"- [{label}]({rel})")
+#     note = f"\n\n(showing 150 of {len(files)})" if len(files) > 150 else ""
+#     return "Saved chat transcripts:\n\n" + "\n".join(lines) + note
 
 
 # @mcp.tool()  # Fetching disabled
-def get_claude_chat_query(file_path: str) -> str:
-    """Return the full content of a saved Claude chat transcript.
-    file_path: relative path from vault root, e.g. 'raw/claude-chat-queries/2026-07-24-testing-01.md'
-    Get the path from search_claude_chat_queries or list_claude_chat_queries first — don't guess it."""
-    p = VAULT_ROOT / file_path
-    return _read(p) if p.exists() else f"File not found: {file_path}"
+# def get_claude_chat_query(file_path: str) -> str:
+#     """Return the full content of a saved Claude chat transcript.
+#     file_path: relative path from vault root, e.g. 'raw/claude-chat-queries/2026-07-24-testing-01.md'
+#     Get the path from search_claude_chat_queries or list_claude_chat_queries first — don't guess it."""
+#     p = VAULT_ROOT / file_path
+#     return _read(p) if p.exists() else f"File not found: {file_path}"
 
 
 # ── Save Analysis ────────────────────────────────────────────────────────────
