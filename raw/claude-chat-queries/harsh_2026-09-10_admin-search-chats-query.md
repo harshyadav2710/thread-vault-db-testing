@@ -16,3 +16,9 @@ A couple of things you might actually mean:
 2. Something in a different system entirely (e.g., EOXS product admin logs, not this chat-memory MCP).
 
 Which one, or something else?
+
+User: i mean search harsh chat
+
+Assistant: No results in chat-summaries or analyses for "harsh." Note: this Security_Testing MCP only exposes search/list over synthesized chat-summaries and analyses — not a direct search over raw transcripts by username. "harsh" appears here only as the account identifier auto-resolved into the filename of my last save (raw/claude-chat-queries/harsh_2026-09-10_...md), not as a searchable field or topic.
+
+So there's nothing to return under that query. If you meant something else by "harsh chat" (a client, a topic, a person's name in conversation content), tell me and I'll search for that instead.
