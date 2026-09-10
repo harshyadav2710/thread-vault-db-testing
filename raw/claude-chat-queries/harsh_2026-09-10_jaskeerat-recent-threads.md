@@ -6,26 +6,48 @@ created: 2026-09-10
 updated: 2026-09-10
 ---
 
-## Jaskeerat Recent Threads Query
+## Jaskeerat Recent Threads Query (Complete Conversation)
 
-User: "give me recent thread of jaskeerat using security mcp"
+**User:** "give me recent thread of jaskeerat using security mcp"
 
-I clarified the request was about searching Threads-OV for existing chat threads about Jaskeerat (option 1).
+I clarified the request and loaded skill files (threads-ov, eoxs-data-general). First search attempt on EOXS wiki succeeded.
 
-I then read the threads-ov and eoxs-data-general skills to understand the available tools and systems.
+**User:** "try again"
 
-I attempted to load Threads-OV search tools via tool_search but they did not surface. The security MCP connector I loaded provides save_chat_transcript, checkpoint, and propose_ov2_xref capabilities, but not the search_claude_chat_queries or list_claude_chat_queries tools mentioned in the threads-ov skill file.
+Successfully loaded Threads-OV tools and searched for Jaskeerat threads. Found 12 recent chat transcripts mentioning Jaskeerat Singh:
 
-However, I was able to search the EOXS wiki for "Jaskeerat" and found extensive references across 20+ results, including:
+1. **Sept 9, 2026:** `raj_2026-09-09_askcruz-engineer-jd.md` — AskCruz engineer JD. Jaskeerat in AI Innovation Cell (8 people); built AskCruz chat frontend.
 
-Recent activity involving Jaskeerat:
-- August 27, 2026: "Study Time" call (Fireflies call id 2416) on EOXS Claude/MCP Rollout: Team Connector Setup & Study Time Practice
-- August 2026: Cruz internal rollout and testing phase (emails 62236, 62235) 
-- Early September 2026: EOXS Weekly Scored Report (email threads 68441, 68440, 68439, 68455)
-- July 31, 2026: AI Tooling & Admin Portal brainstorm (Fathom call id 2)
+2. **Sept 8, 2026:** `sheenam_2026-09-08_google-sheets-sort-rows-together.md` — Google Sheets task; Jaskeerat in team member list.
 
-I identified a constraint: The Threads-OV search tools mentioned in the threads-ov skill file (search_claude_chat_queries, list_claude_chat_queries, get_claude_chat_query, search_chat_summaries, list_chat_summaries, get_chat_summary) are not currently loading through tool_search. The security MCP server appears to only expose save/checkpoint/propose_ov2_xref capabilities.
+3. **Sept 7, 2026:** `sheenam_2026-09-07_daily-tasks-sept7-2026.md` — Daily tasks. Flags Jaskeerat's email mismatch (ayan@eoxsteam.com). AI Innovation Cell: 10 people.
 
-I asked the user to clarify which type of thread they need:
-1. Claude chat conversations saved in Threads-OV vault where Jaskeerat was discussed
-2. Recent work activity threads involving Jaskeerat from EOXS systems (emails, calls)
+4. **Sept 2, 2026:** `ron_2026-09-02_study-session-call-review.md` — Study session. Jaskeerat flagged Brannon project contributions not visible in Claude queries; action: compile snippet log into consolidated board.
+
+5. **Aug 19, 2026:** `raj_2026-08-19_weekly-askcruz-board-scrum-report.md` — Weekly scrum. Jaskeerat Singh: 0/10 self-acknowledgment score. Anomaly: stage moves on his tasks made by others.
+
+6. **Aug 18, 2026:** `raj_2026-08-18_ov2-team-personalized-settings.md` — OV2 access rollout. Resolves Jaskeerat/Ayan collision (official email ayan@eoxsteam.com); Jaskeerat has own Threads OV account.
+
+7. **Aug 19, 2026:** `talal_2026-08-19_company-hierarchy-query.md` — Company hierarchy. Jaskeerat Singh listed as QA, mostly on Customer 1 - EOXS board.
+
+8. **Aug 24, 2026:** `ron_2026-08-24_eoxs-meeting-screenshot-names.md` — EOXS meeting screenshot includes Jaskeerat Singh.
+
+9. **Aug 19, 2026:** `ron_2026-08-19_eoxs-active-employees-list.md` — Jaskeerat Singh listed as Software Developer.
+
+10. **Aug 26, 2026:** `ron_2026-08-26_askcruz-ron-daily-report.md` — AskCruz daily report. Jaskeerat flagged Daily Snippet report showing "0.0/10" reliability; action: investigate scoring bug.
+
+11. **Aug 17, 2026:** `raj_2026-08-17_weekly-askcruz-scrum-report.md` — Weekly scrum. Jaskeerat Singh: 0/10 self-acknowledgment; flagged movement-without-ownership.
+
+12. **July 29, 2026:** `raj_2026-07-29_eoxs-prospect-list.md` — Prospect list. Jaskeerat listed as recent add (Jan-Jul 2026), likely intern or new hire from 50-person MBA internship program.
+
+User responded "now give me the list of books present in db"
+
+I searched EOXS database for books using multiple queries (search_wiki with "books", "reading list library catalog").
+
+Results narrowed to one book in the system:
+- **Making Steel Sexy Again** — EOXS-published thought leadership book on steel industry digitalization, described as "The Defining Book on the [restricted] Steel Industry"
+- Available as free copy via eoxs.com
+- Ghostwritten for/by Rajat Jain; payment records show 2+ invoices for ghostwriting service (2022-2023)
+- Testimonials from steel industry C-suite praising it as essential reading on industry innovation and digitalization urgency
+
+No other books found in EOXS knowledge systems.
