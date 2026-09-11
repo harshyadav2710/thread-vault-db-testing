@@ -53,13 +53,14 @@ updated: 2026-09-11
 - RFQ guidance from the AI bot
 - Automated daily inquiry tracking for each rep + leadership rollup
 
-## Why Generic AI Fails (Their Words)
+## Why Generic AI Fails (From Calls)
 - Claude alone lacks industry-specific customization
 - Can't scale across company without repeated manual data uploads
 - Loses context when there's no centralized, persistent memory
 - Migration from personal Claude account to enterprise system is friction-heavy
+- Customers are already Claude users—the problem is connecting it to company knowledge, not finding an AI
 
-## What Solves It
+## What Solves It (From Customer Language)
 
 ### Positioning: "Company Brain" + Customized AI
 1. **Centralize:** All company data (ERP, emails, calls, SOPs) in one place
@@ -87,13 +88,14 @@ updated: 2026-09-11
 2. Operations: "Stop manually recreating reports across systems"
 3. Leadership: "Make decisions based on patterns, not guesses"
 
-### Language From Customers
-- "Vertical integration" (everything connected)
-- "See everything all at once"
-- "Instantly get all your answers"
-- "All the data that makes someone successful — in one place"
-- "Stop tracking things manually"
-- "Understand what patterns predict winning"
+### Customer Language (Primary Source)
+- "Vertical integration" (everything connected) — Michael, Sabre
+- "See everything all at once" — Michael, Sabre
+- "Instantly get all your answers" — Raj pitch, 3GM
+- "All the data that makes someone successful — in one place" — Raj pitch
+- "Stop tracking things manually" — implied across both
+- "Understand what patterns predict winning" — Dave, Sabre
+- "Why are we winning or losing business?" — Dave's core question, Sabre
 
 ## Phase 1: Proposal Generation Engine
 **Positioning:** "Start with the most painful, repetitive task — automatically generating accurate proposals from all your company data. Then expand to the full Company Brain."
@@ -104,9 +106,7 @@ updated: 2026-09-11
 - Proves the value of centralized data + AI before going full system-wide
 - Natural upgrade path to full automation + reporting + pattern detection
 
-## Next Steps for Messaging
-1. Lead with the fragmentation pain (not the technology)
-2. Show how data isolation blocks insight (not just convenience)
-3. Demonstrate vertical integration value (email + phone + ERP at once)
-4. Position customization as critical (generic AI doesn't work for specialized businesses)
-5. Show quick wins (Proposal Generation) before the full vision (Company Brain)
+## Methodology Note
+- Sourced from actual call transcripts (Fireflies recordings), not internal wiki summaries
+- Wiki had flagged "unverified customer evidence"
+- This is primary source validation of positioning
