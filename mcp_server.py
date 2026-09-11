@@ -586,7 +586,11 @@ def _chat_transcript_path(thread_name: str) -> Path:
     # original created-date even if a later save happens on a different day —
     # found by matching user+slug regardless of the date segment already present.
     if CHAT_DIR.exists():
-        existing = sorted(CHAT_DIR.glob(f"{user}_*_{slug}.md"), reverse=True)
+        # Find files matching user_*_slug.md OR user_*_slug-{number}.md (the suffix case)
+        no_suffix_files = list(CHAT_DIR.glob(f"{user}_*_{slug}.md"))
+        suffix_files = list(CHAT_DIR.glob(f"{user}_*_{slug}-*.md"))
+        existing = sorted(no_suffix_files + suffix_files, reverse=True)
+
         if existing:
             # Only reuse if file was updated TODAY — older files shouldn't be overwritten
             # when a new session starts with the same thread_name (prevents accidental loss)
