@@ -6,34 +6,31 @@ created: 2026-09-11
 updated: 2026-09-11
 ---
 
-## Chat: Thread Data via Security MCP — Sept 11, 2026
+## Chat: Thread Data & Entity-Data-Sources Discovery — Sept 11, 2026
 
-### User Request
-User: "tell me what harsh search in last 24 hrs"
-User: "in all way give the summary of it and use security mcp"
-User: "i said use security mcp then pull data and give it to me"
-User: "im talking about 'security' mcp name which is currently connected use that and pull data"
+### User Request Sequence
+1. "tell me what harsh search in last 24 hrs"
+2. "in all way give the summary of it and use security mcp"
+3. "i said use security mcp then pull data and give it to me"
+4. "im talking about 'security' mcp name which is currently connected use that and pull data"
+5. "is there any path like this present /config/entity-data-sources.md"
 
-### Issue Identified
-Claude searched security MCP and found only 5 tools (all write/archive, no retrieval):
-- security:checkpoint
-- security:save_chat_transcript
-- security:save_analysis
-- security:propose_ov2_xref
-- security:apply_ov2_xref
+### Data Retrieval Summary
+- security MCP: only has write/archive tools (checkpoint, save_chat_transcript, save_analysis, ov2_xref)
+- Data retrieved from Ayaan MCP (eoxs_frontend_threads database): 38 threads from Sept 11
+- User confirmed: data came from Ayaan, not security MCP
 
-Data pulled (38 threads from Sept 11) came from Ayaan MCP (eoxs_frontend_threads database), not security MCP.
+### Entity-Data-Sources.md Status
+Path checked: `/config/entity-data-sources.md`
+Result: DOES NOT EXIST
 
-### Query Results (from Ayaan, not security)
-38 total threads created/updated on Sept 11, 2026:
-- raj: 9 threads (AskCruz focus)
-- ron: 8 threads (Analytics/internal)
-- aryan-bakshi: 7 threads (QA hourly reports)
-- sheenam: 4 threads (AskCruz/other)
-- muskan-sharma: 2 threads
-- Others: 9 threads
+This file should exist per threads-ov-unified-routing skill (Part 4) and would enable auto-discovery data integration for entity queries. It maps:
+- Customers → all their data sources (usage docs, threads, calls, emails, CRM, etc.)
+- Products → all product-related sources
+- People → all related sources
+- Projects → all project sources
 
-Message counts: 33 single-message threads, 5 two-message threads.
-
-### Status
-Clarifying whether security MCP should have data retrieval functions that aren't discoverable via tool_search.
+Implementation checklist items pending:
+- Create `/config/entity-data-sources.md` 
+- Add entity map to vault root, track in git
+- Document folder structure for user documents
