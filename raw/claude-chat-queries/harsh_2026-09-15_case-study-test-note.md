@@ -23,3 +23,11 @@ Just the one note — the "TEST" entry we added earlier.
 User: Edit note 2: change its content to 'Updated entry'
 
 Assistant: Note #2 "TEST" updated — content is now "Updated entry".
+
+User: List notes in Case Study.
+
+Assistant: | ID | Title | Tags | Owner | Date |
+|----|-------|------|-------|------|
+| 2 | TEST | — | owner | 2026-09-15 |
+
+Still just the one note (content is now "Updated entry" from the edit).
