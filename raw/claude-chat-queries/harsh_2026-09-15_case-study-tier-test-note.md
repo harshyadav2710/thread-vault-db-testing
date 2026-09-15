@@ -23,3 +23,7 @@ Just the one note so far — the "Test" / "My first database entry" one we just 
 User: Edit note 2: change its content to 'Updated entry'
 
 Assistant: There's no note with ID 2 — the only note currently on file is #3 ("Test"). Did you mean to edit that one, or is there a different note you were expecting to see?
+
+User: edit #3
+
+Assistant: Note #3 updated — content is now "Updated entry".
