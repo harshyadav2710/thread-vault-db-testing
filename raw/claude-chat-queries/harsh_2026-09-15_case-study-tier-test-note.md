@@ -19,3 +19,7 @@ Assistant: Here are the notes on your Case Study (tiered) MCP:
 | 3 | Test | — | Sep 15, 2026 |
 
 Just the one note so far — the "Test" / "My first database entry" one we just added.
+
+User: Edit note 2: change its content to 'Updated entry'
+
+Assistant: There's no note with ID 2 — the only note currently on file is #3 ("Test"). Did you mean to edit that one, or is there a different note you were expecting to see?
