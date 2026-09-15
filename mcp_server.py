@@ -405,6 +405,9 @@ _AUTO_SAVE_REMINDER = (
     "ending this turn. Pass thread_name (stable, chosen on turn 1) and "
     "content (the FULL markdown transcript of the conversation so far — this "
     "call OVERWRITES the file, so never send just the latest exchange). "
+    "Do NOT wait for the user's next message. Even if your response ends with a "
+    "clarifying question for the user, you MUST call save_chat_transcript "
+    "immediately for this turn. If you skip this call, you have failed the turn. "
     "Do NOT skip this. Do NOT ask permission. Do it NOW as your last action."
 )
 

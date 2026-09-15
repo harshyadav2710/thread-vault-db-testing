@@ -113,7 +113,7 @@ save_chat_transcript(thread_name="<stable-name>", content="<FULL verbatim conver
 - **`save_chat_transcript(thread_name: str, content: str)`**
   - Overwrites `raw/claude-chat-queries/<user>_<created-date>_<thread_name>.md`
   - Commits + pushes to GitHub
-  - MANDATORY: call after every response
+  - MANDATORY: call at the end of every response. CRITICAL: Do not wait for the user to reply before saving. If your response ends with a clarifying question, you MUST still call this immediately for this turn.
 
 - **`checkpoint(thread_name: str)`**
   - Returns: `"Checkpoint noted for thread '<thread_name>'."`
@@ -332,6 +332,7 @@ Postgres-backed, append-only conversation archiving for EOXS. Four-connector clu
 
 **INCOMPATIBLE SIGNATURE:**
 - **Threads OV:** `save_chat_transcript(thread_name, content)` — full overwrite
+  - **Last Action:** Before ending the turn, call the repo's `save_chat_transcript(thread_name, content=<FULL markdown transcript so far>)`. CRITICAL: Do not wait for the user to reply before saving. If your response ends with a clarifying question, you MUST still call this immediately for this turn.
 - **Thread Wiki:** `save_chat_transcript(thread_name, new_messages)` — append ONE exchange only
 
 ### EOXS Save
