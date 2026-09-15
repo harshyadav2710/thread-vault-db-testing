@@ -19,3 +19,7 @@ Assistant: Here are the notes currently in Case Study:
 | 2 | TEST | — | owner | 2026-09-15 |
 
 Just the one note — the "TEST" entry we added earlier.
+
+User: Edit note 2: change its content to 'Updated entry'
+
+Assistant: Note #2 "TEST" updated — content is now "Updated entry".
