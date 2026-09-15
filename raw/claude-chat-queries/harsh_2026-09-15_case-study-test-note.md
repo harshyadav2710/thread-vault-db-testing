@@ -9,3 +9,13 @@ updated: 2026-09-15
 User: in the mcp case study add a note titled TEST with content My First Database Entry
 
 Assistant: Done — note #2 "TEST" added with content "My First Database Entry".
+
+User: List notes in Case Study.
+
+Assistant: Here are the notes currently in Case Study:
+
+| ID | Title | Tags | Owner | Date |
+|----|-------|------|-------|------|
+| 2 | TEST | — | owner | 2026-09-15 |
+
+Just the one note — the "TEST" entry we added earlier.
