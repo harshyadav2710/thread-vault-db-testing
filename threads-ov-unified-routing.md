@@ -1,6 +1,6 @@
 ---
 name: threads-ov-unified-routing
-description: Unified reference for Threads OV conversation archiving. Two incompatible systems (GitHub-backed file-based vs EOXS database-backed) run in parallel. Includes decision tree to determine which to use, full skill documentation for both, and comparison tables. Start with Part 0 (routing) to determine your system, then read the relevant section (Part 1 for GitHub, Part 2 for EOXS).
+description: Unified reference for Threads OV conversation archiving. Two incompatible systems (Threads OV (file-based) vs Thread Wiki (database-backed)) run in parallel. Includes decision tree to determine which to use, full skill documentation for both, and comparison tables. Start with Part 0 (routing) to determine your system, then read the relevant section (Part 1 for Threads OV, Part 2 for Thread Wiki).
 aliases: [Threads OV, conversation archiving, transcript vault, routing guide]
 ---
 
@@ -16,11 +16,11 @@ aliases: [Threads OV, conversation archiving, transcript vault, routing guide]
 
 | Question | Answer → Go To |
 |----------|---|
-| **Do you see `checkpoint` tool available?** | Yes → GITHUB (Part 1) / No → EOXS (Part 2) |
-| **What does `save_chat_transcript` want?** | Full conversation content → GITHUB / Just new exchange → EOXS |
-| **Do you need to cross-link to OV2?** | Yes → GITHUB / No (or doing it elsewhere) → EOXS |
-| **Are you working in EOXS context?** | Yes → EOXS / No → GITHUB |
-| **Do you have access to tier-based thread reads?** | Yes → EOXS / No → GITHUB |
+| **Do you see `checkpoint` tool available?** | Yes → Threads OV (Part 1) / No → Thread Wiki (Part 2) |
+| **What does `save_chat_transcript` want?** | Full conversation content → Threads OV / Just new exchange → Thread Wiki |
+| **Do you need to cross-link to OV2?** | Yes → Threads OV / No (or doing it elsewhere) → Thread Wiki |
+| **Are you working in EOXS context?** | Yes → Thread Wiki / No → Threads OV |
+| **Do you have access to tier-based thread reads?** | Yes → Thread Wiki / No → Threads OV |
 | **Is synthesis automated?** | Yes → EOXS / No (manual) → GITHUB |
 
 ## Detailed Routing Guide
@@ -28,25 +28,25 @@ aliases: [Threads OV, conversation archiving, transcript vault, routing guide]
 ### You Use GITHUB-BACKED (Part 1) If:
 
 - ✅ You see these tools: `checkpoint`, `save_chat_transcript`, `save_analysis`, `propose_ov2_xref`, `apply_ov2_xref`
-- ✅ Your connector is labeled "claude-notes-vault" or "Threads OV GitHub" or similar
+- ✅ Your connector is labeled "claude-notes-vault" or "Threads OV" or similar
 - ✅ You want to cross-link findings into OV2's wiki (CROSS-LINK workflow)
 - ✅ You work standalone (not EOXS context)
 - ✅ Synthesis is manual ("sync threads" = you run SYNTHESIZE workflow)
 - ✅ `save_chat_transcript` asks for full conversation content
 
-**Read: Part 1 (Threads OV GitHub)**
+**Read: Part 1 (Threads OV)**
 
 ### You Use EOXS DATABASE-BACKED (Part 2) If:
 
 - ✅ You see these tool sets: main server (save_chat_transcript, get_thread, list_threads), wiki_mcp (search_wiki, etc.), db_mcp (query, etc.)
-- ✅ Your connector is labeled "Threads OV EOXS", "Frontend Threads", or shows multiple connectors
+- ✅ Your connector is labeled "Thread Wiki", "Frontend Threads", or shows multiple connectors
 - ✅ You do NOT need to cross-link to OV2 (different system handles that)
 - ✅ You work in EOXS context (alongside eoxs-db, eoxs-teams)
 - ✅ Synthesis is automated (scheduled pipeline)
 - ✅ `save_chat_transcript` asks for ONLY the new exchange (not full history)
 - ✅ You can read other users' threads if you share department/tier
 
-**Read: Part 2 (Threads OV EOXS)**
+**Read: Part 2 (Thread Wiki)**
 
 ## If You're Still Unsure
 
@@ -54,15 +54,14 @@ aliases: [Threads OV, conversation archiving, transcript vault, routing guide]
 
 Call `save_chat_transcript(thread_name="test", content="test")` or `save_chat_transcript(thread_name="test", new_messages="test")`
 
-- If the first works → **GITHUB** (Part 1)
-- If the second works → **EOXS** (Part 2)
+- If the first works → **Threads OV** (Part 1)
+- If the second works → **Thread Wiki** (Part 2)
 
 Or ask: "What does `save_chat_transcript` expect for the second parameter?" and read the answer from the error message.
 
 ---
 
-# Part 1: Threads OV (GitHub-Backed)
-
+# Part 1: Threads OV 
 ## Overview
 
 File-based, git-tracked conversation archiving. Standalone system. Cross-links findings to OV2's wiki via CROSS-LINK workflow. Manual synthesis. Single-user (one per connector URL).
@@ -320,8 +319,7 @@ apply_ov2_xref(staged_id="123")
 
 ---
 
-# Part 2: Threads OV (EOXS Database-Backed)
-
+# Part 2: Thread Wiki 
 ## Overview
 
 Postgres-backed, append-only conversation archiving for EOXS. Four-connector cluster (main server + wiki_mcp + db_mcp). Automated synthesis. Tier-based access. No cross-linking (github system handles that).
@@ -333,8 +331,8 @@ Postgres-backed, append-only conversation archiving for EOXS. Four-connector clu
 ### Critical Difference from GitHub
 
 **INCOMPATIBLE SIGNATURE:**
-- **GitHub:** `save_chat_transcript(thread_name, content)` — full overwrite
-- **EOXS:** `save_chat_transcript(thread_name, new_messages)` — append ONE exchange only
+- **Threads OV:** `save_chat_transcript(thread_name, content)` — full overwrite
+- **Thread Wiki:** `save_chat_transcript(thread_name, new_messages)` — append ONE exchange only
 
 ### EOXS Save
 
@@ -350,7 +348,7 @@ Row added to: `public.thread_messages` (identified by `thread_name` + `username`
 
 ### Why Append-Only
 
-The GitHub system overwrites the entire file per save. If a buggy caller passes only the latest exchange, everything prior is silently dropped. Append-only construction prevents this — each save is a new row, never destructive. A client bug cannot drop prior messages.
+The Threads OV system overwrites the entire file per save. If a buggy caller passes only the latest exchange, everything prior is silently dropped. Append-only construction prevents this — each save is a new row, never destructive. A client bug cannot drop prior messages.
 
 ### Call Pattern (Every Turn)
 
@@ -365,7 +363,7 @@ Do NOT send full conversation history. System has it already.
 
 ### Dual-Write Path
 
-This system runs **alongside** GitHub-backed Threads OV. Each `save_chat_transcript` call writes to:
+This system runs **alongside** Threads OV. Each `save_chat_transcript` call writes to:
 1. Git-tracked file in `raw/claude-chat-queries/` (backup)
 2. Postgres row (primary EOXS record)
 
@@ -653,7 +651,7 @@ LIMIT 10;
 
 ## System Comparison
 
-| Aspect | GitHub | EOXS |
+| Aspect | Threads OV | Thread Wiki |
 |--------|--------|------|
 | **Save contract** | `(thread_name, content)` full overwrite | `(thread_name, new_messages)` append |
 | **Checkpoint tool** | Yes (exists) | No (not needed) |
@@ -669,23 +667,23 @@ LIMIT 10;
 ## "I'm Confused — Which System Am I Using?"
 
 **Test 1: What tools do you see?**
-- Only: `save_chat_transcript`, `checkpoint`, `save_analysis`, `propose_ov2_xref`, `apply_ov2_xref` → **GITHUB**
-- Multiple connectors with 11+ tools (main, wiki_mcp, db_mcp) → **EOXS**
+- Only: `save_chat_transcript`, `checkpoint`, `save_analysis`, `propose_ov2_xref`, `apply_ov2_xref` → **Threads OV**
+- Multiple connectors with 11+ tools (main, wiki_mcp, db_mcp) → **Thread Wiki**
 
 **Test 2: Try calling `save_chat_transcript` with different parameters:**
 ```
 save_chat_transcript(thread_name="test", content="test")
 ```
-Works? → **GITHUB**
+Works? → **Threads OV**
 
 ```
 save_chat_transcript(thread_name="test", new_messages="test")
 ```
-Works? → **EOXS**
+Works? → **Thread Wiki**
 
 **Test 3: Does your connector URL include a "secret" that's different from other users' URLs?**
-- Yes → **EOXS** (per-user secrets)
-- No, single URL → **GITHUB**
+- Yes → **Thread Wiki** (per-user secrets)
+- No, single URL → **Threads OV**
 
 ---
 
@@ -697,7 +695,7 @@ Two separate systems. Saves to one do NOT automatically appear in the other (tho
 
 ### "I'm Using EOXS But Calling `checkpoint` — Error!"
 
-`checkpoint` exists in GitHub system only. EOXS doesn't need it (append-only design). Remove that call if using EOXS.
+`checkpoint` exists in Threads OV system only. EOXS doesn't need it (append-only design). Remove that call if using EOXS.
 
 ### "I Called `save_chat_transcript` with Full Content But It Only Saved Last Exchange"
 
@@ -709,7 +707,7 @@ You're using GitHub. GitHub expects FULL content each time. Edit to pass entire 
 
 ### "I Tried to Cross-Link But Got Error"
 
-Cross-linking is GitHub system only. If using EOXS, you cannot call `propose_ov2_xref` / `apply_ov2_xref`. Document findings in your own notes or contact github-based system owner.
+Cross-linking is Threads OV system only. If using EOXS, you cannot call `propose_ov2_xref` / `apply_ov2_xref`. Document findings in your own notes or contact github-based system owner.
 
 ### "A Wiki Page Has Status='rejected' — Can I Quote It?"
 
@@ -749,11 +747,94 @@ EOXS system: **Never quote rejected pages.** They're drafts a reviewer refused. 
 ## Session Start Checklist
 
 1. **Read Part 0 above** — determine which system you're using
-2. **Read the relevant part** (Part 1 for GitHub, Part 2 for EOXS)
+2. **Read the relevant part** (Part 1 for Threads OV, Part 2 for Thread Wiki)
 3. **Do not narrate setup** — just start using the correct system
 
 ---
 
-**Last Updated:** September 10, 2026  
-**Scope:** Both Threads OV systems unified with routing guide  
-**Tools:** 5 (GitHub) + 11 (EOXS) = 16 total across both systems
+# Part 4: Standing Instruction — Auto-Fetch Data Sources
+
+**For all Claude instances connected to OV vault + AskCruz**
+
+---
+
+## When Answering Questions About Customers, Products, or Entities
+
+**Follow this order automatically (do not wait for user to ask):**
+
+### 1. Check Threads First
+- Search Thread Testing MCP: `list_threads()` for entity mentions
+- Search Threads-OV MCP: team-tier threads
+- Extract: what was actually said, when, context
+- Tool: `list_threads()` + grep for entity code/name
+
+### 2. Then Check Wiki
+- Search synthesized pages: `search_wiki(entity)`
+- Extract: prior analysis, strategy notes, known issues
+- Tool: `search_wiki()` from Threads OV
+
+### 3. Pull Data From All Sources
+- Do not stop after threads + wiki
+- Also check: calls, emails, customer records, usage docs
+- Merge all findings before answering
+- Cite which source provided each claim
+
+---
+
+## Configuration
+
+```yaml
+data_sources:
+  enabled: true
+  auto_fetch: true
+  
+  fetch_order:
+    1: "threads"
+    2: "wiki"
+    3: "calls"
+    4: "emails"
+    5: "customer_records"
+    6: "usage_docs"
+  
+  behavior: |
+    - Always check threads first
+    - Always check wiki second
+    - Fetch from all sources simultaneously
+    - Do not require explicit user request
+    - Merge and cite all findings
+    - Surface conflicts (if any source disagrees)
+  
+  scope: "universal"
+  applies_to: "all Claude instances using this vault"
+```
+
+---
+
+## Quick Checklist Before Answering
+
+**Before answering ANY entity question:**
+
+- [ ] Threads checked? (`list_threads()` + grep)
+- [ ] Wiki checked? (`search_wiki()`)
+- [ ] All sources merged?
+- [ ] Sources cited?
+
+**Do not answer without checking threads + wiki first.**
+
+---
+
+## Entity Questions (Auto-Fetch Applies)
+
+✅ "What should we tell [CUSTOMER]?"  
+✅ "Is [PRODUCT] pricing competitive?"  
+✅ "What's [CUSTOMER]'s pain point?"  
+✅ "Should we pursue [PROJECT]?"  
+✅ "What did [CUSTOMER] say about Claude?"  
+
+❌ Does NOT apply to: technical questions, code reviews, general explanations
+
+---
+
+**Last Updated:** September 11, 2026  
+**Scope:** Both Threads OV systems (GitHub + EOXS) + Standing auto-fetch instruction  
+**Reference:** 5 (GitHub) + 11 (EOXS) core tools + auto-data-source-discovery
