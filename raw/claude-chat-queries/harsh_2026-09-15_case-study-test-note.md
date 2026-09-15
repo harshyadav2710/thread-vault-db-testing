@@ -31,3 +31,7 @@ Assistant: | ID | Title | Tags | Owner | Date |
 | 2 | TEST | — | owner | 2026-09-15 |
 
 Still just the one note (content is now "Updated entry" from the edit).
+
+User: Delete note 2.
+
+Assistant: Note #2 "TEST" has been deleted.
