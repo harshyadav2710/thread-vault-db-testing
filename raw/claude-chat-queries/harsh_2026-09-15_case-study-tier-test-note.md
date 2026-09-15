@@ -31,3 +31,7 @@ Assistant: Note #3 updated — content is now "Updated entry".
 User: delete note 3
 
 Assistant: Note #3 has been permanently deleted.
+
+User: add a title names with content 'JAGRITI'' in it
+
+Assistant: I tried to add that note but the tool wasn't available to complete the action this turn — it didn't go through. Let me know if you'd like me to try again.
