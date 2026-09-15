@@ -27,3 +27,7 @@ Assistant: There's no note with ID 2 — the only note currently on file is #3 (
 User: edit #3
 
 Assistant: Note #3 updated — content is now "Updated entry".
+
+User: delete note 3
+
+Assistant: Note #3 has been permanently deleted.
