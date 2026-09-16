@@ -582,11 +582,15 @@ def _git_commit_and_push(rel_path: Path, commit_message: str) -> str:
 def _chat_transcript_path(thread_name: str) -> Path:
     user = re.sub(r"[^a-z0-9]+", "-", current_user().lower()).strip("-") or "unknown"
     slug = re.sub(r"[^a-z0-9]+", "-", thread_name.lower()).strip("-") or "conversation"
+
     # Reuse today's date only for a NEW thread; an existing thread keeps its
     # original created-date even if a later save happens on a different day —
     # found by matching user+slug regardless of the date segment already present.
     if CHAT_DIR.exists():
-        existing = sorted(CHAT_DIR.glob(f"{user}_*_{slug}.md"), reverse=True)
+        no_suffix_files = list(CHAT_DIR.glob(f"{user}*{slug}.md"))
+        suffix_files = list(CHAT_DIR.glob(f"{user}*{slug}-*.md"))
+        existing = sorted(no_suffix_files + suffix_files, reverse=True)
+
         if existing:
             # Only reuse if file was updated TODAY — older files shouldn't be overwritten
             # when a new session starts with the same thread_name (prevents accidental loss)
@@ -598,14 +602,6 @@ def _chat_transcript_path(thread_name: str) -> Path:
                 last_updated = updated_match.group(1)
                 if last_updated == today:
                     return existing_path
-            # If file is from a previous day and we're in a new session, create a new file
-            # with a numeric suffix to avoid overwriting the old conversation
-            suffix = 1
-            while True:
-                new_path = CHAT_DIR / f"{user}_{today}_{slug}-{suffix}.md"
-                if not new_path.exists():
-                    return new_path
-                suffix += 1
     today = date.today().isoformat()
     return CHAT_DIR / f"{user}_{today}_{slug}.md"
 
