@@ -20,6 +20,6 @@ updated: 2026-09-16
 
 ---
 
-**User:** what is 10
+**User:** what is 10+2
 
-**Claude:** 10 is a number — the integer between 9 and 11, or the base of the decimal number system.
+**Claude:** 10 + 2 = 12
