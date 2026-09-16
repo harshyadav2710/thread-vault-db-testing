@@ -17,3 +17,9 @@ updated: 2026-09-16
 **User:** what 4+1?
 
 **Claude:** 4 + 1 = 5
+
+---
+
+**User:** what is 10
+
+**Claude:** 10 is a number — the integer between 9 and 11, or the base of the decimal number system.
