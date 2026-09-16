@@ -1,0 +1,12 @@
+{
+  "auto-save-chat": {
+    "enabled": true,
+    "Stop": [
+      {
+        "type": "command",
+        "command": "python ./save_chat_hook.py",
+        "timeout": 15
+      }
+    ]
+  }
+}
