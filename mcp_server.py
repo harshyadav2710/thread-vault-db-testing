@@ -382,11 +382,11 @@ def _auto_save_turn(user: str, session_id: str, raw_body: bytes) -> None:
                 f"note: This is an auto-captured backup. The primary save is via save_chat_transcript().\n"
                 f"---\n\n"
             )
-        stamp = datetime.now(timezone.est).strftime("%H:%M:%S EST")
+        stamp = datetime.now(timezone.ist).strftime("%H:%M:%S IST")
         block = f"\n\n### {stamp}\n\n" + "\n\n".join(text_bits)
         path.write_text(existing + block, encoding="utf-8")
         rel_path = path.relative_to(VAULT_ROOT)
-        timestamp = datetime.now(timezone.u).strftime("%Y-%m-%d %H:%M EST")
+        timestamp = datetime.now(timezone.ist).strftime("%Y-%m-%d %H:%M IST")
         push_result = _git_commit_and_push(
             rel_path, f"auto-save: backup {rel_path.name} ({timestamp})"
         )
@@ -693,7 +693,7 @@ def save_chat_transcript(thread_name: str, content: str) -> str:
                     content_clean = f"{note}\n\n" + content_clean
 
         CHAT_DIR.mkdir(parents=True, exist_ok=True)
-        timestamp = datetime.now(timezone.est).strftime("%Y-%m-%d %H:%M est")
+        timestamp = datetime.now(timezone.ist).strftime("%Y-%m-%d %H:%M IST")
         frontmatter = (
             f"---\nthread_name: \"{thread_name}\"\nuser: \"{current_user()}\"\ntype: claude-chat\n"
             f"created: {created}\nupdated: {today}\n---\n\n"
@@ -814,7 +814,7 @@ def save_analysis(title: str, content: str) -> str:
         n += 1
 
     out.parent.mkdir(parents=True, exist_ok=True)
-    timestamp = datetime.now(timezone.est).strftime("%Y-%m-%d %H:%M est")
+    timestamp = datetime.now(timezone.ist).strftime("%Y-%m-%d %H:%M IST")
     frontmatter = f"---\ntitle: \"{safe_title}\"\ntype: analysis\ncreated: {today}\nupdated: {today}\n---\n\n"
     out.write_text(frontmatter + content.strip() + "\n", encoding="utf-8")
 
