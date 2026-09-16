@@ -29,3 +29,9 @@ updated: 2026-09-16
 **User:** what is 10+20
 
 **Claude:** 10 + 20 = 30
+
+---
+
+**User:** what is 20+40
+
+**Claude:** 20 + 40 = 60
