@@ -709,58 +709,58 @@ def _chat_dir_for(user: str | None) -> list[Path]:
     return files
 
 
-@mcp.tool()
-def search_claude_chat_queries(query: str, user: str = "") -> str:
-    """Search saved Claude chat transcripts (raw/claude-chat-queries/) — by topic, keyword, or content.
-    user: optional — restrict to one user's threads (e.g. 'ayan'), matching the <user>_ filename
-        prefix. Leave empty to search across all users' threads."""
-    files = _chat_dir_for(user or None)
-    if not files:
-        return "No saved chat transcripts yet." if not user else f"No saved chat transcripts for user '{user}'."
-    q = query.lower()
-    results = []
-    for path in files:
-        content = _read(path)
-        lines = content.splitlines()
-        matches = []
-        for i, line in enumerate(lines):
-            if q in line.lower():
-                start = max(0, i - 1)
-                end = min(len(lines), i + 3)
-                matches.append("\n".join(lines[start:end]))
-        if matches:
-            rel = path.relative_to(VAULT_ROOT)
-            results.append(f"### {rel}\n" + "\n---\n".join(matches[:3]))
-    if not results:
-        return f"No results for '{query}'" + (f" (user='{user}')" if user else "") + "."
-    return f"Results for '{query}':\n\n" + "\n\n".join(results[:12])
+# @mcp.tool()  # Fetching disabled
+# def search_claude_chat_queries(query: str, user: str = "") -> str:
+#     """Search saved Claude chat transcripts (raw/claude-chat-queries/) — by topic, keyword, or content.
+#     user: optional — restrict to one user's threads (e.g. 'ayan'), matching the <user>_ filename
+#         prefix. Leave empty to search across all users' threads."""
+#     files = _chat_dir_for(user or None)
+#     if not files:
+#         return "No saved chat transcripts yet." if not user else f"No saved chat transcripts for user '{user}'."
+#     q = query.lower()
+#     results = []
+#     for path in files:
+#         content = _read(path)
+#         lines = content.splitlines()
+#         matches = []
+#         for i, line in enumerate(lines):
+#             if q in line.lower():
+#                 start = max(0, i - 1)
+#                 end = min(len(lines), i + 3)
+#                 matches.append("\n".join(lines[start:end]))
+#         if matches:
+#             rel = path.relative_to(VAULT_ROOT)
+#             results.append(f"### {rel}\n" + "\n---\n".join(matches[:3]))
+#     if not results:
+#         return f"No results for '{query}'" + (f" (user='{user}')" if user else "") + "."
+#     return f"Results for '{query}':\n\n" + "\n\n".join(results[:12])
 
 
-@mcp.tool()
-def list_claude_chat_queries(user: str = "") -> str:
-    """List all saved Claude chat transcripts, newest first.
-    user: optional — restrict to one user's threads (e.g. 'ayan'). Leave empty for all users."""
-    files = _chat_dir_for(user or None)
-    if not files:
-        return "No saved chat transcripts yet." if not user else f"No saved chat transcripts for user '{user}'."
-    lines = []
-    for f in files[:150]:
-        rel = str(f.relative_to(VAULT_ROOT))
-        content = _read(f)
-        thread_match = re.search(r'^thread_name: "(.*?)"', content, flags=re.MULTILINE)
-        label = thread_match.group(1) if thread_match else f.stem
-        lines.append(f"- [{label}]({rel})")
-    note = f"\n\n(showing 150 of {len(files)})" if len(files) > 150 else ""
-    return "Saved chat transcripts:\n\n" + "\n".join(lines) + note
+# @mcp.tool()  # Fetching disabled
+# def list_claude_chat_queries(user: str = "") -> str:
+#     """List all saved Claude chat transcripts, newest first.
+#     user: optional — restrict to one user's threads (e.g. 'ayan'). Leave empty for all users."""
+#     files = _chat_dir_for(user or None)
+#     if not files:
+#         return "No saved chat transcripts yet." if not user else f"No saved chat transcripts for user '{user}'."
+#     lines = []
+#     for f in files[:150]:
+#         rel = str(f.relative_to(VAULT_ROOT))
+#         content = _read(f)
+#         thread_match = re.search(r'^thread_name: "(.*?)"', content, flags=re.MULTILINE)
+#         label = thread_match.group(1) if thread_match else f.stem
+#         lines.append(f"- [{label}]({rel})")
+#     note = f"\n\n(showing 150 of {len(files)})" if len(files) > 150 else ""
+#     return "Saved chat transcripts:\n\n" + "\n".join(lines) + note
 
 
-@mcp.tool()
-def get_claude_chat_query(file_path: str) -> str:
-    """Return the full content of a saved Claude chat transcript.
-    file_path: relative path from vault root, e.g. 'raw/claude-chat-queries/2026-07-24-testing-01.md'
-    Get the path from search_claude_chat_queries or list_claude_chat_queries first — don't guess it."""
-    p = VAULT_ROOT / file_path
-    return _read(p) if p.exists() else f"File not found: {file_path}"
+# @mcp.tool()  # Fetching disabled
+# def get_claude_chat_query(file_path: str) -> str:
+#     """Return the full content of a saved Claude chat transcript.
+#     file_path: relative path from vault root, e.g. 'raw/claude-chat-queries/2026-07-24-testing-01.md'
+#     Get the path from search_claude_chat_queries or list_claude_chat_queries first — don't guess it."""
+#     p = VAULT_ROOT / file_path
+#     return _read(p) if p.exists() else f"File not found: {file_path}"
 
 
 # ── Save Analysis ────────────────────────────────────────────────────────────
@@ -796,41 +796,41 @@ def save_analysis(title: str, content: str) -> str:
     return f"Saved: {rel_path}\n{push_result}"
 
 
-@mcp.tool()
-def search_analyses(query: str) -> str:
-    """Search saved analysis pages (wiki/analyses/) — by topic, keyword, or title."""
-    if not ANALYSES_DIR.exists():
-        return "No saved analyses yet."
-    return _search(ANALYSES_DIR, query)
+# @mcp.tool()  # Fetching disabled
+# def search_analyses(query: str) -> str:
+#     """Search saved analysis pages (wiki/analyses/) — by topic, keyword, or title."""
+#     if not ANALYSES_DIR.exists():
+#         return "No saved analyses yet."
+#     return _search(ANALYSES_DIR, query)
 
 
-@mcp.tool()
-def list_analyses() -> str:
-    """List all saved analysis pages, newest first."""
-    if not ANALYSES_DIR.exists():
-        return "No saved analyses yet."
-    files = sorted(ANALYSES_DIR.rglob("*.md"), reverse=True)
-    if not files:
-        return "No saved analyses yet."
-    lines = []
-    for f in files[:150]:
-        rel = str(f.relative_to(VAULT_ROOT))
-        try:
-            title = f.read_text(encoding="utf-8").split("\n")[0].lstrip("# ").strip()
-        except Exception:
-            title = f.stem
-        lines.append(f"- [{title}]({rel})")
-    note = f"\n\n(showing 150 of {len(files)})" if len(files) > 150 else ""
-    return "Saved analyses:\n\n" + "\n".join(lines) + note
+# @mcp.tool()  # Fetching disabled
+# def list_analyses() -> str:
+#     """List all saved analysis pages, newest first."""
+#     if not ANALYSES_DIR.exists():
+#         return "No saved analyses yet."
+#     files = sorted(ANALYSES_DIR.rglob("*.md"), reverse=True)
+#     if not files:
+#         return "No saved analyses yet."
+#     lines = []
+#     for f in files[:150]:
+#         rel = str(f.relative_to(VAULT_ROOT))
+#         try:
+#             title = f.read_text(encoding="utf-8").split("\n")[0].lstrip("# ").strip()
+#         except Exception:
+#             title = f.stem
+#         lines.append(f"- [{title}]({rel})")
+#     note = f"\n\n(showing 150 of {len(files)})" if len(files) > 150 else ""
+#     return "Saved analyses:\n\n" + "\n".join(lines) + note
 
 
-@mcp.tool()
-def get_analysis(file_path: str) -> str:
-    """Return the full content of a saved analysis page.
-    file_path: relative path from vault root, e.g. 'wiki/analyses/2026-07-24 My Analysis.md'
-    Get the path from search_analyses or list_analyses first — don't guess it."""
-    p = VAULT_ROOT / file_path
-    return _read(p) if p.exists() else f"File not found: {file_path}"
+# @mcp.tool()  # Fetching disabled
+# def get_analysis(file_path: str) -> str:
+#     """Return the full content of a saved analysis page.
+#     file_path: relative path from vault root, e.g. 'wiki/analyses/2026-07-24 My Analysis.md'
+#     Get the path from search_analyses or list_analyses first — don't guess it."""
+#     p = VAULT_ROOT / file_path
+#     return _read(p) if p.exists() else f"File not found: {file_path}"
 
 
 # ── Chat Summaries (Layer 2 — synthesized from raw/claude-chat-queries/) ────
@@ -839,42 +839,42 @@ def get_analysis(file_path: str) -> str:
 # its file-write tools, then commits/pushes them the same way save_analysis
 # does. Only read-back tools are exposed here.
 
-@mcp.tool()
-def search_chat_summaries(query: str) -> str:
-    """Search synthesized chat-summary pages (wiki/chat-summaries/) — the topic/entity-clustered
-    synthesis layer built on top of raw/claude-chat-queries/. Use this before reading raw transcripts."""
-    if not CHAT_SUMMARIES_DIR.exists():
-        return "No chat summaries yet."
-    return _search(CHAT_SUMMARIES_DIR, query)
+# @mcp.tool()  # Fetching disabled
+# def search_chat_summaries(query: str) -> str:
+#     """Search synthesized chat-summary pages (wiki/chat-summaries/) — the topic/entity-clustered
+#     synthesis layer built on top of raw/claude-chat-queries/. Use this before reading raw transcripts."""
+#     if not CHAT_SUMMARIES_DIR.exists():
+#         return "No chat summaries yet."
+#     return _search(CHAT_SUMMARIES_DIR, query)
 
 
-@mcp.tool()
-def list_chat_summaries() -> str:
-    """List all chat-summary pages, newest first."""
-    if not CHAT_SUMMARIES_DIR.exists():
-        return "No chat summaries yet."
-    files = sorted(CHAT_SUMMARIES_DIR.rglob("*.md"), reverse=True)
-    if not files:
-        return "No chat summaries yet."
-    lines = []
-    for f in files[:150]:
-        rel = str(f.relative_to(VAULT_ROOT))
-        try:
-            title = f.read_text(encoding="utf-8").split("\n")[0].lstrip("# ").strip()
-        except Exception:
-            title = f.stem
-        lines.append(f"- [{title}]({rel})")
-    note = f"\n\n(showing 150 of {len(files)})" if len(files) > 150 else ""
-    return "Chat summaries:\n\n" + "\n".join(lines) + note
+# @mcp.tool()  # Fetching disabled
+# def list_chat_summaries() -> str:
+#     """List all chat-summary pages, newest first."""
+#     if not CHAT_SUMMARIES_DIR.exists():
+#         return "No chat summaries yet."
+#     files = sorted(CHAT_SUMMARIES_DIR.rglob("*.md"), reverse=True)
+#     if not files:
+#         return "No chat summaries yet."
+#     lines = []
+#     for f in files[:150]:
+#         rel = str(f.relative_to(VAULT_ROOT))
+#         try:
+#             title = f.read_text(encoding="utf-8").split("\n")[0].lstrip("# ").strip()
+#         except Exception:
+#             title = f.stem
+#         lines.append(f"- [{title}]({rel})")
+#     note = f"\n\n(showing 150 of {len(files)})" if len(files) > 150 else ""
+#     return "Chat summaries:\n\n" + "\n".join(lines) + note
 
 
-@mcp.tool()
-def get_chat_summary(file_path: str) -> str:
-    """Return the full content of a chat-summary page.
-    file_path: relative path from vault root, e.g. 'wiki/chat-summaries/Sabre Alloys Payment Discipline.md'
-    Get the path from search_chat_summaries or list_chat_summaries first — don't guess it."""
-    p = VAULT_ROOT / file_path
-    return _read(p) if p.exists() else f"File not found: {file_path}"
+# @mcp.tool()  # Fetching disabled
+# def get_chat_summary(file_path: str) -> str:
+#     """Return the full content of a chat-summary page.
+#     file_path: relative path from vault root, e.g. 'wiki/chat-summaries/Sabre Alloys Payment Discipline.md'
+#     Get the path from search_chat_summaries or list_chat_summaries first — don't guess it."""
+#     p = VAULT_ROOT / file_path
+#     return _read(p) if p.exists() else f"File not found: {file_path}"
 
 
 # ── OV2 Cross-Reference (propose → approve → apply) ─────────────────────────
@@ -915,17 +915,17 @@ def _ensure_ov2_clone() -> str | None:
     return None
 
 
-@mcp.tool()
-def search_ov2_wiki(query: str) -> str:
-    """Search OV2's wiki pages directly from this server, to find genuinely relevant pages
-    before proposing a cross-reference. Requires OV2_GITHUB_TOKEN (read access is enough
-    for this call, though the same token is also used to push in apply_ov2_xref).
-    Prefer calling OV2's own search_wiki/get_wiki_page tools directly if OV2's MCP connector
-    is available in this session — this is a fallback for when it isn't."""
-    err = _ensure_ov2_clone()
-    if err:
-        return err
-    return _search(OV2_CLONE_DIR / "wiki", query)
+# @mcp.tool()  # Fetching disabled
+# def search_ov2_wiki(query: str) -> str:
+#     """Search OV2's wiki pages directly from this server, to find genuinely relevant pages
+#     before proposing a cross-reference. Requires OV2_GITHUB_TOKEN (read access is enough
+#     for this call, though the same token is also used to push in apply_ov2_xref).
+#     Prefer calling OV2's own search_wiki/get_wiki_page tools directly if OV2's MCP connector
+#     is available in this session — this is a fallback for when it isn't."""
+#     err = _ensure_ov2_clone()
+#     if err:
+#         return err
+#     return _search(OV2_CLONE_DIR / "wiki", query)
 
 
 @mcp.tool()
@@ -964,15 +964,15 @@ def propose_ov2_xref(ov2_page_path: str, pointer_line: str, chat_summary_title: 
     )
 
 
-@mcp.tool()
-def list_staged_ov2_xrefs() -> str:
-    """List all staged (not-yet-applied) OV2 cross-reference proposals awaiting review."""
-    if not OV2_XREF_STAGING.exists():
-        return "No staged cross-references."
-    files = sorted(OV2_XREF_STAGING.glob("*.md"))
-    if not files:
-        return "No staged cross-references."
-    return "Staged cross-references:\n\n" + "\n\n".join(_read(f) for f in files)
+# @mcp.tool()  # Fetching disabled
+# def list_staged_ov2_xrefs() -> str:
+#     """List all staged (not-yet-applied) OV2 cross-reference proposals awaiting review."""
+#     if not OV2_XREF_STAGING.exists():
+#         return "No staged cross-references."
+#     files = sorted(OV2_XREF_STAGING.glob("*.md"))
+#     if not files:
+#         return "No staged cross-references."
+#     return "Staged cross-references:\n\n" + "\n\n".join(_read(f) for f in files)
 
 
 @mcp.tool()
