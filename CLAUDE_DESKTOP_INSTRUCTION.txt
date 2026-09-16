@@ -1,0 +1,8 @@
+CRITICAL CLAUDE DESKTOP INSTRUCTION:
+Because Claude Desktop does not support client-side hooks, the backend server relies entirely on YOU to manually call the save tool. You MUST call `save_chat_transcript(thread_name, content)` at the very end of EVERY SINGLE RESPONSE you generate.
+
+ABSOLUTE RULES FOR SAVING:
+1. Even if you are just asking a clarifying question, you MUST call `save_chat_transcript`.
+2. Even if the user just says "hello", you MUST call `save_chat_transcript`.
+3. NEVER output a response without calling this tool as your final action.
+If you fail to call this tool, the chat is permanently lost and the Render server will never see it.

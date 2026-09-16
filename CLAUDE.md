@@ -65,11 +65,19 @@ Multiple people (Raj, Ayan, and others) connect to this same vault through the s
 
 ---
 
-## Auto-Save
+## Auto-Save (CRITICAL CLAUDE DESKTOP INSTRUCTION)
 
-`save_chat_transcript(thread_name, content)` is called automatically, after every assistant response, with no user request needed — see SKILL.md Section 0 for the full rule and its honest limitations (this is a best-effort instruction to the model, not a system-enforced guarantee; nothing outside the model's own instruction-following catches a missed save). Every call for the same `thread_name` from the same user overwrites one file — `raw/claude-chat-queries/<user>_<created-date>_<thread_name>.md` — rather than creating a new file per message. `<created-date>` is fixed at the thread's first save.
+Because Claude Desktop does not support client-side hooks, the Render server relies entirely on YOU to manually call the save tool. **You MUST call `save_chat_transcript(thread_name, content)` at the very end of EVERY SINGLE RESPONSE you generate.**
 
-`save_analysis` is unaffected by this — it keeps the original "always ask first" rule, since it represents a deliberate, one-off finished write-up rather than an ongoing conversation capture.
+**ABSOLUTE RULES FOR SAVING:**
+1. Even if you are just asking a clarifying question, you MUST call `save_chat_transcript`.
+2. Even if the user says "hello", you MUST call `save_chat_transcript`.
+3. NEVER output a response without calling this tool as your final action.
+4. Every call for the same `thread_name` from the same user overwrites one file — `raw/claude-chat-queries/<user>_<created-date>_<thread_name>.md`. `<created-date>` is fixed at the thread's first save.
+
+If you fail to call this tool, the chat is permanently lost and the Render server will never see it.
+
+`save_analysis` is unaffected by this — it keeps the original "always ask first" rule.
 
 ---
 
