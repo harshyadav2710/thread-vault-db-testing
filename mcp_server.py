@@ -358,7 +358,7 @@ def _auto_save_turn(user: str, session_id: str, raw_body: bytes) -> None:
         return
 
     u = re.sub(r"[^a-z0-9]+", "-", user.lower()).strip("-") or "unknown"
-    today = date.today().isoformat()
+    today = datetime.now(IST).date().isoformat()
     CHAT_DIR.mkdir(parents=True, exist_ok=True)
     
     # Find most recent auto-save file for this user today (session-agnostic)
@@ -596,7 +596,7 @@ def _chat_transcript_path(thread_name: str) -> Path:
         if existing:
             # Only reuse if file was updated TODAY — older files shouldn't be overwritten
             # when a new session starts with the same thread_name (prevents accidental loss)
-            today = date.today().isoformat()
+            today = datetime.now(IST).date().isoformat()
             existing_path = existing[0]
             frontmatter = _read(existing_path)
             updated_match = re.search(r'^updated: (\S+)', frontmatter, flags=re.MULTILINE)
@@ -604,7 +604,7 @@ def _chat_transcript_path(thread_name: str) -> Path:
                 last_updated = updated_match.group(1)
                 if last_updated == today:
                     return existing_path
-    today = date.today().isoformat()
+    today = datetime.now(IST).date().isoformat()
     return CHAT_DIR / f"{user}_{today}_{slug}.md"
 
 
@@ -646,7 +646,7 @@ def save_chat_transcript(thread_name: str, content: str) -> str:
     lock = _get_file_lock(out)
     with lock:
         is_new = not out.exists()
-        today = date.today().isoformat()
+        today = datetime.now(IST).date().isoformat()
         created = today
         existing_content = ""
         if not is_new:
@@ -805,7 +805,7 @@ def save_analysis(title: str, content: str) -> str:
     title: short title (e.g. 'Sabre Alloys Churn Risk Assessment')
     content: full markdown — include ## Question, ## Findings, ## Sources sections
     """
-    today = date.today().isoformat()
+    today = datetime.now(IST).date().isoformat()
     safe_title = re.sub(r'[<>:"/\\|?*]', "", title).strip()
     filename = f"{today} {safe_title}.md"
     out = ANALYSES_DIR / filename
@@ -977,7 +977,7 @@ def propose_ov2_xref(ov2_page_path: str, pointer_line: str, chat_summary_title: 
         so a future get_chat_summary() call can retrieve it by name
     """
     OV2_XREF_STAGING.mkdir(parents=True, exist_ok=True)
-    staged_id = re.sub(r"[^a-z0-9]+", "-", f"{date.today().isoformat()}-{chat_summary_title}".lower()).strip("-")
+    staged_id = re.sub(r"[^a-z0-9]+", "-", f"{datetime.now(IST).date().isoformat()}-{chat_summary_title}".lower()).strip("-")
     n = 2
     base_id = staged_id
     while (OV2_XREF_STAGING / f"{staged_id}.md").exists():
@@ -986,7 +986,7 @@ def propose_ov2_xref(ov2_page_path: str, pointer_line: str, chat_summary_title: 
     out = OV2_XREF_STAGING / f"{staged_id}.md"
     out.write_text(
         f"---\nov2_page_path: \"{ov2_page_path}\"\nchat_summary_title: \"{chat_summary_title}\"\n"
-        f"status: pending\ncreated: {date.today().isoformat()}\n---\n\n{pointer_line.strip()}\n",
+        f"status: pending\ncreated: {datetime.now(IST).date().isoformat()}\n---\n\n{pointer_line.strip()}\n",
         encoding="utf-8",
     )
     return (
