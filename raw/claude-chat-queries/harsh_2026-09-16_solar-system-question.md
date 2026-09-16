@@ -29,3 +29,16 @@ updated: 2026-09-16
 - Unique geological features (plate tectonics, weather systems, the Moon)
 - Age: 4.54 billion years
 - Offered further exploration options
+
+---
+
+**User:** What do you know about mercury?
+
+**Claude:** Comprehensive overview of Mercury including:
+- Physical characteristics (smallest planet, large iron core, heavily cratered surface, virtually no atmosphere)
+- Orbital mechanics (88-day orbit, 59-day rotation, fastest orbital speed, 0.39 AU from Sun)
+- Extreme temperatures (800°F dayside, -290°F nightside)
+- Unique features (3:2 spin-orbit resonance, no moons, highest orbital eccentricity, tidal heating)
+- Exploration history (Mariner 10, MESSENGER, BepiColombo)
+- Noted as unsuitable for human settlement
+- Offered further exploration options
