@@ -23,3 +23,9 @@ updated: 2026-09-16
 **User:** what is 10+2
 
 **Claude:** 10 + 2 = 12
+
+---
+
+**User:** what is 10+20
+
+**Claude:** 10 + 20 = 30
