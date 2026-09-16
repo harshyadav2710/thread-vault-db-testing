@@ -657,6 +657,41 @@ def save_chat_transcript(thread_name: str, content: str) -> str:
         # Allow saves of any size: short, long, compacted, expanded — anything
         # that has text gets saved. The rule is: if it exists, save it.
 
+        if is_new and CHAT_DIR.exists():
+            user_safe = re.sub(r"[^a-z0-9]+", "-", current_user().lower()).strip("-") or "unknown"
+            slug = re.sub(r"[^a-z0-9]+", "-", thread_name.lower()).strip("-") or "conversation"
+            no_suffix = list(CHAT_DIR.glob(f"{user_safe}*{slug}.md"))
+            suffix = list(CHAT_DIR.glob(f"{user_safe}*{slug}-*.md"))
+            older = sorted(no_suffix + suffix, reverse=True)
+            older = [f for f in older if f != out]
+            if older:
+                older_file = older[0]
+                older_content = _read(older_file)
+                note = f"> *Note: Chat continues from here (earlier parts were saved in {older_file.name}).*"
+                
+                inserted = False
+                
+                # 1. Try exact body boundary matching (agnostic to markdown structure)
+                older_body = re.sub(r'^---\n.*?\n---\n*', '', older_content, flags=re.DOTALL).strip()
+                if older_body and older_body in content_clean:
+                    parts = content_clean.split(older_body, 1)
+                    content_clean = parts[0] + older_body + f"\n\n{note}\n\n" + parts[1].lstrip()
+                    inserted = True
+
+                # 2. Try Turn-based boundary matching
+                if not inserted:
+                    turn_matches = re.findall(r'^## Turn (\d+)', older_content, flags=re.MULTILINE)
+                    if turn_matches:
+                        last_turn = int(turn_matches[-1])
+                        next_turn = last_turn + 1
+                        content_clean, count = re.subn(rf'^(## Turn {next_turn}\b)', f"{note}\n\n" + r'\1', content_clean, flags=re.MULTILINE)
+                        if count > 0:
+                            inserted = True
+                        
+                # 3. Fallback: prepend to the top
+                if not inserted:
+                    content_clean = f"{note}\n\n" + content_clean
+
         CHAT_DIR.mkdir(parents=True, exist_ok=True)
         timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
         frontmatter = (
