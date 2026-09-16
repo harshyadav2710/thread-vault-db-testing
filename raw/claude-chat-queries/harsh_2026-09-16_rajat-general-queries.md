@@ -53,3 +53,9 @@ updated: 2026-09-16
 **User:** what is 160+9
 
 **Claude:** 160 + 9 = 169
+
+---
+
+**User:** what is 109+2
+
+**Claude:** 109 + 2 = 111
