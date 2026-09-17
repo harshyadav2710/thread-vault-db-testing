@@ -470,7 +470,8 @@ def _search(directory: Path, query: str, max_results: int = 12) -> str:
             results.append(f"### {rel}\n" + "\n---\n".join(matches[:3]))
     if not results:
         return f"No results for '{query}'."
-    return f"Results for '{query}':\n\n" + "\n\n".join(results[:max_results])
+    total_found = len(results)
+    return f"Total results found for '{query}': {total_found}\n\nShowing top {min(total_found, max_results)}:\n\n" + "\n\n".join(results[:max_results])
 
 
 # ── Git (shared by both save tools) ─────────────────────────────────────────
@@ -768,7 +769,8 @@ def search_claude_chat_queries(query: str, user: str = "") -> str:
             results.append(f"### {rel}\n" + "\n---\n".join(matches[:3]))
     if not results:
         return f"No results for '{query}'" + (f" (user='{user}')" if user else "") + "."
-    return f"Results for '{query}':\n\n" + "\n\n".join(results[:12])
+    total_found = len(results)
+    return f"Total results found for '{query}': {total_found}\n\nShowing top {min(total_found, 12)}:\n\n" + "\n\n".join(results[:12])
 
 
 @mcp.tool()
@@ -785,8 +787,9 @@ def list_claude_chat_queries(user: str = "") -> str:
         thread_match = re.search(r'^thread_name: "(.*?)"', content, flags=re.MULTILINE)
         label = thread_match.group(1) if thread_match else f.stem
         lines.append(f"- [{label}]({rel})")
-    note = f"\n\n(showing 150 of {len(files)})" if len(files) > 150 else ""
-    return "Saved chat transcripts:\n\n" + "\n".join(lines) + note
+    total_files = len(files)
+    note = f"\n\n(showing {len(lines)} of {total_files})" if total_files > 150 else ""
+    return f"Total saved chat transcripts: {total_files}\n\n" + "\n".join(lines) + note
 
 
 @mcp.tool()
@@ -855,8 +858,9 @@ def list_analyses() -> str:
         except Exception:
             title = f.stem
         lines.append(f"- [{title}]({rel})")
-    note = f"\n\n(showing 150 of {len(files)})" if len(files) > 150 else ""
-    return "Saved analyses:\n\n" + "\n".join(lines) + note
+    total_files = len(files)
+    note = f"\n\n(showing {len(lines)} of {total_files})" if total_files > 150 else ""
+    return f"Total saved analyses: {total_files}\n\n" + "\n".join(lines) + note
 
 
 @mcp.tool()
@@ -899,8 +903,9 @@ def list_chat_summaries() -> str:
         except Exception:
             title = f.stem
         lines.append(f"- [{title}]({rel})")
-    note = f"\n\n(showing 150 of {len(files)})" if len(files) > 150 else ""
-    return "Chat summaries:\n\n" + "\n".join(lines) + note
+    total_files = len(files)
+    note = f"\n\n(showing {len(lines)} of {total_files})" if total_files > 150 else ""
+    return f"Total chat summaries: {total_files}\n\n" + "\n".join(lines) + note
 
 
 @mcp.tool()
