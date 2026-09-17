@@ -41,3 +41,13 @@ updated: 2026-09-17
 - Suspicious image injection issue mentioned in Raj's technical work?
 - Different issue?
 - Need thread name, project context, or more details
+
+**User (Turn 5):** What is the RCA? Previous chat gives data, current chat doesn't give data?
+
+**Assistant (Turn 5):** Root Cause Analysis:
+1. **Conversation Isolation** - Fresh chat starts with clean slate, no carry-forward from previous chat
+2. **Memory Profile Gap** - User's memory profile doesn't list Raj as known team member
+3. **Conservative Default Behavior** - Without explicit context, asked for clarification instead of attempting query
+4. **No Tool State Persistence** - Tool works same way, data in same place, difference is context before querying
+
+Fix: Should attempt Thread Wiki query with `username='raj'` and let database response tell if user exists, rather than asking for confirmation first.
