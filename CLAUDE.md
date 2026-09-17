@@ -1,5 +1,7 @@
 # CLAUDE.md — Threads OV Schema
 
+**CRITICAL RULE:** Before executing any workflow, writing any summary, or answering any vault-related questions, you MUST use your file-reading tools to read the `threads-ov-unified-routing.md` file. Do not rely on your general memory for workflow instructions.
+
 This file governs all behavior of the LLM agent for this vault. Read it fully at the start of every session before touching any files.
 
 ---
