@@ -47,10 +47,10 @@ updated: 2026-09-18
 **User:** Search for assets assigned to employees.
 
 **Tools Invoked:**
-- mcp__hr__search_assets() with multiple queries
+- mcp__hr__search_assets()
 - mcp__hr__list_assets() → 19 assets returned
 
-**Result:** EOXS Salary Details (tier2_confidential_hr) identified as primary asset containing employee compensation. 19 total assets in system.
+**Result:** EOXS Salary Details (tier2_confidential_hr) identified as primary employee asset. 19 total assets in system.
 
 ---
 
@@ -63,7 +63,9 @@ updated: 2026-09-18
 - Sabre Alloys: Import replacement cost (Released, 2024-04-26)
 - PPC Metals: Import Warehouse Locations (Completed, 2025-08-22)
 - Discount Pipe Steel: Import Bank Statements (Completed, 2025-06-12)
-- Eastern States Steel: Multiple tasks (2025-08-11 to 2025-12-16)
+- Eastern States Steel: Multiple import/compilation tasks
+
+**Summary:** 14 completed tasks, 3 active/in-progress, 4 major clients.
 
 ---
 
@@ -72,7 +74,9 @@ updated: 2026-09-18
 
 **Finding:** NO dedicated authentication repository documentation.
 
-**Related Wiki Pages:** 12 pages on user permissions, access control, and role management.
+**Related Wiki Pages (12 found):** User permissions, access control, role management across clients.
+
+**Key Finding:** AskCruz system is role-aware but has NO complete authoritative list of named access tiers or permissions.
 
 ---
 
@@ -82,14 +86,26 @@ updated: 2026-09-18
 **Results: 5 Wiki Pages Found**
 
 **Primary pages:**
-- EOXS Employment Agreement Template — 70/30 Salary Split & Streamlined Leave Approval (Sep 7 2026)
-- EOXS Leave Policy Enforcement — May–June 2026 Case Log
+1. EOXS Employment Agreement Template — 70/30 Salary Split & Streamlined Leave Approval (Sep 7 2026) — Analysis
+2. EOXS Leave Policy Enforcement — May–June 2026 Case Log — Analysis
 
-**Leave Types:** Annual, Sick, Casual, Family function, Christmas
+**Related pages:**
+3. EOXS Offer Letter Template — Concept
+4. Internal Email Archive — HR & Team Admin (2024-01-15 to 2024-08-30) — Source
+5. Faraz Raza (Employee) — Entity
+
+**Leave Types Documented:** Annual Paid, Sick, Casual, Family function, Christmas
+
+**Policy Details:**
+- First 3 months of employment: No paid leave eligibility
+- Sick leave: Portal-based application
+- Casual leave: Requires approval
+- Annual leave: Formal allocation & tracking system
+- Sep 7 2026: Streamlined leave approval process introduced
 
 ---
 
-## Turn 10: Search for assets assigned to employees (Repeat)
+## Turn 10: Search for assets assigned to employees (Repeat Request)
 **User:** Search for assets assigned to employees.
 
 **Tools Invoked:**
@@ -99,12 +115,36 @@ updated: 2026-09-18
 **Result: 19 Assets in System**
 
 **Employee-Related Asset:**
-- ID 10: EOXS Salary Details (tier2_confidential_hr) — Contains employee compensation/financial data
+- ID 10: EOXS Salary Details (tier2_confidential_hr) — Employee compensation/financial data
 
 **Complete Assets Breakdown:**
-- Product/Project Assets: 6 (AI Joe, AskCruz variants)
-- SOPs & Technical References: 8 (Code review, development standards, deployment, etc.)
-- Company & Business Assets: 4 (Company overview, ERP features, ICP, EOXS NEWS)
-- HR/Employee Assets: 1 (EOXS Salary Details)
 
-**No Dedicated Equipment/Asset Assignment Document:** System contains no asset inventory for employee equipment, laptops, devices, or other tangible resource allocation. Only financial compensation asset exists for employees.
+**Product & Project Assets (6):**
+1. AI Joe — Features & Capabilities
+2. AI Joe — Project Overview
+3. AskCruz — Comprehensive Client-Facing Product Understanding
+4. AskCruz — Product Feature File
+5. AskCruz — Product–Market Fit & Product Knowledge Guide
+6. AskCruz — Self-Knowledge, Product Definition & System Architecture
+
+**SOPs & Technical References (8):**
+7. Code Review and Technical QA SOP
+8. Development Standards and Code Structure SOP
+9. EOXS Client Implementation and Go-Live SOP
+10. EOXS NEWS — Standard Operating Procedure
+11. EOXSplore
+12. GitLab Branching, Sandbox Deployment, and Production Release Management SOP
+13. PRODUCT DEMO VIDEO LIBRARY
+14. Sales Coach — Technical Reference
+15. SOP — Standard Operating Procedure
+
+**Company & Business Assets (4):**
+16. EOXS — Company Overview
+17. EOXS ERP — Product Features Overview
+18. EOXS — Ideal Customer Profile (ICP)
+19. EOXS NEWS — Standard Operating Procedure
+
+**HR & Employee Assets (1):**
+20. EOXS Salary Details (tier2_confidential_hr) ← **Only employee-assigned asset**
+
+**Key Finding:** No dedicated equipment/asset assignment document exists. System contains only financial compensation asset for employees. No inventory of laptops, devices, or tangible resource allocation documented.
