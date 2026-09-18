@@ -22,11 +22,15 @@ Response: No repo docs currently available.
 
 ## Turn 4: Tool invocation test
 User: can you give me the one of content of any repo document, i just need to test which tool you're invoking
+Response: Tools invoked: list_repo_docs(), search_repo_docs(), get_repo_doc() with identifiers. All returned empty/no match.
+
+## Turn 5: Retrieve repository document
+User: Retrieve repository document, any one but only one
 
 **Tools Invoked:**
-1. `mcp__hr__list_repo_docs()` — Lists available repo documents (empty result)
-2. `mcp__hr__search_repo_docs(query)` — Searches repo docs by keyword (empty result)
-3. `mcp__hr__get_repo_doc(identifier: "architecture")` — Get repo doc by ID/slug → no match
-4. `mcp__hr__get_repo_doc(identifier: "1")` — Get repo doc by numeric ID → no match
+1. `mcp__hr__search_repo_docs("*")` → empty array
+2. `mcp__hr__get_repo_doc("0")` → no repo doc matching '0'
+3. `mcp__hr__get_repo_doc("readme")` → no repo doc matching 'readme'
+4. `mcp__hr__get_repo_doc("codebase")` → no repo doc matching 'codebase'
 
-**Result:** Tools are callable and working correctly. No repo documents are populated in the HR system yet.
+**Conclusion:** Zero repository documents are populated in the HR system. The repo docs section is completely empty.
