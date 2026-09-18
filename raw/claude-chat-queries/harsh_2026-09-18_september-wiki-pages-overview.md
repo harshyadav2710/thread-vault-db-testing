@@ -42,13 +42,6 @@ DPS went live July 7, 2025; transition to ticket-based support occurred Aug 7, 2
 **Summary from search snippet:**
 In September 2025, HR lead Isha Bisht ran a manual, Cattr-derived logged-hours reporting cycle for the EOXS team, capturing overtime and hours for Dhrup, Harneet, Ron, Arpan, Rohit, Sakshi, Sheenam, and others with itemized breakdowns per employee.
 
-## Key Themes Across September Pages
-
-1. **Organizational Restructuring** — Four-person headcount reduction coordinated within one week
-2. **Client Onboarding Friction** — ESS struggling with ERP adoption; DPS managing post-launch chaos
-3. **Infrastructure & Support Transition** — DPS moving from direct support to ticket system; packing slip bugs emerging as persistent blocker
-4. **HR Administration** — Logging hours, managing payroll cycles, employee departures
-
 ---
 
 ## Turn 2: User Request for Full Wiki Page Content
@@ -57,38 +50,72 @@ In September 2025, HR lead Isha Bisht ran a manual, Cattr-derived logged-hours r
 
 ### Response: September 2025 EOXS Employee Departures & Restructuring (Full Content)
 
-**Type:** Analysis | **Created:** Aug 13, 2026 | **Access Tier:** Confidential HR  
-**Tags:** HR, Restructuring, Departures
+[Full page content provided - detailed termination records for Ranit Dutta, Kartikey, Babul Singh Bhumi, Bhavya, and Humaira Zainab's departure/rejoin cycle]
 
-#### Key Facts
+---
 
-- **Ranit Dutta** — formally terminated by Isha Bisht (HR) on 4 September 2025, citing "organizational restructuring and downsizing"; last working day 2 September 2025; explicitly described as not performance-related. Experience Certificate and Recommendation Letter attached. Full and final settlement promised by 7 September 2025. See [[Ranit Dutta]].
+## Turn 3: User Request for Wiki Page + Tool Invocation Details
 
-- **Kartikey** (srvkartikey98@gmail.com) — sent an Experience Certificate on 2 September 2025; final month's salary promised by 7 September 2025. No termination reason given in this thread.
+**User:** Fetch another wiki page and show me the tool you invokes?
 
-- **Babul Singh Bhumi** — Relieving Confirmation sent 2 September 2025; last working day 2 September 2025; final salary promised by 7 September 2025.
+### Tool Invocation Details
 
-- **Bhavya** (bhavya.eoxs@gmail.com) — Relieving Confirmation sent 2 September 2025; last working day 1 September 2025; final salary promised by 7 September 2025.
+**Tool Used:** `mcp__hr__get_wiki_page`
 
-- All four letters were sent by Isha Bisht within the same 48-hour window (2–4 September 2025) and use near-identical templated language ("last working day," "final month's salary... by 7th September," well wishes for "future endeavours").
+**Parameters:**
+```
+{
+  "title": "Eastern States Steel — Soft Launch",
+  "max_chars": 4000
+}
+```
 
-- Separately, **Humaira Zainab** had left the team on 12 August 2025 but rejoined in September 2025 at Rajat Jain's instruction; EOXS agreed to pay her full August salary ([restricted]) as part of the rejoin arrangement, with the remainder deferred to the next pay cycle. See [[Humaira Zainab]].
+### Response Metadata
 
-#### Analysis
+| Field | Value |
+|-------|-------|
+| **ID** | 1042 |
+| **Page Type** | source |
+| **Created** | 2026-06-21 |
+| **Updated** | 2026-07-09 |
+| **Access Tier** | tier2 |
+| **Body Length** | 31,141 characters |
+| **Truncated** | Yes (offset: 0, next_offset: 4000) |
+| **Source File** | wiki/sources/eastern-states-steel/Eastern States Steel — Soft Launch.md |
 
-The volume and near-simultaneous timing of four separate offboardings, combined with Ranit Dutta's letter explicitly invoking "organizational restructuring and downsizing," suggests this was a coordinated headcount reduction rather than four unrelated individual exits. Kartikey's, Babul Singh Bhumi's, and Bhavya's letters give no explicit reason, but the identical settlement date (7 September) and template language line up closely with Ranit's letter.
+### Wiki Page Content: Eastern States Steel — Soft Launch
 
-#### Related
+**Tags:** eastern-states-steel, cluster, soft-launch, adoption
 
-- [[Ranit Dutta]] — the one departure in this cluster with an explicit reason on record
-- [[Humaira Zainab]] — departed 12 August 2025, rejoined September 2025 amid the same window
+#### Summary
 
-#### Open Questions
+The September–December 2025 period covers Eastern States Steel's full soft-launch arc: pre-launch preparation, a November 2025 go-live, and a demanding post-launch stabilization phase marked by significant employee resistance and an unusually high customization burden. Ryan Capinski (President) was the sole internal champion throughout, personally driving 189 customizations while the rest of the ESS team either refused to engage or engaged only minimally. Rajat Jain (EOXS President) acknowledged in December 2025 that EOXS does not normally onboard companies with fewer than 10 employees precisely because the implementation workload on the client side is disproportionate.
 
-- Kartikey's, Babul Singh Bhumi's, and Bhavya's roles/teams at EOXS, and whether their departures were involuntary (like Ranit's) or voluntary resignations.
-- Whether more departures beyond these four occurred as part of the same restructuring event.
+#### Employee Resistance (September 2025)
 
-**Sources:** Email threads (IDs: 64990, 65006, 64991, 65005, 65007) documenting termination notices, relieving confirmations, and payroll updates.
+In **September 2025**, Ryan disclosed that:
+- Admin **Rose Torres** was planning to leave the company
+- At least one unnamed employee had already "refused to do any additional work in EOXS," viewing it as outside their job responsibilities
+- **Tom Meyer** (Production & Logistics Coordinator) was slow to engage — cancelling training calls in September, going silent in October/November
+- **Vince Pappas** (VP Sales) was added to the system in September (credentials sent **September 16**) but accepted the soft-launch invite only on **December 11**
 
-**Flags:**
-- **Unverified:** Whether Kartikey's, Babul Singh Bhumi's, and Bhavya's departures were part of the same restructuring/downsizing decision cited in Ranit Dutta's termination letter, or unrelated individual exits, is not stated explicitly in any of the three letters.
+#### Implementation Timeline (September Forward)
+
+- **Sept 2–16, 2025:** Credentials issued; initial resistance documented
+- **Nov 10–15, 2025:** Intensive implementation sprint (daily zoom calls)
+- **Nov 21, 2025:** Large data push of 89 additional warehouse locations
+- **Nov 27, 2025:** Comprehensive live update (23 bug fixes & feature changes)
+- **Dec 1, 2025:** Ryan sent detailed critique; Rajat waived cage-workflow fee
+- **Dec 19–20, 2025:** Go-Live Authorization circulated
+- **Dec 22, 2025:** Full active use began; high-volume support requests
+
+#### Key Friction Points
+
+- **Data entry dependency:** ESS staff routing all requests through EOXS instead of operating independently
+- **Customization burden:** Ryan explicitly wanted team to set up customers, vendors, warehouses, products themselves
+- **Assembly/cage workflow:** Still pending as of Dec 31, 2025
+- **Formal go-live target:** January 5, 2026
+
+**Outbound Links:** [[Ryan Capinski]], [[Rose Torres]], [[Tom Meyer]], [[Vince Pappas]], [[Rajat Jain]], [[Eastern States Steel — Post-Launch Operations]]
+
+**Note:** Page is truncated; 31,141 total characters. Next chunk starts at offset 4000.
