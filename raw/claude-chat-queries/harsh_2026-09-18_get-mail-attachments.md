@@ -28,7 +28,7 @@ From mails get the attachements list
 
 **Email 43274** - Vaibhav Shakya | "Testing" | Sept 17, 2026
 - `Resume.pdf` - 62.2 KB (PDF, text extracted - Prem Sarkar's resume)
-- `download (1).jpg` - 65.3 KB (image, no text extracted)
+- `download (1).jpg` - 65.3 KB (image, no text extracted - Whitebeard image)
 - `Walmart_Sales.csv` - 363.7 KB (CSV data file, text extracted but truncated)
 - `WhatsApp Image 2026-08-07 at 10.41.02 PM.jpeg` - 342.4 KB (image, extraction failed)
 
@@ -41,3 +41,31 @@ Show me the picture of whitebeard back from the screenshots images form the atta
 
 ## Response 2
 Retrieved and displayed Whitebeard (Edward Newgate) from One Piece anime - the iconic image showing his muscular figure with the Whitebeard Pirates symbol on his chest and his bisento naginata weapon. Image source: Email 43274, file `download (1).jpg` (65.3 KB).
+
+---
+
+## User Request 3
+Now describe the image
+
+## Response 3
+
+### Whitebeard Character Image Description
+
+**Physical Appearance:**
+- Massive, heavily muscled build with extremely well-defined chest and shoulder musculature
+- Light/pale skin tone contrasting sharply with dark silhouette
+- Famous Whitebeard Pirates skull symbol with crossbones displayed prominently on his chest
+- Prominent facial whiskers characteristic of his design
+- Imposing, authoritative presence emphasizing his status as one of the Four Emperors
+
+**Weaponry:**
+- Large bisento (naginata) halberd visible on right side with red wrapping/handle
+
+**Atmosphere & Composition:**
+- Dramatic, dark background with purple/hazy bokeh effect creating depth
+- Glowing light source on right side for dramatic lighting
+- Lower perspective angle makes him appear even more towering and formidable
+- Overall menacing and powerful tone befitting one of the most feared pirates
+
+**Overall Impression:**
+Captures Whitebeard's legendary status as the "World's Strongest Man" - his sheer physical dominance and commanding presence before his death at Marineford.
