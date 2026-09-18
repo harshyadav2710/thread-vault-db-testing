@@ -6,42 +6,85 @@ created: 2026-09-18
 updated: 2026-09-18
 ---
 
-# Email Review: Monthly Performance Summary May 2026
+# HR Data & Repository Document Requests
 
-## User Request
-Get email ID 62609 summary with 2-3 words per line
+## Session Overview
+User (Rajat Jain, CEO of EOXS) requested HR data retrieval, intern performance summaries, and repository document access.
 
-## Email Details
-- **ID:** 62609
-- **Subject:** Monthly Performance Summary — May 2026
-- **From:** Isha (HR)
-- **To:** Kriti Jain
-- **Date:** June 29, 2026
+---
 
-## Summary
+## Part 1: HR Index
+**User Request:** Get the HR index
 
-**39 employees reviewed**
+**Response:**
+- Wiki pages: 2,004
+- Email threads: 33,592
+- Fireflies calls: 2,263
+- Fathom calls: 150
+- Clients: 8
+- Implementation tasks: 828
 
-**Interns Performance:**
-- Raj Satyam: Low productivity consistently
-- Arshad Malik: Very low output
-- Ankit Pachauri: Decent productivity
-- Aditya Singh: Low productivity
-- Chandvi: Low weeks
-- Azra Saleem: Very low
-- Anvitha Shetty: Low weeks
-- Syed Gufran: Good productivity
-- Kartikey Sharma: No issues
-- Mahesh Mudiraj: Low weeks
+**Wiki Pages by Type:**
+- Entity: 675
+- Analysis: 806
+- Source: 304
+- Concept: 161
+- Overview: 24
+- Prospect: 34
+
+---
+
+## Part 2: Intern-Related Email (May 2026 Performance Summary)
+**User Request:** Get email related to interns
+
+**Email Selected:** ID 62609 - "Monthly Performance Summary — May 2026"
+- From: Isha (HR)
+- To: Kriti Jain
+- Date: June 29, 2026
+- 39 employees reviewed
+
+**Intern Performance Summary:**
+
+**AI Interns/Generalists (4):**
+- Ankit Pachauri: Good productivity
+- Syed Gufran Hussain: Good productivity
+- Jaskeerat: Good productivity
+- Arpita: Excellent productivity
+
+**Software Dev Interns (10):**
+- Raj Satyam: Very low consistently
+- Arshad Malik: Very low consistently
+- Aditya Singh: Very low consistently
 - Tapish Sharma: Good productivity
 - Vaibhav Jain: Low week
-- Jaskeerat: Good productivity
-- Prashant: Good productivity
 - Kartikey Tripathi: Good productivity
 - Siddhant Pathak: Good productivity
 - G. Nijamuddin: Good productivity
-- Arpita: Excellent productivity
 - Vithal: Good productivity
 - Rohit Chand: Excellent productivity
 
-**Key Issues:** High late login rates, variable hours worked
+**Key Finding:** AI interns outperforming software dev interns; 3 dev interns (Raj, Arshad, Aditya) consistently underperforming.
+
+---
+
+## Part 3: September 2026 Data
+**User Request:** Get intern performance data for September 2026
+
+**Finding:** Monthly Performance Summary not yet published (mid-month). Available alternatives:
+- ID 69115: Weekly Team Report (Sep 7-13, 2026)
+- ID 68874/68885: Weekly Scoreboards (Sep 7-13, 2026)
+
+---
+
+## Part 4: Repository Document Access
+**User Request:** Retrieve Thread Vault repository document
+
+**Result:** No repository documents currently indexed in system.
+
+**Available alternatives discussed:**
+- Thread OV vault infrastructure tools
+- Saved analyses (wiki/analyses/)
+- Chat summaries
+- EOXS HR assets
+
+**Status:** Awaiting user clarification on specific Thread Vault information needed.
