@@ -40,6 +40,27 @@ User: Search for assets assigned to employees.
 
 **Results:**
 - No dedicated "assets assigned to employees" document
-- Best match: EOXS Salary Details (tier2_confidential_hr) — compensation data
+- Best match: EOXS Salary Details (tier2_confidential_hr) — compensation data assigned to employees
 - 19 total assets in system (SOPs, product specs, company overviews)
 - Asset types: AI Joe, AskCruz, EOXS, technical references, HR
+
+**Assets List (19 total):**
+1. AI Joe — Features & Capabilities
+2. AI Joe — Project Overview
+3. AskCruz — Comprehensive Client-Facing Product Understanding
+4. AskCruz — Product Feature File
+5. AskCruz — Product–Market Fit & Product Knowledge Guide
+6. AskCruz — Self-Knowledge, Product Definition & System Architecture
+7. Code Review and Technical QA SOP
+8. Development Standards and Code Structure SOP
+9. EOXS Client Implementation and Go-Live SOP
+10. EOXS — Company Overview
+11. EOXS ERP — Product Features Overview
+12. EOXS — Ideal Customer Profile (ICP)
+13. EOXS NEWS — Standard Operating Procedure
+14. EOXSplore
+15. EOXS Salary Details (HR/confidential)
+16. GitLab Branching, Sandbox Deployment, and Production Release Management SOP
+17. PRODUCT DEMO VIDEO LIBRARY
+18. Sales Coach — Technical Reference
+19. SOP — Standard Operating Procedure
