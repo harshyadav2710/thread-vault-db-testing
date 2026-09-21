@@ -6,31 +6,46 @@ created: 2026-09-21
 updated: 2026-09-21
 ---
 
-# Harsh Yadav Contribution Lookup
+# Harsh Yadav Contribution Lookup - AskCruz Board Deep Dive
 
 ## Query
-User asked: "What is the contribution of Harsh Yadav on which project did he works?"
+User asked: "check in askcruz board" - requesting comprehensive review of Harsh Yadav's contributions on the askcruz project management board.
 
-## Method
-Following the EOXS data internal-team routing guidelines for contribution questions, queried:
-1. Ask Cruz project board (teams-askcruz) for assigned tasks
-2. EOXS Teams board (eoxs-teams) for assigned work
-3. Implementation tasks (eoxs-db) for client onboarding/dev work
+## Employee Profile
+- **Name:** Harsh Yadav
+- **Employee ID:** 53
+- **User ID:** 151
+- **Work Email:** harshy@askcruz.com
+- **Status:** Active
 
-## Findings
+## Findings - Assigned Tasks
 
-**Harsh Yadav** (user_id: 151, work_email: harshy@askcruz.com)
+### Active Assignment (1 Task)
+| Field | Value |
+|-------|-------|
+| **Task Name** | Harsh Yadav AI |
+| **Task ID** | 325 |
+| **Project** | Daily Snippets |
+| **Project ID** | 5 |
+| **Stage** | Ai Interns |
+| **Priority** | Normal (0) |
+| **Kanban State** | Normal |
+| **Status** | Active |
+| **Created** | Aug 25, 2026 17:48:55 |
+| **Last Updated** | Aug 27, 2026 18:49:46 |
+| **Deadline** | None |
+| **Planned Hours** | Not specified |
+| **Effective Hours** | 0.0 |
+| **Total Hours Spent** | 0.0 |
+| **Description** | (Empty) |
 
-### AskCruz Board Tasks (1 task)
-| Task | Project | Stage | Created | Deadline |
-|------|---------|-------|---------|----------|
-| Harsh Yadav AI | Daily Snippets | Ai Interns | 2026-08-25 | None |
+## Contribution Analysis
+- **Tasks Created by Harsh:** 0
+- **Tasks Edited by Harsh:** 0
+- **Tasks Assigned to Harsh:** 1
+- **Other Projects Involved:** None
 
-### EOXS Teams Board
-No tasks found assigned to Harsh Yadav.
+## Conclusion
+Harsh Yadav has **one active task assignment** on the **Daily Snippets** project, specifically in the **Ai Interns** stage. The task titled "Harsh Yadav AI" was created on Aug 25, 2026 and is currently in progress with no hours logged. He has not created or edited any other tasks in the askcruz board.
 
-### Implementation Tasks
-No implementation tasks found assigned to Harsh Yadav.
-
-## Summary
-Harsh Yadav is working on the **Daily Snippets** project in the AskCruz board. His assigned task is **"Harsh Yadav AI"** within the Ai Interns stage, created on August 25, 2026.
+**Source:** AskCruz board (read-only connector) - Complete board analysis with aggregated metrics.
