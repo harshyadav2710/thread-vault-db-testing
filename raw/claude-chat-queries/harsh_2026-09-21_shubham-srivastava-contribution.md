@@ -6,13 +6,14 @@ created: 2026-09-21
 updated: 2026-09-21
 ---
 
-# EOXS Internals: Shubham Srivastava Contribution Investigation
+# EOXS Internals: Shubham Srivastava Contribution + Karpathy's Wiki Project
+
 **Session Date:** 2026-09-21  
 **Queried by:** Dhanshree Ratneria (AI Interns, AskCruz)
 
 ---
 
-## Initial Query: Shubham Srivastava Profile & Contributions
+## Part 1: Shubham Srivastava Profile & Daily Snippets Project
 
 ### Employee Profile (AskCruz Odoo 13)
 | Field | Value |
@@ -23,7 +24,7 @@ updated: 2026-09-21
 | Job Title | AI Intern |
 | Department | Product |
 
-### Project Assignment (Daily Snippets)
+### Daily Snippets Project Assignment
 | Attribute | Value |
 |---|---|
 | Task ID | 344 |
@@ -62,20 +63,54 @@ updated: 2026-09-21
 
 ---
 
-## Database Query Details
-**Connector Used:** `mcp__Read-only__query` (AskCruz Odoo 13)  
-**Queries Executed:**
-1. `SELECT * FROM hr_employee WHERE name ILIKE '%shubham%'` → Found employee_id 45
-2. `SELECT * FROM hr_employee WHERE name = 'Shubham Srivastava'` → user_id 154, dept: Product
-3. `SELECT * FROM project_task WHERE user_id = 154` → 1 task (344, Daily Snippets)
-4. `SELECT * FROM project_task WHERE project_id = Daily Snippets AND stage IN ('Ai Interns', 'Product Interns')` → 19 rows
+## Part 2: Karpathy's Wiki Project Details
+
+**Project Name:** Ai/Product Interns (Project ID: 16)  
+**Total Tasks:** 22
+
+### Primary Karpathy's Wiki Tasks
+| Task ID | Task Name | Assigned To |
+|---------|-----------|-------------|
+| 320 | Karpathy's wiki | Ayan Dutta |
+| 426 | Karpathy's wiki/Second Brain | Ayan Dutta |
+
+### All Tasks in Ai/Product Interns Project
+| Task ID | Task Name | Assigned To |
+|---------|-----------|-------------|
+| 581 | Higgsfield open ai research | Ayan Dutta |
+| 579 | testing the mcp | (unassigned) |
+| 572 | Create Cross-Team Project Instructions | Jaskeerat Singh |
+| 571 | Identify Scalable Alternatives to Claude | Priyanshu Sinha |
+| 558 | Improving Skills.md priority over memory in claude | Jaskeerat Singh |
+| 551 | Attachment data population through automation db | Ayan Dutta |
+| 543 | Thread saving | Jaskeerat Singh |
+| 540 | Test task | (unassigned) |
+| 527 | MCP Write Function | Ayan Dutta |
+| 502 | O-Auth connection | Ayan Dutta |
+| 486 | Second brain automation | Ayan Dutta |
+| 427 | OAuth Credentials | Ayan Dutta |
+| 424 | Threads-wiki-local | Jaskeerat Singh |
+| 365 | SOP, Product & Market Fit File Review & Error Identification | Ayan Dutta |
+| 359 | Postgres Structure/MCP | Ayan Dutta |
+| 358 | Access Rights on MCP | Ayan Dutta |
+| 323 | Onboarding | Ayan Dutta |
+| 263 | SOP File Generation | Ayan Dutta |
+| 221 | AskCruz Claude Feedback | Ayan Dutta |
+| 194 | Product/Pitch Deck | Ayan Dutta |
+
+### Assignment Summary
+- **Ayan Dutta:** 16 tasks (72.7% of project)
+- **Jaskeerat Singh:** 3 tasks (13.6%)
+- **Priyanshu Sinha:** 1 task (4.5%)
+- **Unassigned:** 2 tasks (9.1%)
 
 ---
 
-## Follow-up: Wiki Search for "Karpathy"
-**Status:** No matching wiki page found.
+## Database Queries Executed
+**Connector:** `mcp__Read-only__query` (AskCruz Odoo 13)
 
-User requested: "Ai/Product Interns inside this Karpathy's wiki try now"  
-**Result:** Internal wiki search for "Karpathy" returned empty. Title or reference unclear.
-
-**Next step:** Awaiting clarification on what "Karpathy's wiki" refers to.
+1. **Find Shubham Srivastava:** `SELECT * FROM hr_employee WHERE name = 'Shubham Srivastava'`
+2. **Query Daily Snippets tasks:** `SELECT * FROM project_task WHERE project_id = 5 AND stage IN ('Ai Interns', 'Product Interns')`
+3. **Identify Ai/Product Interns project:** `SELECT * FROM project_project WHERE name ILIKE '%karpathy%'` → No match
+4. **List all projects:** `SELECT * FROM project_project` → Found "Ai/Product Interns" (ID 16)
+5. **Query Ai/Product Interns tasks:** `SELECT * FROM project_task WHERE project_id = 16`
