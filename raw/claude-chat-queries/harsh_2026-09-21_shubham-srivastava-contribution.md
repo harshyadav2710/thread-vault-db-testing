@@ -6,61 +6,76 @@ created: 2026-09-21
 updated: 2026-09-21
 ---
 
-# Shubham Srivastava & AI/Product Interns Investigation
+# EOXS Internals: Shubham Srivastava Contribution Investigation
+**Session Date:** 2026-09-21  
+**Queried by:** Dhanshree Ratneria (AI Interns, AskCruz)
 
-## User Questions
-1. What is the contribution of Shubham Srivastava on which project did he works?
-2. Check in askcruz board
-3. From which tool call it give response?
-4. Try to check in ASK CRUZ Board fetch now
-5. From read only mcp?
-6. Ai/Product Interns in this?
+---
 
-## Complete Data - All Queries from mcp__Read-only__query
+## Initial Query: Shubham Srivastava Profile & Contributions
 
-### Tool Used
-**MCP Connector:** Read-only (AskCruz Odoo 13 Database)
-**Database:** askcruz
-**Tables:** hr_employee, project_task, project_task_type, project_project
+### Employee Profile (AskCruz Odoo 13)
+| Field | Value |
+|---|---|
+| Employee ID | 45 |
+| User ID | 154 |
+| Name | Shubham Srivastava |
+| Job Title | AI Intern |
+| Department | Product |
 
-### AI INTERNS (14 entries)
-| Task ID | Name | Assigned To | Status | Created |
-|---|---|---|---|---|
-| 407 | Radhesh Tinani | Not assigned | In Progress | 2026-09-01 |
-| 344 | **Shubham Srivastava** | **Self** | In Progress | 2026-08-25 |
-| 342 | Vaibhav Tez Shakya | Self | In Progress | 2026-08-25 |
-| 341 | Abhishek Maurya | Not assigned | In Progress | 2026-08-25 |
-| 340 | Utkarsh Sharma | Self | In Progress | 2026-08-25 |
-| 339 | Mohan Dwivedi | Not assigned | In Progress | 2026-08-25 |
-| 338 | Tanvi Kumari | Self | In Progress | 2026-08-25 |
-| 336 | Lakshit Singh | Not assigned | In Progress | 2026-08-25 |
-| 335 | Jatin Rao | Not assigned | In Progress | 2026-08-25 |
-| 331 | Himanshu Kumar | Not assigned | In Progress | 2026-08-25 |
-| 330 | Yash Sharma | Self | In Progress | 2026-08-25 |
-| 328 | Dhanshree Ratneria | Self | In Progress | 2026-08-25 |
-| 326 | Dhruv Maheshwari | Not assigned | In Progress | 2026-08-25 |
-| 325 | Harsh Yadav AI | Self (Harsh Yadav) | In Progress | 2026-08-25 |
+### Project Assignment (Daily Snippets)
+| Attribute | Value |
+|---|---|
+| Task ID | 344 |
+| Project | Daily Snippets |
+| Stage | Ai Interns |
+| Assigned To | Self |
+| Status | In Progress |
+| Priority | 0 (Normal) |
+| Created | 2026-08-25 18:04:45 |
+| Deadline | Not set |
+| Planned Hours | None |
+| Effective Hours | 0.0 |
 
-### PRODUCT INTERNS (5 entries)
-| Task ID | Name | Assigned To | Status | Created |
-|---|---|---|---|---|
-| 405 | Himanshu Vashisth | Not assigned | In Progress | 2026-09-01 |
-| 136 | Harsh Yadav | Jaskeerat Singh | In Progress | 2026-08-12 |
-| 100 | Jagriti | Nidhi Rana | In Progress | 2026-08-07 |
-| 21 | Aditya yadav | Nidhi Rana | In Progress | 2026-08-05 |
-| 20 | Priyanshu Sinha | Ayan Dutta | In Progress | 2026-08-05 |
+### Daily Snippets — AI Interns Stage (14 total)
+- Radhesh Tinani (unassigned)
+- **Shubham Srivastava (self-assigned)** ← focus
+- Vaibhav Tez Shakya (self-assigned)
+- Abhishek Maurya (unassigned)
+- Utkarsh Sharma (self-assigned)
+- Mohan Dwivedi (unassigned)
+- Tanvi Kumari (self-assigned)
+- Lakshit Singh (unassigned)
+- Jatin Rao (unassigned)
+- Himanshu Kumar (unassigned)
+- Yash Sharma (self-assigned)
+- Dhanshree Ratneria (self-assigned)
+- Dhruv Maheshwari (unassigned)
+- Harsh Yadav AI (assigned to Harsh Yadav)
 
-### Summary Statistics
-- **Total Interns Tracked:** 19
-- **AI Interns:** 14 (73.7%)
-- **Product Interns:** 5 (26.3%)
-- **Self-Assigned Tasks:** 6 (31.6%)
-- **Unassigned:** 9 (47.4%)
-- **Mentor-Assigned:** 4 (21.1%)
+### Daily Snippets — Product Interns Stage (5 total)
+- Himanshu Vashisth (unassigned)
+- Harsh Yadav (assigned to Jaskeerat Singh)
+- Jagriti (assigned to Nidhi Rana)
+- Aditya Yadav (assigned to Nidhi Rana)
+- Priyanshu Sinha (assigned to Ayan Dutta)
 
-### Shubham Srivastava Status
-- **Category:** AI Interns
-- **Self-Assigned:** Yes
-- **Task Status:** In Progress
-- **Priority:** Normal
-- **Created:** 2026-08-25 18:04:45
+---
+
+## Database Query Details
+**Connector Used:** `mcp__Read-only__query` (AskCruz Odoo 13)  
+**Queries Executed:**
+1. `SELECT * FROM hr_employee WHERE name ILIKE '%shubham%'` → Found employee_id 45
+2. `SELECT * FROM hr_employee WHERE name = 'Shubham Srivastava'` → user_id 154, dept: Product
+3. `SELECT * FROM project_task WHERE user_id = 154` → 1 task (344, Daily Snippets)
+4. `SELECT * FROM project_task WHERE project_id = Daily Snippets AND stage IN ('Ai Interns', 'Product Interns')` → 19 rows
+
+---
+
+## Follow-up: Wiki Search for "Karpathy"
+**Status:** No matching wiki page found.
+
+User requested: "Ai/Product Interns inside this Karpathy's wiki try now"  
+**Result:** Internal wiki search for "Karpathy" returned empty. Title or reference unclear.
+
+**Next step:** Awaiting clarification on what "Karpathy's wiki" refers to.
