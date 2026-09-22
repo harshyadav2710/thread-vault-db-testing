@@ -6,268 +6,381 @@ created: 2026-09-22
 updated: 2026-09-22
 ---
 
-# Email (Gmail/Zoho Mail) Ingestion ETL DAG — Connection Methods
+# Email Ingestion Tracking — How to Determine Ingested vs. Non-Ingested
 
 **Thread:** email-etl-airflow-dag  
 **User:** Rajat Jain (CEO, EOXS)  
 **Date:** 2026-09-22  
-**Query:** How to connect Gmail and Zoho Mail to Airflow DAG to fetch data, create CSV, send email with attachment showing ingested/non-ingested emails
+**Question:** When you fetch 50 emails from Gmail/Zoho, how do you know which ones are "ingested" (processed) vs. "not ingested" (pending)?
 
 ---
 
-## Use Case
+## The Core Problem
 
-Build an Airflow DAG that:
-1. Fetches emails from Gmail and/or Zoho Mail
-2. Stores email metadata + ingestion status in database
-3. Queries database for ingested vs. non-ingested emails
-4. Generates CSV report
-5. Sends email with CSV attachment to stakeholders
+Previous response provided a DAG but left the critical question unanswered:
 
----
-
-## Connection Approaches Provided
-
-### Approach 1: Gmail via Gmail API
-- **Auth:** Google Service Account (JSON key from GCP)
-- **Setup:** Google Cloud Console > Create project > Enable Gmail API > Create Service Account > Download key
-- **Pros:** Official API, most reliable, rich features
-- **Cons:** Requires GCP account setup
-
-**Airflow Connection:**
-- Type: Google Cloud Platform
-- Extra: Service account JSON with private_key, client_email, project_id
-
-**Code:** Full Python function provided to:
-- Build Gmail API client with service account credentials
-- Query Gmail API for unread messages from last 24 hours
-- Extract headers: From, To, Subject, Date, snippet
-- Push email list to XCom
-
-### Approach 2: Gmail via IMAP
-- **Auth:** Username + App Password (simpler alternative)
-- **Pros:** Simple, no GCP required
-- **Cons:** Less feature-rich, slower for large volumes
-
-### Approach 3: Zoho Mail via API
-- **Auth:** OAuth 2.0 (Client ID, Client Secret, Refresh Token)
-- **Setup:** Zoho Developer Console > Create OAuth app > Generate refresh token
-- **Pros:** Official API, OAuth flow handles token refresh
-- **Cons:** OAuth setup slightly more complex
-
-**Airflow Connection:**
-- Type: HTTP
-- Host: https://mail.zoho.com
-- Extra: grant_type, client_id, client_secret, scope
-
-**Code:** Full Python function provided to:
-- Exchange refresh token for access token
-- Query Zoho Mail API for messages in account
-- Extract message metadata
-- Push to XCom
-
-### Approach 4: Zoho Mail via IMAP
-- **Auth:** Username + App Password
-- **Pros:** Simple, no Zoho developer setup
-- **Cons:** Less powerful than API
-
----
-
-## Complete DAG Pipeline Provided
-
-**5-Task Pipeline:**
-
-1. **fetch_gmail_data** (PythonOperator)
-   - Uses Gmail API via service account
-   - Fetches unread emails from last 24 hours
-   - Returns list of email objects with: message_id, from, to, subject, date, snippet, ingested flag
-   - Pushes to XCom: `emails` list
-
-2. **fetch_zoho_mail_data** (PythonOperator)
-   - Uses Zoho Mail API via OAuth
-   - Fetches messages from account
-   - Returns same schema as Gmail data
-   - Both Gmail and Zoho run in parallel (fan-out)
-
-3. **store_emails_in_db** (PythonOperator)
-   - Reads emails from XCom
-   - Uses SQLAlchemy to define Email table
-   - Performs upsert: insert if new, update if exists (prevents duplicates)
-   - Schema: message_id (PK), from, to, subject, date, snippet, ingested (Boolean), timestamps
-   - Logs success/failures
-
-4. **generate_report** (PythonOperator)
-   - Queries database: `SELECT ingested status, COUNT(*), email subjects FROM emails WHERE created_at >= 24h AGO GROUP BY ingested`
-   - Generates Pandas DataFrame
-   - Saves as CSV: `/tmp/email_ingestion_report.csv`
-   - Pushes path to XCom: `csv_path`
-
-5. **send_email_with_attachment** (PythonOperator)
-   - Reads CSV path from XCom
-   - Constructs email message (MIMEMultipart)
-   - Attaches HTML body with report metadata
-   - Attaches CSV file with base64 encoding
-   - Sends via SMTP (Gmail or custom SMTP server)
-   - Logs delivery
-
-**Task Dependencies:**
 ```
-[fetch_gmail, fetch_zoho] >> store_db >> gen_report >> send_email
+Fetch 50 emails from Gmail API
+↓
+Store in DB
+↓
+Now what?
+  - Which 50 are "ingested"? (processed into business system)
+  - Which ones are "non-ingested"? (still pending)
+  - How do we KNOW the difference?
 ```
-Gmail and Zoho fetch run in parallel, then merge for storage.
+
+Answer: **You need a tracking mechanism.** The `ingested` Boolean flag isn't automatic — it requires explicit business logic.
 
 ---
 
-## Airflow Variables Required (Admin > Variables)
+## Three Core Patterns Explained
 
-```json
-// Gmail Setup (pick one auth method)
-gmail_service_account: {full json with private_key, client_email, project_id}
-OR
-gmail_app_password: "app_specific_password_from_google_account"
+### Pattern 1: Ingestion Tracking Table (Recommended for EOXS)
 
-// Zoho Setup (pick one auth method)
-zoho_client_id: "your_client_id"
-zoho_client_secret: "your_secret"
-zoho_refresh_token: "your_refresh_token"
-OR
-zoho_app_password: "app_password_from_zoho"
+**Concept:** Create separate table that links raw emails to processed records.
 
-// Email Delivery
-smtp_server: "smtp.gmail.com"
-smtp_port: "587"
-smtp_user: "notification_account@gmail.com"
-smtp_password: "app_password"
-email_from: "noreply@eoxs.com"
-email_to: "rajat@eoxs.com,team@eoxs.com"
+**Tables:**
+```
+emails_raw (what we fetched)
+├── message_id (PK)
+├── from_address
+├── to_address
+├── subject
+├── content
+└── created_at
 
-// Database
-db_connection_string: "postgresql://user:password@host:5432/etl_db"
+email_ingestion_tracking (how we processed it)
+├── id (PK)
+├── message_id (FK → emails_raw)
+├── ingestion_type ('customer', 'order', 'support_ticket')
+├── extracted_data (JSON of what was extracted)
+├── target_table ('customers', 'orders', 'tickets')
+├── target_record_id (FK to actual ingested record in business DB)
+├── status ('success', 'failed', 'pending', 'skipped')
+├── error_message (if failed)
+├── ingested_at
+└── attempted_at
+```
+
+**Flow:**
+1. Fetch 50 emails → store in emails_raw
+2. Process each email:
+   - Try to extract data (e.g., customer info from email content)
+   - Validate extracted data
+   - Insert into business table (e.g., customers table)
+   - Create row in email_ingestion_tracking with status='success'
+   - If error → create row with status='failed' + error_message
+3. Query time:
+   ```sql
+   SELECT * FROM email_ingestion_tracking WHERE status='success'
+   -- Returns: 45 successfully ingested
+   
+   SELECT * FROM email_ingestion_tracking 
+   WHERE status IN ('failed', 'pending')
+   -- Returns: 5 not ingested (need retry or investigation)
+   ```
+
+**Advantages:**
+- Audit trail (know what was extracted, where it went)
+- Error tracking (why failed, what needs retry)
+- Idempotent (can reprocess without duplicates)
+- Flexible (supports multiple extraction types)
+
+**Code Example:**
+```python
+# After processing email:
+ingestion_record = EmailIngestion(
+    message_id='msg_123',
+    ingestion_type='customer',  # This email had customer data
+    extracted_data={'name': 'John', 'email': 'john@example.com'},
+    target_table='customers',  # Inserted into customers table
+    target_record_id='cust_456',  # This customer ID
+    status='success',  # Successfully processed
+    ingested_at=datetime.utcnow(),
+)
+session.add(ingestion_record)
+session.commit()
 ```
 
 ---
 
-## Airflow Connections (Optional Alternative to Variables)
+### Pattern 2: Status Flag in Raw Table
 
-| Connection ID | Type | Host | Extra |
-|---|---|---|---|
-| gmail_connector | Google Cloud Platform | N/A | Service account JSON |
-| zoho_mail_connector | HTTP | https://mail.zoho.com | OAuth credentials |
-| postgres_etl | Postgres | localhost | DB credentials |
-| smtp_gmail | SMTP | smtp.gmail.com:587 | Username & app password |
+**Concept:** Simple Boolean or status field in emails_raw table.
 
----
+**Table:**
+```
+emails_raw
+├── message_id
+├── ...
+├── status ('pending', 'ingested', 'failed', 'skipped')
+└── processed_at
+```
 
-## Implementation Complexity & Effort
+**Flow:**
+1. Fetch → store with status='pending'
+2. Separate process updates status:
+   - If successfully ingested → status='ingested'
+   - If error → status='failed'
+3. Query:
+   ```sql
+   SELECT COUNT(*) FROM emails_raw WHERE status='ingested'
+   -- Returns: 45 ingested
+   
+   SELECT COUNT(*) FROM emails_raw WHERE status='pending'
+   -- Returns: 3 still waiting to be processed
+   ```
 
-| Component | Effort | Notes |
-|-----------|--------|-------|
-| Gmail API setup | 30 min | GCP project creation, service account, JSON key export |
-| Zoho API setup | 30 min | Zoho developer console, OAuth app, refresh token generation |
-| Airflow DAG code | 1-2 hours | ~200 lines for all 5 tasks (templates provided) |
-| Database schema | 30 min | Create Email table with ingestion tracking |
-| SMTP setup | 15 min | Gmail app password or custom SMTP server |
-| Testing | 1-2 hours | Verify email fetching, DB storage, report generation, email delivery |
-| **Total** | **4-5 hours** | **Full working pipeline** |
+**Advantages:**
+- Simple (one table, no joins)
+- Fast queries
+- Minimal schema
 
----
-
-## Key Design Decisions
-
-**1. Upsert Pattern in Database**
-- Problem: Same email can be fetched multiple times → duplicates
-- Solution: Check if message_id exists; update if found, insert if new
-- Benefit: Idempotent — safe to retry without data loss
-
-**2. XCom for Data Passing**
-- Problem: Can't pass large data structures between tasks
-- Solution: Store in XCom, tasks pull by key
-- Limitation: XCom has size limits (~100KB); use DB for large datasets
-
-**3. Parallel Email Fetching**
-- Problem: Fetching from both Gmail and Zoho sequentially doubles time
-- Solution: Fan-out to parallel tasks [fetch_gmail, fetch_zoho]
-- Benefit: Reduces total DAG execution time
-
-**4. CSV Generation from DB Query**
-- Problem: Could generate from XCom data, but fragile if process fails
-- Solution: Query database (source of truth), generate from DB state
-- Benefit: If DAG reruns, report reflects DB state (idempotent)
-
-**5. Email via SMTP, not Airflow SendEmailOperator**
-- Airflow SendEmailOperator doesn't attach files easily
-- Direct SMTP gives more control over MIME structure
-- Can add CC/BCC, custom headers, etc.
+**Disadvantages:**
+- No error tracking (why failed?)
+- No audit trail (what was extracted?)
+- No visibility into what was done with email
 
 ---
 
-## Risks & Mitigations
+### Pattern 3: Match Against Existing Data (Duplicate Detection)
 
-| Risk | Impact | Mitigation |
-|------|--------|-----------|
-| **Gmail API quota** | Calls fail if >10M/day | Monitor quota usage, implement caching |
-| **Duplicate emails** | DB grows with repeats | Upsert on message_id prevents duplicates |
-| **Ingestion flag never set** | Report shows "Non-Ingested" for everything | Add downstream task to update `ingested=True` after processing |
-| **Database connection lost** | Store fails, email not sent | Retry logic (retries=2), alert on failure |
-| **SMTP auth fails** | Email not delivered | Test SMTP creds in staging; monitor delivery logs |
-| **Large data volume** | DAG timeout or memory spike | Implement pagination in API calls, limit query with date range |
+**Concept:** Check if email content already exists in warehouse → if yes, it's ingested; if no, it's new.
 
----
+**Flow:**
+1. Fetch 50 emails
+2. For each email:
+   - Extract key identifiers (sender, subject, date)
+   - Check if already exists in warehouse (by matching those keys)
+   - If found → mark `is_ingested=True` (already processed)
+   - If not found → mark `is_ingested=False` (new, never processed)
+3. Query:
+   ```sql
+   SELECT 
+       CASE WHEN is_ingested THEN 'Ingested' ELSE 'New' END,
+       COUNT(*)
+   FROM emails_raw
+   GROUP BY is_ingested;
+   ```
 
-## Next Steps for Implementation
+**Advantages:**
+- No separate processing needed
+- Immediate knowledge of ingestion status
+- Detects duplicates
 
-**Week 1: Setup**
-1. Create GCP project & enable Gmail API (or Zoho OAuth app)
-2. Generate credentials, store in Airflow Variables
-3. Create Airflow Connections
-4. Set up PostgreSQL database
-
-**Week 1-2: Development**
-1. Write fetch_gmail_data() function, test locally
-2. Write fetch_zoho_mail_data() function, test locally
-3. Write store_emails_in_db() with SQL Alchemy
-4. Write generate_report() with Pandas
-5. Write send_email_with_attachment()
-
-**Week 2: Testing**
-1. Deploy DAG to staging Airflow
-2. Trigger first manual run
-3. Verify Gmail/Zoho auth works
-4. Verify emails stored in DB correctly
-5. Verify CSV generated & email delivered
-6. Test failure scenarios (API down, DB error)
-
-**Week 3: Production**
-1. Deploy to production
-2. Set schedule: daily at 9 AM
-3. Monitor first 3-5 runs
-4. Set up alerting on task failures
-5. Update runbook with troubleshooting
+**Disadvantages:**
+- Only works if warehouse already has the data
+- Doesn't track partial/failed ingestions
+- Doesn't know what was extracted or why
 
 ---
 
-## Quick Reference: Gmail API vs. IMAP vs. Zoho API
+## Recommended Pattern for EOXS: Hybrid Approach
 
-| Feature | Gmail API | Gmail IMAP | Zoho API |
-|---------|-----------|-----------|----------|
-| **Auth Complexity** | High (GCP + service account) | Low (username + app password) | Medium (OAuth) |
-| **Feature Richness** | Rich (labels, threads, drafts, etc.) | Basic (inbox, folders) | Rich (accounts, messages, attachments) |
-| **Rate Limits** | 10M/day (service account) | 2500/day (user account) | 500/min (API) |
-| **Setup Time** | 30 min | 5 min | 20 min |
-| **Recommended For** | Production, high volume | Dev/test, low volume | Production, enterprise Zoho users |
+Combine **Pattern 1 + Pattern 3**:
 
-**Recommendation for EOXS:**
-- **If mostly Gmail:** Use Gmail API (most reliable, best docs)
-- **If mixed users:** Use both APIs in parallel DAG
-- **If IMAP acceptable:** Use IMAP for quick MVP (less setup)
+```python
+def ingest_emails_with_tracking(**context):
+    """
+    Complete ingestion with full tracking.
+    """
+    emails = fetch_from_gmail()  # 50 emails
+    session = get_db_session()
+    
+    ingestion_counts = {
+        'success': 0,
+        'failed': 0,
+        'skipped': 0,
+        'not_attempted': 0,
+    }
+    
+    for email in emails:
+        # Store raw email
+        raw_email = EmailRaw(
+            message_id=email['message_id'],
+            from_address=email['from'],
+            subject=email['subject'],
+            content=email['content'],
+            created_at=datetime.utcnow(),
+        )
+        session.add(raw_email)
+        session.flush()
+        
+        # Try to ingest
+        try:
+            # Step 1: Validate
+            if not email['content'].strip():
+                raise ValueError("Empty email content")
+            
+            # Step 2: Extract
+            extracted = extract_customer_from_email(email['content'])
+            
+            # Step 3: Check if already ingested (duplicate detection)
+            existing_customer = session.query(Customer).filter_by(
+                email=extracted['email']
+            ).first()
+            
+            if existing_customer:
+                # Already ingested → just track it
+                ingestion = EmailIngestion(
+                    message_id=email['message_id'],
+                    ingestion_type='customer',
+                    extracted_data=extracted,
+                    target_table='customers',
+                    target_record_id=str(existing_customer.id),
+                    status='success',  # Was already ingested before
+                    ingested_at=datetime.utcnow(),
+                )
+            else:
+                # New → ingest it
+                customer = Customer(**extracted)
+                session.add(customer)
+                session.flush()
+                
+                ingestion = EmailIngestion(
+                    message_id=email['message_id'],
+                    ingestion_type='customer',
+                    extracted_data=extracted,
+                    target_table='customers',
+                    target_record_id=str(customer.id),
+                    status='success',
+                    ingested_at=datetime.utcnow(),
+                )
+            
+            session.add(ingestion)
+            ingestion_counts['success'] += 1
+            
+        except ValueError as e:
+            # Data invalid → skip, don't retry
+            ingestion = EmailIngestion(
+                message_id=email['message_id'],
+                status='skipped',
+                error_message=str(e),
+                attempted_at=datetime.utcnow(),
+            )
+            session.add(ingestion)
+            ingestion_counts['skipped'] += 1
+            
+        except Exception as e:
+            # Unexpected error → failed, should retry
+            ingestion = EmailIngestion(
+                message_id=email['message_id'],
+                status='failed',
+                error_message=str(e),
+                attempted_at=datetime.utcnow(),
+            )
+            session.add(ingestion)
+            ingestion_counts['failed'] += 1
+    
+    session.commit()
+    
+    # Log summary
+    logging.info(f"Ingestion complete: {ingestion_counts}")
+    return ingestion_counts
+```
 
 ---
 
-## Code Files Available
+## Report Query (What Goes in CSV Email)
 
-- Main DAG: Complete with all 5 tasks + dependencies
-- Utility functions: email fetching, DB storage, report generation, SMTP sending
-- Configuration: All required Variables and Connections
-- Troubleshooting: Common issues (auth failures, timeouts, email delivery)
+```sql
+SELECT 
+    CASE 
+        WHEN ei.status = 'success' THEN 'Ingested'
+        WHEN ei.status = 'failed' THEN 'Failed (Needs Retry)'
+        WHEN ei.status = 'skipped' THEN 'Skipped (Invalid Data)'
+        ELSE 'Not Yet Attempted'
+    END as ingestion_status,
+    COUNT(DISTINCT er.message_id) as email_count,
+    STRING_AGG(DISTINCT er.subject LIMIT 5, '; ') as sample_subjects
+FROM emails_raw er
+LEFT JOIN email_ingestion ei ON er.message_id = ei.message_id
+WHERE er.created_at >= NOW() - INTERVAL '24 hours'
+GROUP BY ei.status
+ORDER BY 
+    CASE 
+        WHEN ei.status = 'success' THEN 1
+        WHEN ei.status = 'failed' THEN 2
+        WHEN ei.status = 'skipped' THEN 3
+        ELSE 4
+    END;
 
-**Total Lines of Code:** ~400 lines (with comments and error handling)
+-- Example Output:
+-- ingestion_status         | email_count | sample_subjects
+-- -------------------------+-------------+----------------------------------
+-- Ingested                 | 45          | "Invoice #123"; "Welcome"
+-- Failed (Needs Retry)     | 2           | "Corrupted"; "Parse error"
+-- Skipped (Invalid Data)   | 2           | "Empty content"; "No email"
+-- Not Yet Attempted        | 1           | "Just arrived"
+```
+
+---
+
+## CSV Content Example
+
+```
+Header:
+Email Ingestion Report - 2026-09-22 09:00:00
+
+SUMMARY:
+Total Emails Fetched: 50
+Successfully Ingested: 45
+Failed (Needs Retry): 2
+Skipped (Invalid): 2
+Pending (Not Processed): 1
+
+DETAILS:
+message_id,from_address,to_address,subject,ingestion_status,extracted_type,target_table,error_message
+msg_001,customer@example.com,support@eoxs.com,Order inquiry,Ingested,customer,customers,
+msg_002,supplier@vendor.com,billing@eoxs.com,Invoice,Ingested,order,orders,
+msg_003,noreply@system.com,notifications@eoxs.com,Bounce,Skipped,N/A,N/A,"Empty content"
+msg_004,partner@company.com,sales@eoxs.com,Partnership,Failed,N/A,N/A,"Email format not recognized"
+...
+```
+
+---
+
+## The Key Difference: Why Pattern 1 Wins for EOXS
+
+| Aspect | Pattern 1 (Tracking Table) | Pattern 2 (Status Flag) | Pattern 3 (Duplicate Check) |
+|--------|---|---|---|
+| **Ingestion Visibility** | Full audit trail | Just status | Only duplicate detection |
+| **Error Tracking** | Why failed? Error message | No details | No error tracking |
+| **Extraction Details** | What was extracted? JSON stored | No | No |
+| **Idempotency** | Safe to reprocess | Yes, but less info | Yes |
+| **Retry Strategy** | Can distinguish failed vs. skipped | Just retry all failures | Can't retry |
+| **Compliance** | Full audit for SOX/compliance | Limited | Limited |
+| **Complexity** | Higher schema | Simple | Medium |
+
+**For EOXS:** Use Pattern 1 because:
+1. You need audit trail (compliance, debugging)
+2. You need to distinguish failures (which need retry?) vs. skips (invalid data)
+3. You need to track what was extracted (for reconciliation)
+4. You need error messages (why did it fail?)
+
+---
+
+## Implementation Checklist
+
+- [ ] Create tables: emails_raw, email_ingestion_tracking, Customer
+- [ ] Write fetch_emails() → store in emails_raw
+- [ ] Write process_emails() → create rows in email_ingestion_tracking
+- [ ] Add status tracking: success/failed/skipped/pending
+- [ ] Write report query: count by status
+- [ ] Generate CSV from report query
+- [ ] Send CSV via email
+- [ ] Test with sample data (50 emails)
+- [ ] Monitor: watch ingestion_counts for anomalies
+
+---
+
+## Next: Want Full Updated DAG?
+
+Should I provide:
+1. Complete DAG with email_ingestion_tracking pattern?
+2. Full database schema with all tables?
+3. Detailed error handling + retry logic?
+4. Complete report generation + email sending?
+
+Let me know which depth you need.
