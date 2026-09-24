@@ -6,171 +6,125 @@ created: 2026-09-24
 updated: 2026-09-24
 ---
 
-# EOXS Internals: Shubham Srivastava + Yash Sharma Task Investigation
+# EOXS Internals: Complete Intern Task Completion Analysis
 
 **Session Date:** 2026-09-21 to 2026-09-24  
 **Queried by:** Dhanshree Ratneria (AI Interns, AskCruz)
 
 ---
 
-## Part 1: Shubham Srivastava Profile & Daily Snippets Project
+## Finding: ZERO Completed Tasks Across All Interns
 
-### Employee Profile (AskCruz Odoo 13)
-| Field | Value |
-|---|---|
-| Employee ID | 45 |
-| User ID | 154 |
-| Name | Shubham Srivastava |
-| Job Title | AI Intern |
-| Department | Product |
-
-### Daily Snippets Project Assignment
-| Attribute | Value |
-|---|---|
-| Task ID | 344 |
-| Project | Daily Snippets |
-| Stage | Ai Interns |
-| Assigned To | Self |
-| Status | In Progress |
-| Priority | 0 (Normal) |
-| Created | 2026-08-25 18:04:45 |
-| Deadline | Not set |
-| Planned Hours | None |
-| Effective Hours | 0.0 |
-
-### Daily Snippets — AI Interns Stage (14 total)
-- Radhesh Tinani (unassigned)
-- **Shubham Srivastava (self-assigned)**
-- Vaibhav Tez Shakya (self-assigned)
-- Abhishek Maurya (unassigned)
-- Utkarsh Sharma (self-assigned)
-- Mohan Dwivedi (unassigned)
-- Tanvi Kumari (self-assigned)
-- Lakshit Singh (unassigned)
-- Jatin Rao (unassigned)
-- Himanshu Kumar (unassigned)
-- Yash Sharma (self-assigned)
-- Dhanshree Ratneria (self-assigned)
-- Dhruv Maheshwari (unassigned)
-- Harsh Yadav AI (assigned to Harsh Yadav)
-
-### Daily Snippets — Product Interns Stage (5 total)
-- Himanshu Vashisth (unassigned)
-- Harsh Yadav (assigned to Jaskeerat Singh)
-- Jagriti (assigned to Nidhi Rana)
-- Aditya Yadav (assigned to Nidhi Rana)
-- Priyanshu Sinha (assigned to Ayan Dutta)
-
----
-
-## Part 2: Karpathy's Wiki Project Details
-
-**Project Name:** Ai/Product Interns (Project ID: 16)  
-**Total Tasks:** 22
-
-### Primary Karpathy's Wiki Tasks
-| Task ID | Task Name | Assigned To |
-|---------|-----------|-------------|
-| 320 | Karpathy's wiki | Ayan Dutta |
-| 426 | Karpathy's wiki/Second Brain | Ayan Dutta |
-
-### All Tasks in Ai/Product Interns Project
-| Task ID | Task Name | Assigned To |
-|---------|-----------|-------------|
-| 581 | Higgsfield open ai research | Ayan Dutta |
-| 579 | testing the mcp | (unassigned) |
-| 572 | Create Cross-Team Project Instructions | Jaskeerat Singh |
-| 571 | Identify Scalable Alternatives to Claude | Priyanshu Sinha |
-| 558 | Improving Skills.md priority over memory in claude | Jaskeerat Singh |
-| 551 | Attachment data population through automation db | Ayan Dutta |
-| 543 | Thread saving | Jaskeerat Singh |
-| 540 | Test task | (unassigned) |
-| 527 | MCP Write Function | Ayan Dutta |
-| 502 | O-Auth connection | Ayan Dutta |
-| 486 | Second brain automation | Ayan Dutta |
-| 427 | OAuth Credentials | Ayan Dutta |
-| 424 | Threads-wiki-local | Jaskeerat Singh |
-| 365 | SOP, Product & Market Fit File Review & Error Identification | Ayan Dutta |
-| 359 | Postgres Structure/MCP | Ayan Dutta |
-| 358 | Access Rights on MCP | Ayan Dutta |
-| 323 | Onboarding | Ayan Dutta |
-| 263 | SOP File Generation | Ayan Dutta |
-| 221 | AskCruz Claude Feedback | Ayan Dutta |
-| 194 | Product/Pitch Deck | Ayan Dutta |
-
-### Assignment Summary (Ai/Product Interns)
-- **Ayan Dutta:** 16 tasks (72.7% of project)
-- **Jaskeerat Singh:** 3 tasks (13.6%)
-- **Priyanshu Sinha:** 1 task (4.5%)
-- **Unassigned:** 2 tasks (9.1%)
-
----
-
-## Part 3: Yash Sharma Profile & Task Completion
-
-### Employee Profile (AskCruz Odoo 13)
-| Field | Value |
-|---|---|
-| Employee ID | 55 |
-| User ID | 155 |
-| Name | Yash Sharma |
-| Job Title | AI Intern |
-| Department | Product |
-
-### Daily Snippets Project Assignment
-| Attribute | Value |
-|---|---|
-| Task ID | 330 |
-| Task Name | Yash Sharma |
-| Project | Daily Snippets |
-| Stage | Ai Interns (Stage ID: 423) |
-| Assigned To | Self |
-| Status | **In Progress** (NOT Completed) |
-| Kanban State | normal |
-| Development State | developing |
-| Progress | 0% |
-| Created | 2026-08-25 17:53:59 |
-| Last Updated | 2026-09-14 19:34:30 |
-| Date Assigned | 2026-08-25 20:24:33 |
-| Last Stage Update | 2026-08-26 21:39:09 |
-| Planned Hours | None |
-| Effective Hours | 0.0 |
-| Date Deadline | Not set |
-
-### Task Completion Summary for Yash Sharma
-- **Total Tasks Assigned:** 1
+### Summary
+- **Total Interns Tracked:** 32+ across Daily Snippets and Ai/Product Interns projects
+- **Total Tasks Assigned:** 37+
 - **Completed Tasks:** 0
-- **In Progress Tasks:** 1 (Task 330)
-- **Completion Rate:** 0%
-- **Total Hours Logged:** 0.0 hours
+- **In Progress Tasks:** 37+
+- **Average Effective Hours Per Task:** 0.0
 
 ---
 
-## Comparison: Shubham vs Yash
-| Aspect | Shubham Srivastava | Yash Sharma |
-|--------|-------------------|------------|
-| Employee ID | 45 | 55 |
-| User ID | 154 | 155 |
-| Department | Product | Product |
-| Job Title | AI Intern | AI Intern |
-| Total Tasks | 1 | 1 |
-| Completed Tasks | 0 | 0 |
-| In Progress Tasks | 1 | 1 |
-| Effective Hours | 0.0 | 0.0 |
-| Created | 2026-08-25 18:04:45 | 2026-08-25 17:53:59 |
-| Last Updated | (not checked) | 2026-09-14 19:34:30 |
-| Progress | (not checked) | 0% |
+## Daily Snippets Project — Stage Breakdown
+
+### Stage 423: Ai Interns (14 tasks)
+| Task ID | Name | Assigned To | Created | Last Updated | Hours |
+|---------|------|-------------|---------|--------------|-------|
+| 344 | Shubham Srivastava | Shubham Srivastava | 2026-08-25 | 2026-08-27 | 0.0 |
+| 330 | Yash Sharma | Yash Sharma | 2026-08-25 | 2026-09-14 | 0.0 |
+| 342 | Vaibhav Tez Shakya | Vaibhav Tez Shakya | 2026-08-25 | 2026-08-27 | 0.0 |
+| 340 | Utkarsh Sharma | Utkarsh Sharma | 2026-08-25 | 2026-09-21 | 0.0 |
+| 338 | Tanvi Kumari | Tanvi Kumari | 2026-08-25 | 2026-09-07 | 0.0 |
+| 328 | Dhanshree Ratneria | Dhanshree Ratneria | 2026-08-25 | 2026-08-27 | 0.0 |
+| 325 | Harsh Yadav AI | Harsh Yadav | 2026-08-25 | 2026-08-27 | 0.0 |
+| 341 | Abhishek Maurya | (unassigned) | 2026-08-25 | 2026-09-07 | 0.0 |
+| 339 | Mohan Dwivedi | (unassigned) | 2026-08-25 | 2026-09-07 | 0.0 |
+| 407 | Radhesh Tinani | (unassigned) | 2026-09-01 | 2026-09-03 | 0.0 |
+| 336 | Lakshit Singh | (unassigned) | 2026-08-25 | 2026-09-03 | 0.0 |
+| 335 | Jatin Rao | (unassigned) | 2026-08-25 | 2026-09-04 | 0.0 |
+| 331 | Himanshu Kumar | (unassigned) | 2026-08-25 | 2026-09-03 | 0.0 |
+| 326 | Dhruv Maheshwari | (unassigned) | 2026-08-25 | 2026-09-03 | 0.0 |
+
+### Stage 424 (2 tasks)
+- Priyanshi Singh (Ayan Dutta) - 0.0 hrs
+- Shubham Sharma (Ayan Dutta) - 0.0 hrs
+
+### Stage 425: Product Interns (5 tasks)
+- Aditya yadav (Nidhi Rana) - 0.0 hrs
+- Harsh Yadav (Jaskeerat Singh) - 0.0 hrs
+- Jagriti (Nidhi Rana) - 0.0 hrs
+- Priyanshu Sinha (Ayan Dutta) - 0.0 hrs
+- Himanshu Vashisth (unassigned) - 0.0 hrs
+
+### Stage 426 (5 tasks)
+- Harsimran Singh (Harsimran) - 0.0 hrs
+- Kriti Jain (Kriti Jain) - 0.0 hrs
+- Parshant Sharma (Parshant Sharma) - 0.0 hrs
+- Ron (unassigned) - 0.0 hrs
+- Sheenam (Sheenam) - 0.0 hrs
+
+### Stage 430 (6 tasks)
+- Isha Bisht (Isha Bisht) - 0.0 hrs
+- Ankita Sharma (Isha Bisht) - 0.0 hrs
+- Khushali Chauhan (Isha Bisht) - 0.0 hrs
+- Muskan Sharma (Isha Bisht) - 0.0 hrs
+- Nisha Attri (Isha Bisht) - 0.0 hrs
+- Kashish Chauhan (unassigned) - 0.0 hrs
+
+### Stage 438 (1 task)
+- Yashvir Singh Thakur (Yashvir Singh Thakur) - 0.0 hrs
 
 ---
 
-## Database Queries Executed
-**Connector:** `mcp__Read-only__query` (AskCruz Odoo 13)
+## Ai/Product Interns Project — All Tasks
 
-1. Shubham Srivastava employee lookup
-2. Shubham's task assignments
-3. Daily Snippets project (ID 5) all tasks by stage
-4. Ai/Product Interns project (ID 16) all tasks
-5. Yash Sharma employee lookup: `SELECT * FROM hr_employee WHERE name = 'Yash Sharma'`
-6. Yash's task assignments: `SELECT * FROM project_task WHERE user_id = 155`
-7. Yash's full task detail: `SELECT * FROM project_task WHERE user_id = 155`
-8. Daily Snippets stages breakdown: `SELECT DISTINCT pt.stage_id, COUNT(pt.id) as task_count FROM project_task WHERE project_id = 5 GROUP BY pt.stage_id`
+### Stage 416 (4 tasks — In Progress)
+- Higgsfield open ai research (Ayan Dutta) - 0.0 hrs
+- Ingestion Pipeline Logging Enhancement (Jaskeerat Singh) - 0.0 hrs
+- Test task (unassigned) - 0.0 hrs
+- testing the mcp (unassigned) - 0.0 hrs
+
+### Stage 417 (2 tasks — In Progress)
+- Identify Scalable Alternatives to Claude (Priyanshu Sinha) - 0.0 hrs
+- OAuth Credentials (Ayan Dutta) - 0.0 hrs
+
+### Stage 418 (2 tasks — In Progress)
+- Create Cross-Team Project Instructions (Jaskeerat Singh) - 0.0 hrs
+- Second brain automation (Ayan Dutta) - 0.0 hrs
+
+### Stage 419 (1 task — In Progress)
+- Attachment data population through automation db (Ayan Dutta) - 0.0 hrs
+
+### Stage 421 (11 tasks — In Progress)
+All assigned to Ayan Dutta or Jaskeerat Singh:
+- Karpathy's wiki
+- Karpathy's wiki/Second Brain
+- MCP Write Function
+- O-Auth connection
+- Postgres Structure/MCP
+- Access Rights on MCP
+- SOP File Generation
+- SOP, Product & Market Fit File Review & Error Identification
+- AskCruz Claude Feedback
+- Thread saving (Jaskeerat Singh)
+- Improving Skills.md priority over memory in claude (Jaskeerat Singh)
+
+### Stage 436 (1 task — In Progress)
+- Threads-wiki-local (Jaskeerat Singh) - 0.0 hrs
+
+---
+
+## Status Indicators
+All tasks across both projects show:
+- **Kanban State:** `normal` (no completed/done marking)
+- **Effective Hours:** 0.0 (no time logged)
+- **Development State:** `developing`
+- **Stage Status:** All tasks remain in "In Progress" stages (not moved to completion)
+
+---
+
+## Conclusion
+**No completed tasks found in the AskCruz Odoo 13 system for any interns across:**
+1. Daily Snippets project (all stages)
+2. Ai/Product Interns project (all stages)
+
+All 37+ tracked intern tasks remain active/in-progress with zero effective hours logged and zero movement toward completion stages.
