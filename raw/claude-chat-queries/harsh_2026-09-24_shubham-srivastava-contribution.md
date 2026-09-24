@@ -6,11 +6,9 @@ created: 2026-09-24
 updated: 2026-09-24
 ---
 
-> *Note: Chat continues from here (earlier parts were saved in harsh_2026-09-21_shubham-srivastava-contribution.md).*
+# EOXS Internals: Shubham Srivastava + Yash Sharma Task Investigation
 
-# EOXS Internals: Shubham Srivastava + Yash Sharma Contribution Investigation
-
-**Session Date:** 2026-09-21  
+**Session Date:** 2026-09-21 to 2026-09-24  
 **Queried by:** Dhanshree Ratneria (AI Interns, AskCruz)
 
 ---
@@ -42,7 +40,7 @@ updated: 2026-09-24
 
 ### Daily Snippets — AI Interns Stage (14 total)
 - Radhesh Tinani (unassigned)
-- **Shubham Srivastava (self-assigned)** ← focus
+- **Shubham Srivastava (self-assigned)**
 - Vaibhav Tez Shakya (self-assigned)
 - Abhishek Maurya (unassigned)
 - Utkarsh Sharma (self-assigned)
@@ -108,7 +106,7 @@ updated: 2026-09-24
 
 ---
 
-## Part 3: Yash Sharma Profile & Assignment
+## Part 3: Yash Sharma Profile & Task Completion
 
 ### Employee Profile (AskCruz Odoo 13)
 | Field | Value |
@@ -125,35 +123,54 @@ updated: 2026-09-24
 | Task ID | 330 |
 | Task Name | Yash Sharma |
 | Project | Daily Snippets |
-| Stage | Ai Interns |
+| Stage | Ai Interns (Stage ID: 423) |
 | Assigned To | Self |
-| Status | In Progress |
+| Status | **In Progress** (NOT Completed) |
+| Kanban State | normal |
+| Development State | developing |
+| Progress | 0% |
 | Created | 2026-08-25 17:53:59 |
-| Deadline | Not set |
+| Last Updated | 2026-09-14 19:34:30 |
+| Date Assigned | 2026-08-25 20:24:33 |
+| Last Stage Update | 2026-08-26 21:39:09 |
 | Planned Hours | None |
 | Effective Hours | 0.0 |
+| Date Deadline | Not set |
 
-### Comparison: Shubham vs Yash
+### Task Completion Summary for Yash Sharma
+- **Total Tasks Assigned:** 1
+- **Completed Tasks:** 0
+- **In Progress Tasks:** 1 (Task 330)
+- **Completion Rate:** 0%
+- **Total Hours Logged:** 0.0 hours
+
+---
+
+## Comparison: Shubham vs Yash
 | Aspect | Shubham Srivastava | Yash Sharma |
 |--------|-------------------|------------|
 | Employee ID | 45 | 55 |
 | User ID | 154 | 155 |
 | Department | Product | Product |
 | Job Title | AI Intern | AI Intern |
-| Task Count | 1 (Daily Snippets) | 1 (Daily Snippets) |
-| Assignment Type | Self | Self |
-| Created Date | 2026-08-25 18:04:45 | 2026-08-25 17:53:59 |
+| Total Tasks | 1 | 1 |
+| Completed Tasks | 0 | 0 |
+| In Progress Tasks | 1 | 1 |
 | Effective Hours | 0.0 | 0.0 |
-| Deadline Set | No | No |
+| Created | 2026-08-25 18:04:45 | 2026-08-25 17:53:59 |
+| Last Updated | (not checked) | 2026-09-14 19:34:30 |
+| Progress | (not checked) | 0% |
 
 ---
 
 ## Database Queries Executed
 **Connector:** `mcp__Read-only__query` (AskCruz Odoo 13)
 
-1. Shubham Srivastava employee lookup: `SELECT * FROM hr_employee WHERE name = 'Shubham Srivastava'`
-2. Shubham's task assignments: `SELECT * FROM project_task WHERE user_id = 154`
-3. Daily Snippets project tasks: `SELECT * FROM project_task WHERE project_id = 5 AND stage IN ('Ai Interns', 'Product Interns')`
-4. Ai/Product Interns project tasks: `SELECT * FROM project_task WHERE project_id = 16`
+1. Shubham Srivastava employee lookup
+2. Shubham's task assignments
+3. Daily Snippets project (ID 5) all tasks by stage
+4. Ai/Product Interns project (ID 16) all tasks
 5. Yash Sharma employee lookup: `SELECT * FROM hr_employee WHERE name = 'Yash Sharma'`
 6. Yash's task assignments: `SELECT * FROM project_task WHERE user_id = 155`
+7. Yash's full task detail: `SELECT * FROM project_task WHERE user_id = 155`
+8. Daily Snippets stages breakdown: `SELECT DISTINCT pt.stage_id, COUNT(pt.id) as task_count FROM project_task WHERE project_id = 5 GROUP BY pt.stage_id`
